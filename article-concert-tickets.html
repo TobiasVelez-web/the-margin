@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; }
+.logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.article-wrap { max-width:680px;margin:0 auto;padding:3.5rem 2rem 5rem; }
+.back-link { font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem;transition:color 0.15s; }
+.back-link:hover { color:var(--ink); }
+.article-tag { font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem; }
+h1 { font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem; }
+h1 em { font-style:italic; }
+.article-meta { font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap; }
+.article-body p { margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.8; }
+.article-body h2 { font-family:var(--serif);font-size:1.4rem;margin:2.5rem 0 1rem;line-height:1.3; }
+.article-body .callout { background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted); }
+.article-body table { width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.9rem; }
+.article-body th { background:var(--faint);padding:0.6rem 0.75rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border); }
+.article-body td { padding:0.6rem 0.75rem;border-bottom:1px solid var(--border); }
+.article-body tr:last-child td { border-bottom:none; }
+.byline { margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted); }
+.byline strong { color:var(--ink); }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem; }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){nav{display:none;}.footer-inner{flex-direction:column;align-items:flex-start;}}
+</style></head><body>
+<header><div class="header-inner">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+<title>Why Concert Tickets Cost So Much — The Margin</title>
+<div class="article-wrap">
+<a href="index.html" class="back-link">← Back to home</a>
+<div class="article-tag">Everyday Econ</div>
+<h1>Why concert tickets cost so much — and why that's <em>actually rational</em></h1>
+<div class="article-meta"><span>Tobias Velez</span><span>·</span><span>March 2026</span><span>·</span><span>5 min read</span></div>
+<div class="article-body">
+<p>You refresh Ticketmaster. A Lil Baby ticket shows 5. You wait two hours in the queue, and suddenly it's 40. You feel robbed. But here's what the economics actually says happened — and it might change your mind.</p>
+<h2>Supply and demand, from scratch</h2>
+<p>Arenas have a fixed supply: 20,000 seats, max. Artists can't clone themselves for extra shows. When 500,000 fans compete for those seats, prices have to rise until the number of buyers willing to pay matches the number of seats available. That's not a conspiracy — it's just how markets work.</p>
+<table><tr><th>Price</th><th>Buyers willing to pay</th></tr>
+<tr><td>5</td><td>500,000</td></tr>
+<tr><td>50</td><td>250,000</td></tr>
+<tr><td>50</td><td>80,000</td></tr>
+<tr><td>40</td><td>20,000</td></tr>
+<tr><td>50</td><td>8,000</td></tr></table>
+<div class="callout">40 is the equilibrium price — where supply meets demand. No empty seats, no buyers left out who were actually willing to pay the going rate.</div>
+<h2>Dynamic pricing isn't new — it's just more visible now</h2>
+<p>Airlines have done this forever. Friday night Ubers surge 3x. Hotels charge double during festival weekends. Ticketmaster just made the same logic real-time and visible for concerts. The algorithm watches queue length, time to show, seat location, and remaining inventory — and adjusts prices as demand shifts in real time.</p>
+<h2>The scalper problem nobody talks about</h2>
+<p>Here's what happens without dynamic pricing: Ticketmaster sells at 5. Scalpers, using bots, grab thousands of tickets instantly. Fans end up paying 00 on StubHub anyway — except now the artist gets 5 and the scalper pockets the rest. Dynamic pricing cuts out the middleman. The artist gets 40, fans pay market rate, and nobody profits from the chaos.</p>
+<h2>So why does it still feel wrong?</h2>
+<p>Economists call it price gouging resentment. Our brains anchor to the first number we see — 5 — and the jump to 40 feels like a violation, even when the market logic is completely sound. I get it. I wanted Bad Bunny floor tickets last year. They started at 20 and hit 50 after 90 minutes. It felt like theft. But 200,000 people from the DMV wanted 300 floor seats. Someone was going to pay 50. Better it goes to the artist than a scalper with a bot farm.</p>
+<h2>My take</h2>
+<p>Dynamic pricing is the more honest system. Fixed cheap tickets are basically a scalper welfare program. What I'd actually push for: hard caps on service fees (those are genuinely ridiculous and add nothing), stronger anti-bot laws so real fans have a fair shot, and more transparency around where the money goes. The price itself isn't the problem. The hidden fees and rigged queues are.</p>
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin</div>
+</div></div>
+<footer><div class="footer-inner">
+<a href="index.html" class="footer-logo">The Margin</a>
+<div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>© 2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer></body></html>

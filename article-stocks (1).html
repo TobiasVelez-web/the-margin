@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; }
+.logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.article-wrap { max-width:680px;margin:0 auto;padding:3.5rem 2rem 5rem; }
+.back-link { font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem;transition:color 0.15s; }
+.back-link:hover { color:var(--ink); }
+.article-tag { font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem; }
+h1 { font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem; }
+h1 em { font-style:italic; }
+.article-meta { font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap; }
+.article-body p { margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.8; }
+.article-body h2 { font-family:var(--serif);font-size:1.4rem;margin:2.5rem 0 1rem;line-height:1.3; }
+.article-body .callout { background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted); }
+.article-body table { width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.9rem; }
+.article-body th { background:var(--faint);padding:0.6rem 0.75rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border); }
+.article-body td { padding:0.6rem 0.75rem;border-bottom:1px solid var(--border); }
+.article-body tr:last-child td { border-bottom:none; }
+.byline { margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted); }
+.byline strong { color:var(--ink); }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem; }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){nav{display:none;}.footer-inner{flex-direction:column;align-items:flex-start;}}
+</style></head><body>
+<header><div class="header-inner">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+<title>The Stock Market Feels Abstract — The Margin</title>
+<div class="article-wrap">
+<a href="index.html" class="back-link">← Back to home</a>
+<div class="article-tag">Personal Finance</div>
+<h1>The stock market feels abstract. <em>Here's why I still pay attention.</em></h1>
+<div class="article-meta"><span>Tobias Velez</span><span>·</span><span>February 2026</span><span>·</span><span>5 min read</span></div>
+<div class="article-body">
+<p>Every day, news alerts tell you whether the S&P 500 went up or down as if that were a direct measure of how everyone is doing. For most high school students, these numbers feel completely distant. We don't have retirement accounts or large portfolios. Still, learning how the stock market works is more important than it seems — because it shapes wealth, inequality, and opportunity over decades, including yours.</p>
+<h2>What owning a stock actually means</h2>
+<p>A stock is a small share of ownership in a company. When you buy one share of Apple, you own a tiny claim on its future profits. If the company grows and earns more, that claim becomes more valuable. If it fails to adapt or makes bad decisions, it shrinks. Behind every ticker symbol is a real business with workers, products, and customers. The market's job is to continuously update what those future earnings are worth today, based on all available information.</p>
+<h2>Why prices move so much</h2>
+<p>Stock prices react to expectations, not just current results. A company can report strong profits and still see its share price fall if investors expected even better numbers. Interest rates, inflation, political events, and technological shifts all feed into these expectations constantly. This makes the market volatile in the short run — it can feel irrational when a "safe" stock drops 10% on a single piece of news. Over decades, though, broad markets tend to follow the real economy: if businesses innovate and productivity grows, corporate profits grow, and index values rise with them.</p>
+<h2>The compounding argument</h2>
+<table>
+<tr><th>Year</th><th>S&P 500 total return index (1996 = 100)</th></tr>
+<tr><td>1996</td><td>100</td></tr>
+<tr><td>2001</td><td>132</td></tr>
+<tr><td>2006</td><td>181</td></tr>
+<tr><td>2011</td><td>185</td></tr>
+<tr><td>2016</td><td>247</td></tr>
+<tr><td>2021</td><td>412</td></tr>
+<tr><td>2026</td><td>455</td></tr>
+</table>
+<p>Despite multiple recessions, market crashes, and extended periods of volatility, the long-run trend is upward. Patient, diversified investors who stayed invested through full cycles were rewarded by the cumulative growth of the underlying companies. That's the case for broad index funds — owning a little of everything rather than trying to pick winners.</p>
+<div class="callout">Historical S&P 500 data shows positive real (inflation-adjusted) returns for investors who held a diversified portfolio over multiple decades the vast majority of the time. No strategy is risk-free, but diversification and time are the two most powerful tools available to ordinary investors.</div>
+<h2>The honest caveat</h2>
+<p>It's important not to romanticize this. Gains are unevenly distributed — when stock prices rise, people who already own assets benefit most. When financial crises hit, ordinary workers can lose jobs even if they never owned a single share. That asymmetry matters for understanding inequality. But ignoring the stock market entirely doesn't make its influence disappear. For students, the goal isn't to start day-trading or treating investing like a game. It's to recognize that patient ownership of productive assets over time is a powerful force — and to be ready to use that knowledge responsibly when the opportunity comes.</p>
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin</div>
+</div></div>
+<footer><div class="footer-inner">
+<a href="index.html" class="footer-logo">The Margin</a>
+<div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>© 2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer></body></html>

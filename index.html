@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Margin — Economics for High Schoolers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a18; --muted: #6b6b67; --faint: #f2f0eb;
+    --border: #e0ddd6; --accent: #c0392b; --white: #ffffff;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  body { font-family: var(--sans); background: var(--white); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  /* HEADER */
+  header { border-bottom: 1px solid var(--border); padding: 0 2rem; position: sticky; top: 0; background: rgba(255,255,255,0.96); backdrop-filter: blur(6px); z-index: 100; }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 2rem; }
+  .logo { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
+  .logo span { color: var(--accent); }
+  nav { display: flex; gap: 2rem; font-size: 0.875rem; font-weight: 500; color: var(--muted); }
+  nav a { transition: color 0.15s; }
+  nav a:hover { color: var(--ink); }
+  .header-cta { background: var(--ink); color: var(--white) !important; font-size: 0.8125rem; font-weight: 500; padding: 0.45rem 1.1rem; border-radius: 999px; white-space: nowrap; transition: background 0.15s; }
+  .header-cta:hover { background: var(--accent) !important; }
+
+  /* HERO */
+  .hero { border-bottom: 1px solid var(--border); padding: 3.5rem 2rem 3rem; }
+  .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+  .hero-eyebrow { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .hero-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+  .hero-title em { font-style: italic; }
+  .hero-desc { font-size: 1rem; color: var(--muted); max-width: 420px; margin-bottom: 2rem; }
+  .hero-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.8125rem; color: var(--muted); flex-wrap: wrap; }
+  .tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: var(--faint); color: var(--muted); padding: 0.2rem 0.6rem; border-radius: 3px; }
+  .tag.red { background: #fdf0ee; color: var(--accent); }
+  .hero-image { background: var(--faint); border-radius: 4px; aspect-ratio: 4/3; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .chart-svg { width: 100%; height: 100%; }
+
+  /* SECTIONS */
+  .section { padding: 3rem 2rem; border-bottom: 1px solid var(--border); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; color: var(--muted); margin-bottom: 1.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+
+  /* ARTICLE GRID */
+  .article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .article-card { display: flex; flex-direction: column; gap: 0.75rem; cursor: pointer; }
+  .article-card:hover .article-title { color: var(--accent); }
+  .article-thumb { background: var(--faint); border-radius: 3px; aspect-ratio: 16/9; overflow: hidden; margin-bottom: 0.25rem; position: relative; }
+  .article-title { font-family: var(--serif); font-size: 1.1rem; line-height: 1.35; font-weight: 600; transition: color 0.15s; }
+  .article-excerpt { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+  .article-meta { font-size: 0.75rem; color: #aaa9a4; display: flex; gap: 0.75rem; align-items: center; }
+  .article-meta span::before { content: '·'; margin-right: 0.75rem; }
+  .article-meta span:first-child::before { content: none; }
+  .thumb-chart { width: 100%; height: 100%; display: block; }
+
+  /* FEATURED STRIP */
+  .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .featured-card { display: grid; grid-template-columns: 100px 1fr; gap: 1.25rem; align-items: start; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .featured-card:last-child { border-bottom: none; padding-bottom: 0; }
+  .featured-card:hover .article-title { color: var(--accent); }
+  .featured-thumb { background: var(--faint); border-radius: 3px; aspect-ratio: 1; }
+
+  /* MISSION STRIP */
+  .mission { background: var(--ink); color: var(--white); padding: 4rem 2rem; }
+  .mission-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .mission h2 { font-family: var(--serif); font-size: 2rem; line-height: 1.2; margin-bottom: 1rem; }
+  .mission h2 em { font-style: italic; color: #e8a89f; }
+  .mission p { color: rgba(255,255,255,0.7); font-size: 0.9375rem; line-height: 1.8; margin-bottom: 1rem; }
+  .mission-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .mission-pill { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 999px; letter-spacing: 0.04em; }
+  .mission-stat { text-align: center; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; }
+  .mission-stat-num { font-family: var(--serif); font-size: 2.5rem; color: var(--white); display: block; margin-bottom: 0.25rem; }
+  .mission-stat-label { font-size: 0.8125rem; color: rgba(255,255,255,0.5); }
+  .mission-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* ABOUT */
+  .about-strip { background: var(--faint); border-radius: 6px; padding: 2.5rem; display: flex; gap: 3rem; align-items: center; }
+  .about-strip h2 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .about-strip p { font-size: 0.9rem; color: var(--muted); max-width: 500px; }
+  .about-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1.75rem; color: var(--muted); }
+
+  /* NEWSLETTER */
+  .newsletter { text-align: center; padding: 4rem 2rem; }
+  .newsletter h2 { font-family: var(--serif); font-size: 2rem; margin-bottom: 0.75rem; }
+  .newsletter p { color: var(--muted); font-size: 0.9375rem; margin-bottom: 1.75rem; }
+  .newsletter-form { display: flex; gap: 0.5rem; max-width: 380px; margin: 0 auto; }
+  .newsletter-form input { flex: 1; border: 1px solid var(--border); border-radius: 999px; padding: 0.6rem 1.25rem; font-family: var(--sans); font-size: 0.875rem; outline: none; color: var(--ink); background: var(--white); }
+  .newsletter-form input:focus { border-color: var(--ink); }
+  .newsletter-form input::placeholder { color: #bbb; }
+  .newsletter-form button { background: var(--ink); color: var(--white); border: none; border-radius: 999px; padding: 0.6rem 1.4rem; font-family: var(--sans); font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+  .newsletter-form button:hover { background: var(--accent); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem; font-size: 0.8125rem; color: var(--muted); }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .footer-logo { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1rem; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a:hover { color: var(--ink); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-inner, .mission-inner, .featured-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .article-grid { grid-template-columns: 1fr; }
+    nav { display: none; }
+    .about-strip { flex-direction: column; gap: 1.5rem; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .mission-stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">The<span> Margin</span></div>
+    <nav>
+      <a href="#articles">Articles</a>
+      <a href="#mission">About</a>
+      <a href="#newsletter">Subscribe</a>
+    </nav>
+    <a href="#newsletter" class="header-cta">Subscribe</a>
+  </div>
+</header>
+
+<!-- HERO: featured article = concert tickets (most accessible) -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Latest Essay</div>
+      <h1 class="hero-title">Why concert tickets cost so much — and why that's <em>actually rational</em></h1>
+      <p class="hero-desc">From $85 to $340 in two hours. You feel robbed. But here's what the economics actually says happened — and it might change your mind.</p>
+      <div class="hero-meta">
+        <span class="tag red">Everyday Econ</span>
+        <span style="font-size:0.8rem;color:var(--muted)">Tobias Velez · Mar 2026 · 5 min read</span>
+      </div>
+    </div>
+    <a href="article-concert-tickets.html" style="display:block;">
+      <div class="hero-image">
+        <svg viewBox="0 0 480 340" fill="none" xmlns="http://www.w3.org/2000/svg" class="chart-svg">
+          <line x1="60" y1="40" x2="60" y2="290" stroke="#e0ddd6" stroke-width="1"/>
+          <line x1="60" y1="290" x2="450" y2="290" stroke="#e0ddd6" stroke-width="1"/>
+          <line x1="60" y1="240" x2="450" y2="240" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="4,4"/>
+          <line x1="60" y1="190" x2="450" y2="190" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="4,4"/>
+          <line x1="60" y1="140" x2="450" y2="140" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="4,4"/>
+          <line x1="60" y1="90" x2="450" y2="90" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="4,4"/>
+          <polyline points="80,260 150,240 220,200 290,155 360,110 430,85" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+          <text x="435" y="83" font-family="'DM Sans',sans-serif" font-size="11" fill="#c0392b">Price</text>
+          <polyline points="80,85 150,90 220,100 290,130 360,200 430,255" stroke="#1a1a18" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6,3"/>
+          <text x="435" y="255" font-family="'DM Sans',sans-serif" font-size="11" fill="#888">Supply</text>
+          <text x="50" y="293" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$85</text>
+          <text x="50" y="193" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$200</text>
+          <text x="50" y="93" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$340</text>
+          <text x="60" y="25" font-family="'DM Sans',sans-serif" font-size="12" font-weight="500" fill="#6b6b67">Ticket price vs. remaining supply</text>
+        </svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="section" id="articles">
+  <div class="section-inner">
+    <div class="section-label">All Articles</div>
+    <div class="article-grid">
+
+      <a href="article-bethesda-housing.html" class="article-card">
+        <div class="article-thumb">
+          <svg viewBox="0 0 320 180" class="thumb-chart" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#f2f0eb"/>
+            <polyline points="20,140 60,135 100,120 140,100 180,80 220,65 270,55 300,50" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+            <line x1="20" y1="165" x2="300" y2="165" stroke="#e0ddd6" stroke-width="1"/>
+            <text x="160" y="30" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">Bethesda median home price, 2010–2025</text>
+          </svg>
+          <span class="tag" style="position:absolute;bottom:10px;left:10px;">Everyday Econ</span>
+        </div>
+        <div class="article-title">Bethesda housing crisis: why prices just won't fall</div>
+        <div class="article-excerpt">MLS data reveals why Bethesda completely defies national cooling trends — and what it would actually take to fix it.</div>
+        <div class="article-meta"><span>Mar 2026</span><span>7 min read</span></div>
+      </a>
+
+      <a href="article-montgomery-polarization.html" class="article-card">
+        <div class="article-thumb">
+          <svg viewBox="0 0 320 180" class="thumb-chart" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#f2f0eb"/>
+            <rect x="30" y="100" width="50" height="55" fill="#c0392b" opacity="0.7" rx="2"/>
+            <rect x="140" y="130" width="50" height="25" fill="#6b6b67" opacity="0.5" rx="2"/>
+            <rect x="240" y="120" width="50" height="35" fill="#1a1a18" opacity="0.2" rx="2"/>
+            <text x="55" y="95" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#c0392b">Low</text>
+            <text x="165" y="125" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#6b6b67">Middle</text>
+            <text x="265" y="115" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#888">High</text>
+            <line x1="20" y1="155" x2="300" y2="155" stroke="#e0ddd6" stroke-width="1"/>
+            <text x="160" y="30" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">Montgomery County income shift, 2005–2022</text>
+          </svg>
+          <span class="tag" style="position:absolute;bottom:10px;left:10px;">Inequality</span>
+        </div>
+        <div class="article-title">Montgomery County income polarization: two counties emerging from one</div>
+        <div class="article-excerpt">Montgomery lost 26,000 middle-income residents while gaining 88,000 low-income ones. Here's what the data actually shows.</div>
+        <div class="article-meta"><span>Mar 2026</span><span>8 min read</span></div>
+      </a>
+
+      <a href="article-march-macro.html" class="article-card">
+        <div class="article-thumb">
+          <svg viewBox="0 0 320 180" class="thumb-chart" xmlns="http://www.w3.org/2000/svg">
+            <rect width="320" height="180" fill="#f2f0eb"/>
+            <polyline points="20,80 60,83 100,87 140,90 180,90 220,90" stroke="#c0392b" stroke-width="2" fill="none" stroke-linejoin="round"/>
+            <polyline points="20,55 60,57 100,60 140,62 180,62 220,62" stroke="#1a1a18" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-dasharray="5,3"/>
+            <text x="225" y="90" font-family="'DM Sans',sans-serif" font-size="9" fill="#c0392b">CPI</text>
+            <text x="225" y="60" font-family="'DM Sans',sans-serif" font-size="9" fill="#888">Fed Rate</text>
+            <line x1="20" y1="140" x2="280" y2="140" stroke="#e0ddd6" stroke-width="1"/>
+            <text x="160" y="25" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">Inflation vs. Fed rate, late 2025–2026</text>
+          </svg>
+          <span class="tag" style="position:absolute;bottom:10px;left:10px;">Macro</span>
+        </div>
+        <div class="article-title">March 2026 macro review: stability under pressure</div>
+        <div class="article-excerpt">Inflation is cooling but not gone. The Fed isn't moving. Here's what the global economy actually looks like right now.</div>
+        <div class="article-meta"><span>Mar 2026</span><span>6 min read</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- MORE READS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">More Reading</div>
+    <div class="featured-grid">
+      <div>
+        <a href="article-unemployment.html" class="featured-card">
+          <div class="featured-thumb"></div>
+          <div>
+            <div class="tag" style="margin-bottom:0.5rem;">Labor</div>
+            <div class="article-title" style="font-size:1rem;">The unemployment rate says "we're fine." My friends don't agree.</div>
+            <div class="article-meta" style="margin-top:0.4rem;"><span>Mar 2026</span><span>5 min</span></div>
+          </div>
+        </a>
+        <a href="article-stocks.html" class="featured-card">
+          <div class="featured-thumb" style="background:#ede9e2;"></div>
+          <div>
+            <div class="tag" style="margin-bottom:0.5rem;">Personal Finance</div>
+            <div class="article-title" style="font-size:1rem;">The stock market feels abstract. Here's why I still pay attention.</div>
+            <div class="article-meta" style="margin-top:0.4rem;"><span>Feb 2026</span><span>5 min</span></div>
+          </div>
+        </a>
+        <a href="article-concert-tickets.html" class="featured-card">
+          <div class="featured-thumb" style="background:#e8e5df;"></div>
+          <div>
+            <div class="tag" style="margin-bottom:0.5rem;">Everyday Econ</div>
+            <div class="article-title" style="font-size:1rem;">Why concert tickets cost so much — and why that's actually rational</div>
+            <div class="article-meta" style="margin-top:0.4rem;"><span>Mar 2026</span><span>5 min</span></div>
+          </div>
+        </a>
+      </div>
+      <div>
+        <a href="article-bethesda-housing.html" class="featured-card">
+          <div class="featured-thumb" style="background:#f0ede6;"></div>
+          <div>
+            <div class="tag" style="margin-bottom:0.5rem;">Housing</div>
+            <div class="article-title" style="font-size:1rem;">Bethesda housing crisis: why prices just won't fall</div>
+            <div class="article-meta" style="margin-top:0.4rem;"><span>Mar 2026</span><span>7 min</span></div>
+          </div>
+        </a>
+        <a href="article-montgomery-polarization.html" class="featured-card">
+          <div class="featured-thumb" style="background:#e5e2db;"></div>
+          <div>
+            <div class="tag" style="margin-bottom:0.5rem;">Inequality</div>
+            <div class="article-title" style="font-size:1rem;">Montgomery County income polarization: two counties emerging from one</div>
+            <div class="article-meta" style="margin-top:0.4rem;"><span>Mar 2026</span><span>8 min</span></div>
+          </div>
+        </a>
+        <a href="article-march-macro.html" class="featured-card">
+          <div class="featured-thumb" style="background:#f2eeea;"></div>
+          <div>
+            <div class="tag" style="margin-bottom:0.5rem;">Macro</div>
+            <div class="article-title" style="font-size:1rem;">March 2026 macro review: stability under pressure</div>
+            <div class="article-meta" style="margin-top:0.4rem;"><span>Mar 2026</span><span>6 min</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION STRIP -->
+<section class="mission" id="mission">
+  <div class="mission-inner">
+    <div>
+      <h2>Economics shouldn't require a <em>college degree</em> to understand.</h2>
+      <p>The Margin is written by Tobias Velez, a student at Walter Johnson High School in Bethesda, MD. Every article starts from zero — real data, plain English, and an honest opinion at the end.</p>
+      <p>The goal isn't to sound smart. It's to make economic ideas actually accessible to the people they affect most: students who will inherit these problems.</p>
+      <div class="mission-pills">
+        <span class="mission-pill">No jargon</span>
+        <span class="mission-pill">Original data</span>
+        <span class="mission-pill">Student perspective</span>
+        <span class="mission-pill">Local + global</span>
+        <span class="mission-pill">Free, always</span>
+      </div>
+    </div>
+    <div class="mission-stats-grid">
+      <div class="mission-stat">
+        <span class="mission-stat-num">7</span>
+        <span class="mission-stat-label">Articles published</span>
+      </div>
+      <div class="mission-stat">
+        <span class="mission-stat-num">4</span>
+        <span class="mission-stat-label">Topics covered</span>
+      </div>
+      <div class="mission-stat">
+        <span class="mission-stat-num">WJ</span>
+        <span class="mission-stat-label">Walter Johnson HS</span>
+      </div>
+      <div class="mission-stat">
+        <span class="mission-stat-num">0$</span>
+        <span class="mission-stat-label">Cost to read</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section">
+  <div class="section-inner">
+    <div class="about-strip">
+      <div class="about-avatar">TV</div>
+      <div>
+        <h2>Written by a student, for students.</h2>
+        <p>I'm Tobias Velez, a high schooler at Walter Johnson in Bethesda, MD. I started The Margin because I kept reading economic news that assumed I already knew everything — or that I wouldn't care. Both felt wrong. If you're a student who wants to actually understand what's happening in the economy, this blog is for you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter" class="newsletter">
+  <div style="max-width:480px;margin:0 auto;">
+    <div class="hero-eyebrow" style="margin-bottom:0.75rem;">Stay in the loop</div>
+    <h2>New essays, straight to your inbox.</h2>
+    <p>No spam. One article when it's ready. Unsubscribe anytime.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="your@email.com" />
+      <button type="button" onclick="this.textContent='Thanks!';this.style.background='#2ecc71';">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">The Margin</div>
+    <div class="footer-links">
+      <a href="#articles">Articles</a>
+      <a href="#mission">About</a>
+      <a href="#newsletter">Subscribe</a>
+    </div>
+    <div>© 2026 Tobias Velez · Walter Johnson High School</div>
+  </div>
+</footer>
+
+</body>
+</html>

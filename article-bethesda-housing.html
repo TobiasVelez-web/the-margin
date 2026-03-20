@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; }
+.logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.article-wrap { max-width:680px;margin:0 auto;padding:3.5rem 2rem 5rem; }
+.back-link { font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem;transition:color 0.15s; }
+.back-link:hover { color:var(--ink); }
+.article-tag { font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem; }
+h1 { font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem; }
+h1 em { font-style:italic; }
+.article-meta { font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap; }
+.article-body p { margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.8; }
+.article-body h2 { font-family:var(--serif);font-size:1.4rem;margin:2.5rem 0 1rem;line-height:1.3; }
+.article-body .callout { background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted); }
+.article-body table { width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.9rem; }
+.article-body th { background:var(--faint);padding:0.6rem 0.75rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border); }
+.article-body td { padding:0.6rem 0.75rem;border-bottom:1px solid var(--border); }
+.article-body tr:last-child td { border-bottom:none; }
+.byline { margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted); }
+.byline strong { color:var(--ink); }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem; }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){nav{display:none;}.footer-inner{flex-direction:column;align-items:flex-start;}}
+</style></head><body>
+<header><div class="header-inner">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+<title>Bethesda Housing Crisis — The Margin</title>
+<div class="article-wrap">
+<a href="index.html" class="back-link">← Back to home</a>
+<div class="article-tag">Everyday Econ</div>
+<h1>Bethesda housing crisis: <em>why prices just won't fall</em></h1>
+<div class="article-meta"><span>Tobias Velez</span><span>·</span><span>March 2026</span><span>·</span><span>7 min read</span></div>
+<div class="article-body">
+<p>Bethesda median home prices hit .2 million in 2025 — up 142% since 2010. National prices cooled after the 2022 rate hikes. Bethesda kept climbing anyway. I wanted to understand why, so I dug into MLS data. The answer isn't complicated, but nobody around here seems to want to say it out loud.</p>
+<h2>The inventory problem</h2>
+<p>Bethesda homes sell in about 21 days on average. The national average is closer to 45 days. Even when mortgage rates hit 7% and markets across the country slowed down, Bethesda barely flinched. Sellers here face almost zero pressure to cut prices because there are simply not enough homes coming onto the market. In 2025, only 41 new listings per month were hitting the market while 69 homes were closing. That's 0.6 months of inventory — crash-level shortage.</p>
+<div class="callout">Normal, balanced real estate markets have 4–6 months of inventory. Bethesda is running at 0.6. At that level, prices don't fall — they compound upward mechanically, regardless of what interest rates do nationally.</div>
+<h2>The lock-in effect</h2>
+<p>Here's the part that makes this hard to fix: about 67% of Bethesda homeowners locked in 3% mortgages in 2019–2021. Their monthly payment might be ,500. If they sell and try to buy something comparable today at 6.5% rates, that same mortgage payment jumps to around ,800. So they don't sell. They stay. And the inventory problem gets worse every year.</p>
+<h2>Zoning is the ceiling</h2>
+<p>R-60 zoning covers 78% of Bethesda's residential land. That means single-family homes only — no duplexes, no townhomes, no apartments. Supply elasticity here is about 0.08, meaning for every 100 new households that want to move in, only 8 new homes can legally be built. The national average is 0.45. Bethesda is structurally incapable of building its way out of this problem under current rules.</p>
+<h2>Who actually gets hurt</h2>
+<p>This isn't abstract. Walter Johnson's teacher vacancy rate hit 18% in 2025, and housing costs are a direct reason why. A starting teacher making 8,000 is spending close to half their income on rent in this area. Firefighters. Young professionals. Middle-class families. The people who keep the county running can't afford to live in it anymore.</p>
+<h2>What I think would actually work</h2>
+<p>My proposal — and this is genuinely something I think Montgomery County should consider — is a targeted public land program. The county buys 50 tear-down lots per year and builds duplexes on them, reserved for first-time buyers earning 20K–00K: teachers, firefighters, young professionals. Each lot that would have held one luxury mansion instead creates six middle-income homes. Arlington County ran a similar program from 2019–2024 and added 4,200 units while cutting teacher vacancies by 42%.</p>
+<p>The harder fix is rezoning. If Bethesda allowed duplexes on just 5% of R-60 land, days-on-market would rise toward 35, annual price growth would slow from 12% to something closer to 4%, and teacher vacancies would start falling. Without any policy change, the model points to .8 million median prices by 2030. That's not a housing market anymore. That's a gated community with a county government attached.</p>
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin<br><small>Data: BrightMLS, Montgomery Planning, Redfin Research</small></div>
+</div></div>
+<footer><div class="footer-inner">
+<a href="index.html" class="footer-logo">The Margin</a>
+<div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>© 2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer></body></html>
