@@ -1,0 +1,5 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="6" fill="#1a1a18"/>
+  <text x="16" y="13" text-anchor="middle" font-family="Georgia, serif" font-size="9" font-weight="600" fill="#ffffff">The</text>
+  <text x="16" y="24" text-anchor="middle" font-family="Georgia, serif" font-size="7.5" font-weight="600" fill="#c0392b">Margin</text>
+</svg>
