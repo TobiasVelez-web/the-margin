@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is College Still Worth It? — The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; } .logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.article-wrap { max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem; }
+.back-link { font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem; }
+.back-link:hover { color:var(--ink); }
+.article-tag { font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem; }
+h1 { font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem; } h1 em { font-style:italic; }
+.article-meta { font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap; }
+.article-body p { margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.8; }
+.article-body h2 { font-family:var(--serif);font-size:1.4rem;margin:2.5rem 0 1rem;line-height:1.3; }
+.article-body ul { margin:0 0 1.5rem 1.5rem; }
+.article-body ul li { font-size:1.0625rem;color:#2a2a28;line-height:1.8;margin-bottom:0.5rem; }
+.callout { background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted); }
+.article-body table { width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.875rem; }
+.article-body th { background:var(--faint);padding:0.6rem 0.75rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border);font-size:0.8rem; }
+.article-body td { padding:0.6rem 0.75rem;border-bottom:1px solid var(--border);vertical-align:top; }
+.article-body tr:last-child td { border-bottom:none; }
+.chart-box { background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0; }
+.chart-label { font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem; }
+.chart-caption { font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic; }
+.legend { display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:0.75rem; }
+.legend-item { display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted); }
+.legend-line { width:20px;height:2.5px;flex-shrink:0;border-radius:2px; }
+.byline { margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted); }
+.byline strong { color:var(--ink); }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem; }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){nav{display:none;}.footer-inner{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo">The<span> Margin</span></a>
+  <nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+  <a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+
+<div class="article-wrap">
+  <a href="index.html" class="back-link">← Back to home</a>
+  <div class="article-tag">Personal Finance</div>
+  <h1>I'm applying to college right now. <em>Is it still worth it?</em></h1>
+  <div class="article-meta"><span>Tobias Velez</span><span>·</span><span>March 2026</span><span>·</span><span>7 min read</span></div>
+
+  <div class="article-body">
+    <p>When I first looked up tuition prices this year, I genuinely thought it was a typo. $58,000 per year — including room and board — is the average for a private four-year college in 2026. Even many public schools are over $30,000 a year. I'm at the point where this number stops being abstract and starts being very real. So I decided to actually look at the economics of it.</p>
+
+    <h2>How we got here</h2>
+    <p>College costs have risen about eight times faster than general inflation since 1980. That's not a rounding error — it's a structural trend. A degree that cost the equivalent of $10,000 in 1980 now costs closer to $58,000. Economists point to three main causes.</p>
+    <p>First, the federal student loan system made it easy for students to borrow more, which made it easy for colleges to charge more. Second, the U.S. News rankings race pushed schools to compete on amenities — nicer dorms, bigger gyms, fancier student centers — instead of academic value. Third, the number of non-teaching administrators at universities ballooned starting in the 1990s. More staff, same number of students, higher costs per person.</p>
+
+    <!-- CHART 1: Tuition vs inflation line chart -->
+    <div class="chart-box">
+      <div class="chart-label">Average private college tuition vs. general inflation, 1980–2026 (indexed, 1980 = 100)</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-line" style="background:#c0392b;"></div>College tuition</div>
+        <div class="legend-item"><div class="legend-line" style="background:#1a1a18;opacity:0.5"></div>General inflation (CPI)</div>
+      </div>
+      <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <line x1="55" y1="10" x2="55" y2="185" stroke="#c8c5be" stroke-width="1"/>
+        <line x1="55" y1="185" x2="530" y2="185" stroke="#c8c5be" stroke-width="1"/>
+        <line x1="55" y1="145" x2="530" y2="145" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="55" y1="105" x2="530" y2="105" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="55" y1="65" x2="530" y2="65" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="55" y1="25" x2="530" y2="25" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <!-- y: 100=145, 300=105, 500=65, 800=25  scale approx -->
+        <text x="48" y="188" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">100</text>
+        <text x="48" y="148" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">300</text>
+        <text x="48" y="108" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">500</text>
+        <text x="48" y="68" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">700</text>
+        <text x="48" y="28" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">900</text>
+        <!-- x: 1980=75, 1990=145, 2000=215, 2010=320, 2020=430, 2026=500 -->
+        <!-- Tuition: 100→220→380→560→740→880 (8x over 46yrs) mapped to y -->
+        <!-- y = 185 - ((val-100)/800 * 175) -->
+        <polyline points="75,185 145,160 215,130 320,97 430,67 500,40"
+          stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+        <polygon points="75,185 145,160 215,130 320,97 430,67 500,40 500,185"
+          fill="#c0392b" opacity="0.06"/>
+        <!-- CPI: 100→163→212→275→320→360 (3.6x) -->
+        <polyline points="75,185 145,173 215,163 320,150 430,141 500,134"
+          stroke="#1a1a18" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6,3" opacity="0.6"/>
+        <!-- labels at end -->
+        <text x="505" y="43" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">Tuition ×8</text>
+        <text x="505" y="137" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">CPI ×3.6</text>
+        <!-- x labels -->
+        <text x="75" y="202" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">1980</text>
+        <text x="145" y="202" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">1990</text>
+        <text x="215" y="202" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2000</text>
+        <text x="320" y="202" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2010</text>
+        <text x="430" y="202" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2020</text>
+        <text x="500" y="202" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2026</text>
+      </svg>
+      <div class="chart-caption">Tuition has risen roughly 8x since 1980, while general inflation rose about 3.6x over the same period. The gap between these two lines is what economists call the "higher education premium" — and it's entirely paid by students and families.</div>
+    </div>
+
+    <div class="callout">The average student graduates with about $37,000 in loan debt. At a typical interest rate, that's roughly $370/month for 10 years — before rent, food, car payments, or anything else in your budget.</div>
+
+    <h2>Does it actually pay off?</h2>
+    <p>Despite the costs, a college degree still pays off on average. People with bachelor's degrees earn about 65% more over their lifetime than those with only a high school diploma. But that average hides enormous variation depending on what you study and where you go.</p>
+
+    <!-- CHART 2: Lifetime earnings boost and payback by major -->
+    <div class="chart-box">
+      <div class="chart-label">Estimated lifetime earnings boost vs. payback period — by major</div>
+      <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <line x1="55" y1="10" x2="55" y2="195" stroke="#c8c5be" stroke-width="1"/>
+        <line x1="55" y1="195" x2="560" y2="195" stroke="#c8c5be" stroke-width="1"/>
+        <line x1="55" y1="155" x2="560" y2="155" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="55" y1="115" x2="560" y2="115" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="55" y1="75" x2="560" y2="75" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="55" y1="35" x2="560" y2="35" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <!-- y: $0=195, $300k=155, $600k=115, $900k=75, $1.2M=35 → scale: $300k=40px -->
+        <text x="48" y="198" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$0</text>
+        <text x="48" y="158" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$300k</text>
+        <text x="48" y="118" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$600k</text>
+        <text x="48" y="78" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$900k</text>
+        <text x="48" y="38" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$1.2M</text>
+        <!-- Engineering: $1.2M → 160px bar, payback ~5yrs (green tint) -->
+        <rect x="72" y="35" width="65" height="160" fill="#c0392b" opacity="0.90" rx="3"/>
+        <text x="104" y="31" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">$1.2M</text>
+        <text x="104" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Engineering</text>
+        <text x="104" y="225" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">~5yr payback</text>
+        <!-- CS: $950k → 127px -->
+        <rect x="162" y="68" width="65" height="127" fill="#c0392b" opacity="0.78" rx="3"/>
+        <text x="194" y="64" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">$950k</text>
+        <text x="194" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Comp Sci</text>
+        <text x="194" y="225" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">~6yr payback</text>
+        <!-- Business: $700k → 93px -->
+        <rect x="252" y="102" width="65" height="93" fill="#c0392b" opacity="0.62" rx="3"/>
+        <text x="284" y="98" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67" font-weight="500">$700k</text>
+        <text x="284" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Business</text>
+        <text x="284" y="225" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">~8yr payback</text>
+        <!-- Education: $250k → 33px -->
+        <rect x="342" y="162" width="65" height="33" fill="#c0392b" opacity="0.40" rx="3"/>
+        <text x="374" y="158" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">$250k</text>
+        <text x="374" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Education</text>
+        <text x="374" y="225" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">~14yr payback</text>
+        <!-- Arts/Humanities: $150k → 20px -->
+        <rect x="432" y="175" width="65" height="20" fill="#c0392b" opacity="0.25" rx="3"/>
+        <text x="464" y="171" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$150k</text>
+        <text x="464" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Humanities</text>
+        <text x="464" y="225" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">20+ yr payback</text>
+      </svg>
+      <div class="chart-caption">Engineering and computer science degrees pay back quickly relative to their cost. Humanities degrees can still be worthwhile — but the financial math takes much longer to work out, which matters a lot if you're borrowing to fund them.</div>
+    </div>
+
+    <h2>Cheaper paths that still work</h2>
+    <p>The expensive private school is not the only option, and it's often not even the best one. Here are routes that genuinely work:</p>
+    <ul>
+      <li><strong>Community college + transfer:</strong> Average tuition is around $4,000 per year. Finish your general requirements locally, then transfer to a state university. You save tens of thousands and end up with the same degree.</li>
+      <li><strong>In-state public universities:</strong> Usually cost roughly half of private schools, and for most careers the name on the diploma matters far less than people assume.</li>
+      <li><strong>Scholarships and grants:</strong> Over $120 billion in financial aid is available annually. A significant portion goes unclaimed because students don't apply. The Free Application for Federal Student Aid (FAFSA) is the starting point — fill it out even if you think you won't qualify.</li>
+      <li><strong>Negotiating your aid package:</strong> Most people don't know this, but financial aid offers are negotiable. If another school offers you more, you can often ask your first-choice school to match it.</li>
+    </ul>
+
+    <h2>My take</h2>
+    <p>I still think college is worth it — but only if you pick smart. The question isn't "is college worth it?" It's "which college, which major, at what total price?" A degree that costs $80,000 total and leads to a stable, well-paying career is a fundamentally different financial decision than a $250,000 diploma in a field with a saturated job market. Look at outcomes data, not school rankings. Talk to people actually working in the careers you're considering. And run the numbers before you commit to anything.</p>
+    <p>The fact that we're expected to make a $200,000 decision at 17 with minimal financial education is, honestly, its own economics problem worth writing about.</p>
+
+    <div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin<br><small>Sources: College Board, NCES, Bureau of Labor Statistics, Federal Reserve Bank of New York</small></div>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <a href="index.html" class="footer-logo">The Margin</a>
+  <div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+  <div>© 2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer>
+</body></html>
