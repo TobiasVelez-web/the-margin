@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; } .logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.article-wrap { max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem; }
+.back-link { font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem; }
+.back-link:hover { color:var(--ink); }
+.article-tag { font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem; }
+h1 { font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem; } h1 em { font-style:italic; }
+.article-meta { font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap; }
+.article-body p { margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.8; }
+.article-body h2 { font-family:var(--serif);font-size:1.4rem;margin:2.5rem 0 1rem;line-height:1.3; }
+.article-body ul { margin:0 0 1.5rem 1.5rem; }
+.article-body ul li { font-size:1.0625rem;color:#2a2a28;line-height:1.8;margin-bottom:0.5rem; }
+.callout { background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted); }
+.article-body table { width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.875rem; }
+.article-body th { background:var(--faint);padding:0.6rem 0.75rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border);font-size:0.8rem; }
+.article-body td { padding:0.6rem 0.75rem;border-bottom:1px solid var(--border); }
+.article-body tr:last-child td { border-bottom:none; }
+.chart-box { background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0; }
+.chart-label { font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem; }
+.chart-caption { font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic; }
+.legend { display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:0.75rem; }
+.legend-item { display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted); }
+.legend-dot { width:10px;height:10px;border-radius:2px;flex-shrink:0; }
+.legend-line { width:20px;height:2.5px;flex-shrink:0;border-radius:2px; }
+.byline { margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted); }
+.byline strong { color:var(--ink); }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem; }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){nav{display:none;}.footer-inner{flex-direction:column;align-items:flex-start;}}
+</style></head><body>
+<header><div class="header-inner">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+<title>The Stock Market Feels Abstract — The Margin</title>
+<div class="article-wrap">
+<a href="index.html" class="back-link">Back to home</a>
+<div class="article-tag">Personal Finance</div>
+<h1>The stock market feels abstract. <em>Here's why I still pay attention.</em></h1>
+<div class="article-meta"><span>Tobias Velez</span><span>·</span><span>February 2026</span><span>·</span><span>5 min read</span></div>
+<div class="article-body">
+
+<p>Every day some alert pops up telling you the S&P 500 went up or down. Most high schoolers ignore it. I used to too. Then I started paying attention and realized the market isn't just something rich people watch on TV. It's actually one of the few tools regular people have to build wealth over time, and understanding it earlier makes a real difference.</p>
+
+<h2>What you actually own when you buy a stock</h2>
+<p>A stock is a small ownership stake in a company. Buy one share of Apple and you own a tiny piece of its future profits. If Apple keeps growing, that piece becomes more valuable. If they make bad decisions and lose customers, it shrinks. That's it. People lose sight of this because the numbers move so fast it starts to feel like gambling. It's not. Behind every ticker is a real business making real things for real people.</p>
+
+<h2>Why prices swing so much</h2>
+<p>Prices react to expectations, not just current results. A company can post its best quarter ever and still see its stock drop if investors were expecting something even better. Interest rates, inflation, elections, new technology, all of it feeds into what investors think the future looks like. Day to day it feels chaotic. Over decades, markets track actual economic growth pretty closely. The key distinction is time horizon.</p>
+
+<h2>The compounding argument</h2>
+<p>The S&P 500 has returned about 7% per year on average, adjusted for inflation, over the past century. That sounds boring until you run the math over 30 years.</p>
+
+<div class="chart-box">
+<div class="chart-label">S&P 500 total return index, 1996-2026 (1996 = 100)</div>
+<svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+<line x1="55" y1="10" x2="55" y2="200" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="200" x2="535" y2="200" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="156" x2="535" y2="156" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="112" x2="535" y2="112" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="68" x2="535" y2="68" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="24" x2="535" y2="24" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<text x="48" y="203" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">0</text>
+<text x="48" y="159" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">100</text>
+<text x="48" y="115" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">200</text>
+<text x="48" y="71" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">300</text>
+<text x="48" y="27" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">400</text>
+<polygon points="80,156 160,141 240,120 320,119 400,91 480,18 535,0 535,200 80,200" fill="#c0392b" opacity="0.06"/>
+<polyline points="80,156 160,141 240,120 320,119 400,91 480,18 535,0" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80" cy="156" r="4" fill="#c0392b"/>
+<circle cx="160" cy="141" r="4" fill="#c0392b"/>
+<circle cx="240" cy="120" r="4" fill="#c0392b"/>
+<circle cx="320" cy="119" r="4" fill="#c0392b"/>
+<circle cx="400" cy="91" r="4" fill="#c0392b"/>
+<circle cx="480" cy="18" r="4" fill="#c0392b"/>
+<circle cx="535" cy="0" r="4" fill="#c0392b"/>
+<text x="163" y="108" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">dot-com</text>
+<text x="243" y="88" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">2008</text>
+<text x="403" y="68" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">COVID</text>
+<text x="480" y="32" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">412</text>
+<text x="535" y="14" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">455</text>
+<text x="80" y="217" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">1996</text>
+<text x="240" y="217" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2006</text>
+<text x="400" y="217" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2016</text>
+<text x="535" y="217" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2026</text>
+</svg>
+<div class="chart-caption">Three major crashes, all visible. The market recovered from every single one. A patient investor who stayed in from 1996 to 2026 saw their money grow 4.55x in real terms. No stock picking, no timing, just staying invested.</div>
+</div>
+
+<p>,000 in an S&P 500 index fund in 1996 is worth about ,550 today after inflation. No trading, no research, no skill required. Just time. That's the whole argument for index funds.</p>
+
+<h2>Why index funds beat stock picking</h2>
+<p>Most professional fund managers underperform the market average over 10-year periods. This is well documented and honestly kind of embarrassing for the industry. The people whose entire job is picking stocks can't consistently beat just owning everything. An index fund does exactly that. It holds a small piece of every company in an index, charges almost nothing in fees, and historically outperforms most active strategies. For someone starting out it's the obvious move.</p>
+
+<h2>The part people don't talk about enough</h2>
+<p>Markets don't distribute gains equally. When the S&P 500 goes up, the people who own the most stocks benefit the most. When crashes happen, workers lose jobs even if they never owned a single share. That asymmetry is real and it matters for understanding inequality. I'm not saying ignore it. I'm saying that ignoring the stock market entirely doesn't make its influence disappear. Understanding how it works, and eventually using it, is part of being economically literate.</p>
+
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin</div>
+</div></div>
+<footer><div class="footer-inner">
+<a href="index.html" class="footer-logo">The Margin</a>
+<div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer></body></html>

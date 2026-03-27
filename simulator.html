@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Simulator — The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:#1a1a18; --muted:#6b6b67; --faint:#f2f0eb; --border:#e0ddd6;
+  --accent:#c0392b; --white:#ffffff;
+  --serif:"Playfair Display",Georgia,serif; --sans:"DM Sans",system-ui,sans-serif;
+  --green:#27ae60; --yellow:#f39c12; --blue:#2980b9; --purple:#8e44ad; --gray:#7f8c8d;
+}
+body { font-family:var(--sans); background:var(--faint); color:var(--ink); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; min-height:100vh; }
+a { color:inherit; text-decoration:none; } a:hover { color:var(--accent); }
+
+/* HEADER */
+header { border-bottom:1px solid var(--border); padding:0 2rem; background:rgba(255,255,255,0.96); backdrop-filter:blur(6px); position:sticky; top:0; z-index:100; }
+.header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:64px; gap:2rem; }
+.logo { font-family:var(--serif); font-size:1.5rem; font-weight:600; letter-spacing:-0.02em; }
+.logo span { color:var(--accent); }
+nav { display:flex; gap:2rem; font-size:0.875rem; font-weight:500; color:var(--muted); }
+.header-cta { background:var(--ink); color:var(--white)!important; font-size:0.8125rem; font-weight:500; padding:0.45rem 1.1rem; border-radius:999px; transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+
+/* PAGE */
+.page { max-width:1200px; margin:0 auto; padding:2rem; }
+.page-title { font-family:var(--serif); font-size:2rem; letter-spacing:-0.02em; margin-bottom:0.5rem; }
+.page-title em { font-style:italic; color:var(--accent); }
+.page-sub { color:var(--muted); font-size:0.9375rem; margin-bottom:2rem; }
+
+/* GRID */
+.sim-grid { display:grid; grid-template-columns:340px 1fr; gap:1.5rem; align-items:start; }
+
+/* PANEL */
+.panel { background:var(--white); border-radius:10px; border:1px solid var(--border); padding:1.5rem; }
+.panel-title { font-size:0.72rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:1.25rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border); }
+
+/* INPUTS */
+.input-group { margin-bottom:1.25rem; }
+.input-label { font-size:0.8125rem; font-weight:500; color:var(--ink); margin-bottom:0.4rem; display:flex; justify-content:space-between; align-items:center; }
+.input-val { color:var(--accent); font-weight:500; }
+input[type="range"] { width:100%; height:4px; border-radius:2px; background:var(--border); outline:none; cursor:pointer; appearance:none; -webkit-appearance:none; }
+input[type="range"]::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; border:2px solid white; box-shadow:0 0 0 2px var(--accent); }
+input[type="number"] { width:100%; border:1px solid var(--border); border-radius:6px; padding:0.5rem 0.75rem; font-family:var(--sans); font-size:0.875rem; color:var(--ink); outline:none; }
+input[type="number"]:focus { border-color:var(--ink); }
+
+/* ALLOCATION */
+.alloc-row { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem; }
+.alloc-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.alloc-name { font-size:0.8125rem; flex:1; }
+.alloc-pct { font-size:0.8125rem; font-weight:500; min-width:36px; text-align:right; }
+.alloc-bar-wrap { flex:2; height:6px; background:var(--faint); border-radius:3px; overflow:hidden; }
+.alloc-bar { height:100%; border-radius:3px; transition:width 0.3s; }
+
+/* PRESET BUTTONS */
+.preset-row { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem; }
+.preset-btn { font-size:0.75rem; font-weight:500; padding:0.3rem 0.8rem; border-radius:999px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+.preset-btn:hover, .preset-btn.active { background:var(--ink); color:var(--white); border-color:var(--ink); }
+
+/* RUN BUTTON */
+.run-btn { width:100%; background:var(--accent); color:var(--white); border:none; border-radius:8px; padding:0.875rem; font-family:var(--sans); font-size:0.9375rem; font-weight:500; cursor:pointer; transition:background 0.15s; margin-top:0.5rem; }
+.run-btn:hover { background:#a93226; }
+.run-btn:disabled { background:var(--border); color:var(--muted); cursor:not-allowed; }
+
+/* STATS */
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
+.stat-card { background:var(--white); border-radius:10px; border:1px solid var(--border); padding:1rem; text-align:center; }
+.stat-label { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.4rem; }
+.stat-val { font-family:var(--serif); font-size:1.5rem; font-weight:600; }
+.stat-val.up { color:var(--green); }
+.stat-val.down { color:var(--accent); }
+
+/* CHART */
+.chart-wrap { background:var(--white); border-radius:10px; border:1px solid var(--border); padding:1.5rem; margin-bottom:1.5rem; }
+.chart-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+.chart-title-sm { font-size:0.72rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); }
+.year-badge { font-size:0.875rem; font-weight:500; color:var(--accent); background:#fdf0ee; padding:0.2rem 0.75rem; border-radius:999px; }
+#mainChart { width:100%; display:block; }
+
+/* EVENTS TICKER */
+.event-box { background:var(--ink); color:var(--white); border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.5rem; min-height:56px; display:flex; align-items:center; gap:0.75rem; }
+.event-icon { font-size:1.25rem; flex-shrink:0; }
+.event-text { font-size:0.875rem; line-height:1.5; }
+.event-text strong { color:#f9ca74; }
+
+/* BREAKDOWN */
+.breakdown-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; }
+.breakdown-card { background:var(--white); border-radius:10px; border:1px solid var(--border); padding:1rem; }
+.breakdown-name { font-size:0.75rem; font-weight:500; color:var(--muted); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em; }
+.breakdown-val { font-size:1.1rem; font-weight:600; margin-bottom:0.25rem; }
+.breakdown-ret { font-size:0.8rem; }
+.breakdown-ret.pos { color:var(--green); }
+.breakdown-ret.neg { color:var(--accent); }
+
+/* SPEED CONTROL */
+.speed-row { display:flex; gap:0.5rem; align-items:center; margin-top:0.75rem; }
+.speed-label { font-size:0.8rem; color:var(--muted); }
+.speed-btn { font-size:0.75rem; padding:0.25rem 0.6rem; border-radius:999px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; }
+.speed-btn.active { background:var(--ink); color:var(--white); border-color:var(--ink); }
+
+/* LEGEND */
+.legend { display:flex; gap:1rem; flex-wrap:wrap; margin-top:0.75rem; }
+.legend-item { display:flex; align-items:center; gap:0.4rem; font-size:0.75rem; color:var(--muted); }
+.legend-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+@media(max-width:900px) {
+  .sim-grid { grid-template-columns:1fr; }
+  .stats-grid { grid-template-columns:repeat(2,1fr); }
+  .breakdown-grid { grid-template-columns:repeat(2,1fr); }
+  nav { display:none; }
+}
+
+footer { border-top:1px solid var(--border); padding:1.5rem 2rem; font-size:0.8rem; color:var(--muted); margin-top:2rem; text-align:center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">The<span> Margin</span></a>
+    <nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+    <a href="index.html#newsletter" class="header-cta">Subscribe</a>
+  </div>
+</header>
+
+<div class="page">
+  <h1 class="page-title">Portfolio <em>Simulator</em></h1>
+  <p class="page-sub">Build a portfolio, set your starting amount, and watch 30 years of market history play out — crashes, recoveries, and all. See how different allocations perform over time.</p>
+
+  <div class="sim-grid">
+    <!-- LEFT: Controls -->
+    <div>
+      <div class="panel">
+        <div class="panel-title">Your Setup</div>
+
+        <div class="input-group">
+          <div class="input-label">Starting investment <span class="input-val" id="startVal">$10,000</span></div>
+          <input type="range" id="startSlider" min="1000" max="100000" step="1000" value="10000" oninput="updateStart()">
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">Monthly contribution <span class="input-val" id="monthlyVal">$200</span></div>
+          <input type="range" id="monthlySlider" min="0" max="2000" step="50" value="200" oninput="updateMonthly()">
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">Time horizon <span class="input-val" id="yearsVal">30 years</span></div>
+          <input type="range" id="yearsSlider" min="5" max="40" step="1" value="30" oninput="updateYears()">
+        </div>
+
+        <div class="panel-title" style="margin-top:1.25rem;">Allocation Presets</div>
+        <div class="preset-row">
+          <button class="preset-btn" onclick="setPreset('aggressive')">Aggressive</button>
+          <button class="preset-btn active" onclick="setPreset('balanced')">Balanced</button>
+          <button class="preset-btn" onclick="setPreset('conservative')">Conservative</button>
+          <button class="preset-btn" onclick="setPreset('crypto')">Crypto heavy</button>
+          <button class="preset-btn" onclick="setPreset('custom')">Custom</button>
+        </div>
+
+        <div class="panel-title">Portfolio Allocation</div>
+
+        <div class="alloc-row">
+          <div class="alloc-dot" style="background:#e74c3c;"></div>
+          <div class="alloc-name">Stocks (S&P 500)</div>
+          <div class="alloc-bar-wrap"><div class="alloc-bar" id="bar-stocks" style="background:#e74c3c;width:60%"></div></div>
+          <div class="alloc-pct" id="pct-stocks">60%</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-dot" style="background:#3498db;"></div>
+          <div class="alloc-name">Bonds</div>
+          <div class="alloc-bar-wrap"><div class="alloc-bar" id="bar-bonds" style="background:#3498db;width:20%"></div></div>
+          <div class="alloc-pct" id="pct-bonds">20%</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-dot" style="background:#27ae60;"></div>
+          <div class="alloc-name">Real Estate</div>
+          <div class="alloc-bar-wrap"><div class="alloc-bar" id="bar-real-estate" style="background:#27ae60;width:10%"></div></div>
+          <div class="alloc-pct" id="pct-real-estate">10%</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-dot" style="background:#f39c12;"></div>
+          <div class="alloc-name">Crypto</div>
+          <div class="alloc-bar-wrap"><div class="alloc-bar" id="bar-crypto" style="background:#f39c12;width:5%"></div></div>
+          <div class="alloc-pct" id="pct-crypto">5%</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-dot" style="background:#95a5a6;"></div>
+          <div class="alloc-name">Cash / Savings</div>
+          <div class="alloc-bar-wrap"><div class="alloc-bar" id="bar-cash" style="background:#95a5a6;width:5%"></div></div>
+          <div class="alloc-pct" id="pct-cash">5%</div>
+        </div>
+
+        <!-- Custom sliders (shown only in custom mode) -->
+        <div id="customSliders" style="display:none;margin-top:1rem;">
+          <div class="input-group">
+            <div class="input-label">Stocks <span class="input-val" id="cs-stocks-val">60%</span></div>
+            <input type="range" id="cs-stocks" min="0" max="100" value="60" oninput="updateCustom()">
+          </div>
+          <div class="input-group">
+            <div class="input-label">Bonds <span class="input-val" id="cs-bonds-val">20%</span></div>
+            <input type="range" id="cs-bonds" min="0" max="100" value="20" oninput="updateCustom()">
+          </div>
+          <div class="input-group">
+            <div class="input-label">Real Estate <span class="input-val" id="cs-re-val">10%</span></div>
+            <input type="range" id="cs-re" min="0" max="100" value="10" oninput="updateCustom()">
+          </div>
+          <div class="input-group">
+            <div class="input-label">Crypto <span class="input-val" id="cs-crypto-val">5%</span></div>
+            <input type="range" id="cs-crypto" min="0" max="100" value="5" oninput="updateCustom()">
+          </div>
+          <div class="input-group">
+            <div class="input-label">Cash <span class="input-val" id="cs-cash-val">5%</span></div>
+            <input type="range" id="cs-cash" min="0" max="100" value="5" oninput="updateCustom()">
+          </div>
+          <div style="font-size:0.8rem;color:var(--muted);text-align:center;" id="totalPct">Total: 100%</div>
+        </div>
+
+        <button class="run-btn" id="runBtn" onclick="runSimulation()">Run Simulation</button>
+        <div class="speed-row">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn active" onclick="setSpeed(800, this)">Slow</button>
+          <button class="speed-btn" onclick="setSpeed(300, this)">Normal</button>
+          <button class="speed-btn" onclick="setSpeed(80, this)">Fast</button>
+          <button class="speed-btn" onclick="setSpeed(10, this)">Instant</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Results -->
+    <div>
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Portfolio Value</div>
+          <div class="stat-val" id="statValue">$10,000</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Gain</div>
+          <div class="stat-val up" id="statGain">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Return</div>
+          <div class="stat-val up" id="statReturn">0%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Invested</div>
+          <div class="stat-val" id="statInvested">$10,000</div>
+        </div>
+      </div>
+
+      <!-- Event ticker -->
+      <div class="event-box" id="eventBox">
+        <div class="event-icon">📊</div>
+        <div class="event-text">Set your allocation and hit <strong>Run Simulation</strong> to watch 30 years of market history play out in real time.</div>
+      </div>
+
+      <!-- Main chart -->
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <div class="chart-title-sm">Portfolio value over time</div>
+          <div class="year-badge" id="yearBadge">Year 0</div>
+        </div>
+        <svg id="mainChart" viewBox="0 0 700 260" style="width:100%;display:block;">
+          <line x1="50" y1="10" x2="50" y2="230" stroke="#e0ddd6" stroke-width="1"/>
+          <line x1="50" y1="230" x2="690" y2="230" stroke="#e0ddd6" stroke-width="1"/>
+          <text x="370" y="130" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14" fill="#c8c5be">Run the simulation to see your chart</text>
+        </svg>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div>Portfolio value</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e0ddd6;border:1px solid #aaa;"></div>Amount invested</div>
+        </div>
+      </div>
+
+      <!-- Asset breakdown -->
+      <div class="breakdown-grid">
+        <div class="breakdown-card">
+          <div class="breakdown-name" style="color:#e74c3c;">Stocks</div>
+          <div class="breakdown-val" id="bd-stocks">$6,000</div>
+          <div class="breakdown-ret pos" id="bdr-stocks">+0%</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-name" style="color:#3498db;">Bonds</div>
+          <div class="breakdown-val" id="bd-bonds">$2,000</div>
+          <div class="breakdown-ret pos" id="bdr-bonds">+0%</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-name" style="color:#27ae60;">Real Estate</div>
+          <div class="breakdown-val" id="bd-re">$1,000</div>
+          <div class="breakdown-ret pos" id="bdr-re">+0%</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-name" style="color:#f39c12;">Crypto</div>
+          <div class="breakdown-val" id="bd-crypto">$500</div>
+          <div class="breakdown-ret pos" id="bdr-crypto">+0%</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-name" style="color:#95a5a6;">Cash</div>
+          <div class="breakdown-val" id="bd-cash">$500</div>
+          <div class="breakdown-ret pos" id="bdr-cash">+0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html">← Back to The Margin</a> &nbsp;·&nbsp;
+  Returns are based on historical averages and simulated market events. This is an educational tool, not financial advice.
+</footer>
+
+<script>
+// ── State ──
+let allocation = { stocks:60, bonds:20, re:10, crypto:5, cash:5 };
+let simSpeed = 800;
+let simInterval = null;
+let isRunning = false;
+
+const presets = {
+  aggressive:  { stocks:80, bonds:5,  re:5,  crypto:8,  cash:2  },
+  balanced:    { stocks:60, bonds:20, re:10, crypto:5,  cash:5  },
+  conservative:{ stocks:30, bonds:50, re:10, crypto:0,  cash:10 },
+  crypto:      { stocks:40, bonds:5,  re:5,  crypto:45, cash:5  },
+};
+
+// ── Historical annual returns (approximate) ──
+// Each year: {stocks, bonds, re, crypto, cash, event}
+const yearData = [
+  {s:0.28,  b:0.09, r:0.12, c:null,  k:0.05, ev:null},                                    // 1995
+  {s:0.23,  b:0.03, r:0.15, c:null,  k:0.05, ev:null},
+  {s:0.33,  b:0.10, r:0.17, c:null,  k:0.05, ev:"🚀 Dot-com boom begins. Tech stocks surge."},
+  {s:0.28,  b:0.09, r:0.15, c:null,  k:0.05, ev:null},
+  {s:0.21,  b:0.05, r:0.11, c:null,  k:0.05, ev:"📈 S&P 500 peaks. Nasdaq at all-time highs."},
+  {s:-0.09, b:0.08, r:0.12, c:null,  k:0.04, ev:"💥 Dot-com crash begins. Tech loses 40%."},
+  {s:-0.12, b:0.09, r:0.09, c:null,  k:0.03, ev:"📉 9/11. Markets close for a week. Recession."},
+  {s:-0.22, b:0.10, r:0.05, c:null,  k:0.03, ev:"📉 Markets bottom out. Dot-com bust ends."},
+  {s:0.29,  b:0.04, r:0.07, c:0.50,  k:0.03, ev:"🔄 Recovery begins. Real estate booms."},
+  {s:0.11,  b:0.04, r:0.14, c:1.50,  k:0.04, ev:"🏠 Housing bubble inflating. Bitcoin launched."},
+  {s:0.05,  b:0.02, r:0.12, c:2.00,  k:0.04, ev:"📊 Economy humming. Real estate still hot."},
+  {s:0.16,  b:0.07, r:0.05, c:1.00,  k:0.05, ev:"⚠️ Subprime mortgage warnings begin."},
+  {s:0.05,  b:0.07, r:-0.08,c:0.30,  k:0.05, ev:"⚠️ Housing market starts cracking."},
+  {s:-0.37, b:0.08, r:-0.39,c:-0.80, k:0.03, ev:"🔥 2008 Financial Crisis. Lehman Brothers collapses. Worst crash since Great Depression."},
+  {s:0.26,  b:0.06, r:-0.05,c:0.50,  k:0.03, ev:"🔄 Recovery starts. Fed cuts rates to zero."},
+  {s:0.15,  b:0.07, r:0.04, c:3.00,  k:0.03, ev:"📈 Markets recover. Bitcoin hits $1."},
+  {s:0.02,  b:0.08, r:0.08, c:15.00, k:0.03, ev:"💰 Bitcoin surges 1,500%. European debt crisis."},
+  {s:0.16,  b:0.04, r:0.11, c:5.00,  k:0.03, ev:"📊 Steady growth. Real estate recovering."},
+  {s:0.32,  b:-0.02,r:0.12, c:100.0, k:0.03, ev:"🚀 Bitcoin goes from $13 to $1,100. S&P best year since '97."},
+  {s:0.14,  b:0.06, r:0.13, c:-0.58, k:0.03, ev:"📉 Bitcoin crashes 58%. Stocks steady."},
+  {s:0.01,  b:0.05, r:0.10, c:0.35,  k:0.03, ev:"⚠️ Oil price crash. Emerging markets struggle."},
+  {s:0.12,  b:0.03, r:0.09, c:1.25,  k:0.04, ev:"📊 Steady markets. Election year uncertainty."},
+  {s:0.22,  b:0.03, r:0.11, c:13.00, k:0.04, ev:"🚀 Bitcoin from $1k to $14k. Tech stocks boom."},
+  {s:-0.04, b:0.00, r:0.08, c:-0.73, k:0.04, ev:"📉 Bitcoin loses 73%. Trade war with China."},
+  {s:0.31,  b:0.09, r:0.12, c:0.92,  k:0.05, ev:"📈 Strong year. Fed signals rate patience."},
+  {s:-0.19, b:0.08, r:-0.10,c:-0.68, k:0.03, ev:"🦠 COVID-19. Fastest 30% crash in history. Fed prints trillions."},
+  {s:0.28,  b:0.00, r:0.41, c:3.00,  k:0.03, ev:"🚀 Massive recovery. Bitcoin hits $29k. Real estate explodes."},
+  {s:0.27,  b:-0.02,r:0.25, c:0.60,  k:0.03, ev:"📈 Everything rallies. Meme stocks. NFTs. Inflation begins."},
+  {s:-0.19, b:-0.13,r:0.05, c:-0.65, k:0.04, ev:"🔥 Inflation hits 40-yr high. Fed raises rates aggressively. Crypto winter."},
+  {s:0.26,  b:0.05, r:0.08, c:1.56,  k:0.05, ev:"🔄 Recovery. AI boom begins. Bitcoin ETF approved."},
+  {s:0.23,  b:0.04, r:0.06, c:0.45,  k:0.05, ev:"📊 Stable growth. AI reshapes economy. Rates start falling."},
+];
+
+// ── Helpers ──
+const fmt = v => '$' + Math.round(v).toLocaleString();
+const fmtPct = v => (v >= 0 ? '+' : '') + (v * 100).toFixed(1) + '%';
+
+function getInputs() {
+  return {
+    start: +document.getElementById('startSlider').value,
+    monthly: +document.getElementById('monthlySlider').value,
+    years: +document.getElementById('yearsSlider').value,
+  };
+}
+
+function updateStart() {
+  const v = +document.getElementById('startSlider').value;
+  document.getElementById('startVal').textContent = fmt(v);
+}
+function updateMonthly() {
+  const v = +document.getElementById('monthlySlider').value;
+  document.getElementById('monthlyVal').textContent = fmt(v) + '/mo';
+}
+function updateYears() {
+  const v = +document.getElementById('yearsSlider').value;
+  document.getElementById('yearsVal').textContent = v + ' years';
+}
+
+function setSpeed(ms, btn) {
+  simSpeed = ms;
+  document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setPreset(name) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  if (name === 'custom') {
+    document.getElementById('customSliders').style.display = 'block';
+    updateCustom();
+  } else {
+    document.getElementById('customSliders').style.display = 'none';
+    const p = presets[name];
+    allocation = { stocks:p.stocks, bonds:p.bonds, re:p.re, crypto:p.crypto, cash:p.cash };
+    updateAllocDisplay();
+  }
+}
+
+function updateCustom() {
+  const s = +document.getElementById('cs-stocks').value;
+  const b = +document.getElementById('cs-bonds').value;
+  const r = +document.getElementById('cs-re').value;
+  const c = +document.getElementById('cs-crypto').value;
+  const k = +document.getElementById('cs-cash').value;
+  const total = s + b + r + c + k;
+  document.getElementById('cs-stocks-val').textContent = s + '%';
+  document.getElementById('cs-bonds-val').textContent = b + '%';
+  document.getElementById('cs-re-val').textContent = r + '%';
+  document.getElementById('cs-crypto-val').textContent = c + '%';
+  document.getElementById('cs-cash-val').textContent = k + '%';
+  document.getElementById('totalPct').textContent = 'Total: ' + total + '%';
+  document.getElementById('totalPct').style.color = total === 100 ? 'var(--green)' : 'var(--accent)';
+  if (total > 0) {
+    allocation = { stocks:s/total*100, bonds:b/total*100, re:r/total*100, crypto:c/total*100, cash:k/total*100 };
+    updateAllocDisplay();
+  }
+}
+
+function updateAllocDisplay() {
+  const keys = ['stocks','bonds','real-estate','crypto','cash'];
+  const vals = [allocation.stocks, allocation.bonds, allocation.re, allocation.crypto, allocation.cash];
+  keys.forEach((k, i) => {
+    const pct = Math.round(vals[i]);
+    document.getElementById('bar-' + k).style.width = pct + '%';
+    document.getElementById('pct-' + k).textContent = pct + '%';
+  });
+}
+
+// ── Simulation ──
+function runSimulation() {
+  if (isRunning) {
+    clearInterval(simInterval);
+    isRunning = false;
+    document.getElementById('runBtn').textContent = 'Run Simulation';
+    return;
+  }
+
+  const { start, monthly, years } = getInputs();
+  const alloc = {
+    stocks: allocation.stocks / 100,
+    bonds:  allocation.bonds  / 100,
+    re:     allocation.re     / 100,
+    crypto: allocation.crypto / 100,
+    cash:   allocation.cash   / 100,
+  };
+
+  // Build year-by-year data
+  const history = [];
+  let portfolioVal = start;
+  let totalInvested = start;
+
+  // Per-asset tracking
+  let assets = {
+    stocks: start * alloc.stocks,
+    bonds:  start * alloc.bonds,
+    re:     start * alloc.re,
+    crypto: start * alloc.crypto,
+    cash:   start * alloc.cash,
+  };
+  const assetCost = { ...assets };
+
+  history.push({ val: portfolioVal, invested: totalInvested, assets: {...assets}, year: 0, ev: null });
+
+  for (let y = 0; y < years; y++) {
+    const yd = yearData[y % yearData.length];
+
+    // Add monthly contributions
+    const yearContrib = monthly * 12;
+    totalInvested += yearContrib;
+
+    // Distribute contributions proportionally
+    assets.stocks += yearContrib * alloc.stocks;
+    assets.bonds  += yearContrib * alloc.bonds;
+    assets.re     += yearContrib * alloc.re;
+    assets.crypto += yearContrib * alloc.crypto;
+    assets.cash   += yearContrib * alloc.cash;
+
+    assetCost.stocks += yearContrib * alloc.stocks;
+    assetCost.bonds  += yearContrib * alloc.bonds;
+    assetCost.re     += yearContrib * alloc.re;
+    assetCost.crypto += yearContrib * alloc.crypto;
+    assetCost.cash   += yearContrib * alloc.cash;
+
+    // Apply returns
+    assets.stocks *= (1 + yd.s);
+    assets.bonds  *= (1 + yd.b);
+    assets.re     *= (1 + yd.r);
+    assets.crypto *= (1 + (yd.c !== null ? Math.max(-0.9, Math.min(yd.c, 3)) : yd.s * 1.5));
+    assets.cash   *= (1 + yd.k);
+
+    portfolioVal = assets.stocks + assets.bonds + assets.re + assets.crypto + assets.cash;
+
+    history.push({
+      val: portfolioVal,
+      invested: totalInvested,
+      assets: {...assets},
+      assetCost: {...assetCost},
+      year: y + 1,
+      ev: yd.ev,
+    });
+  }
+
+  // Draw chart
+  isRunning = true;
+  document.getElementById('runBtn').textContent = 'Stop';
+  let step = 0;
+
+  const maxVal = Math.max(...history.map(h => h.val)) * 1.05;
+  const W = 700, H = 260, PL = 55, PR = 10, PT = 10, PB = 30;
+  const chartW = W - PL - PR;
+  const chartH = H - PT - PB;
+
+  function drawStep() {
+    const h = history[step];
+    const svg = document.getElementById('mainChart');
+
+    // Build SVG
+    let content = '';
+
+    // Grid lines and y-axis labels
+    for (let i = 0; i <= 4; i++) {
+      const yv = (maxVal / 4) * i;
+      const yp = H - PB - (yv / maxVal) * chartH;
+      content += `<line x1="${PL}" y1="${yp.toFixed(1)}" x2="${W - PR}" y2="${yp.toFixed(1)}" stroke="#f0eeeb" stroke-width="1"/>`;
+      content += `<text x="${PL - 6}" y="${(yp + 4).toFixed(1)}" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">${yv >= 1000000 ? '$' + (yv/1000000).toFixed(1) + 'M' : yv >= 1000 ? '$' + Math.round(yv/1000) + 'k' : '$' + Math.round(yv)}</text>`;
+    }
+
+    // Invested area (gray)
+    let investedPath = `M ${PL} ${H - PB}`;
+    for (let i = 0; i <= step; i++) {
+      const x = PL + (i / (history.length - 1)) * chartW;
+      const y = H - PB - (history[i].invested / maxVal) * chartH;
+      investedPath += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+    }
+    const lastIX = PL + (step / (history.length - 1)) * chartW;
+    investedPath += ` L ${lastIX.toFixed(1)} ${H - PB} Z`;
+    content += `<path d="${investedPath}" fill="#e0ddd6" opacity="0.5"/>`;
+
+    // Portfolio line
+    let linePath = '';
+    let areaPath = `M ${PL} ${H - PB}`;
+    for (let i = 0; i <= step; i++) {
+      const x = PL + (i / (history.length - 1)) * chartW;
+      const y = H - PB - (history[i].val / maxVal) * chartH;
+      linePath += (i === 0 ? `M ${x.toFixed(1)} ${y.toFixed(1)}` : ` L ${x.toFixed(1)} ${y.toFixed(1)}`);
+      areaPath += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+    }
+    const lastX = PL + (step / (history.length - 1)) * chartW;
+    const lastY = H - PB - (h.val / maxVal) * chartH;
+    areaPath += ` L ${lastX.toFixed(1)} ${H - PB} Z`;
+
+    content += `<path d="${areaPath}" fill="#c0392b" opacity="0.08"/>`;
+    content += `<path d="${linePath}" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linejoin="round"/>`;
+
+    // Current dot
+    content += `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="5" fill="#c0392b"/>`;
+
+    // X axis labels
+    const labelYears = [0, Math.round(years/4), Math.round(years/2), Math.round(3*years/4), years];
+    labelYears.forEach(ly => {
+      const x = PL + (ly / years) * chartW;
+      content += `<text x="${x.toFixed(1)}" y="${H - 8}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">Yr ${ly}</text>`;
+    });
+
+    svg.innerHTML = content;
+
+    // Update stats
+    const gain = h.val - h.invested;
+    const ret = h.invested > 0 ? gain / h.invested : 0;
+    document.getElementById('statValue').textContent = fmt(h.val);
+    document.getElementById('statGain').textContent = (gain >= 0 ? '+' : '') + fmt(Math.abs(gain));
+    document.getElementById('statGain').className = 'stat-val ' + (gain >= 0 ? 'up' : 'down');
+    document.getElementById('statReturn').textContent = fmtPct(ret);
+    document.getElementById('statReturn').className = 'stat-val ' + (ret >= 0 ? 'up' : 'down');
+    document.getElementById('statInvested').textContent = fmt(h.invested);
+    document.getElementById('yearBadge').textContent = 'Year ' + h.year;
+
+    // Event
+    const eb = document.getElementById('eventBox');
+    if (h.ev) {
+      const isBad = h.ev.includes('crash') || h.ev.includes('Crisis') || h.ev.includes('bust') || h.ev.includes('📉') || h.ev.includes('🔥') || h.ev.includes('💥') || h.ev.includes('⚠️');
+      eb.style.background = isBad ? '#922b21' : '#1a3a2a';
+      const icon = isBad ? '⚠️' : '📈';
+      eb.innerHTML = `<div class="event-icon">${icon}</div><div class="event-text"><strong>Year ${h.year}:</strong> ${h.ev}</div>`;
+    } else if (h.year === 0) {
+      eb.style.background = 'var(--ink)';
+      eb.innerHTML = `<div class="event-icon">🚀</div><div class="event-text"><strong>Simulation started.</strong> Watch how your portfolio grows over ${years} years of real market history.</div>`;
+    } else {
+      eb.style.background = 'var(--ink)';
+      eb.innerHTML = `<div class="event-icon">📊</div><div class="event-text"><strong>Year ${h.year}:</strong> No major market events this year. Your portfolio keeps compounding.</div>`;
+    }
+
+    // Asset breakdown
+    const costRef = h.assetCost || assetCost;
+    const assetKeys = ['stocks','bonds','re','crypto','cash'];
+    const assetIds  = ['stocks','bonds','re','crypto','cash'];
+    assetKeys.forEach((k, i) => {
+      document.getElementById('bd-' + assetIds[i]).textContent = fmt(h.assets[k]);
+      const baselineVal = history[0].assets[k];
+      const ret = baselineVal > 0 ? (h.assets[k] - baselineVal) / baselineVal : 0;
+      const el = document.getElementById('bdr-' + assetIds[i]);
+      el.textContent = fmtPct(ret);
+      el.className = 'breakdown-ret ' + (ret >= 0 ? 'pos' : 'neg');
+    });
+
+    step++;
+    if (step >= history.length) {
+      clearInterval(simInterval);
+      isRunning = false;
+      document.getElementById('runBtn').textContent = 'Run Again';
+    }
+  }
+
+  drawStep();
+  if (simSpeed > 0 && simSpeed < 800) {
+    simInterval = setInterval(drawStep, simSpeed);
+  } else if (simSpeed === 10) {
+    while (step < history.length) drawStep();
+  } else {
+    simInterval = setInterval(drawStep, simSpeed);
+  }
+}
+
+// Init
+updateStart();
+updateMonthly();
+updateYears();
+</script>
+</body>
+</html>

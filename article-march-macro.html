@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; } .logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.article-wrap { max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem; }
+.back-link { font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem; }
+.back-link:hover { color:var(--ink); }
+.article-tag { font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem; }
+h1 { font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem; } h1 em { font-style:italic; }
+.article-meta { font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap; }
+.article-body p { margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.8; }
+.article-body h2 { font-family:var(--serif);font-size:1.4rem;margin:2.5rem 0 1rem;line-height:1.3; }
+.article-body ul { margin:0 0 1.5rem 1.5rem; }
+.article-body ul li { font-size:1.0625rem;color:#2a2a28;line-height:1.8;margin-bottom:0.5rem; }
+.callout { background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted); }
+.article-body table { width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.875rem; }
+.article-body th { background:var(--faint);padding:0.6rem 0.75rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border);font-size:0.8rem; }
+.article-body td { padding:0.6rem 0.75rem;border-bottom:1px solid var(--border); }
+.article-body tr:last-child td { border-bottom:none; }
+.chart-box { background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0; }
+.chart-label { font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem; }
+.chart-caption { font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic; }
+.legend { display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:0.75rem; }
+.legend-item { display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted); }
+.legend-dot { width:10px;height:10px;border-radius:2px;flex-shrink:0; }
+.legend-line { width:20px;height:2.5px;flex-shrink:0;border-radius:2px; }
+.byline { margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted); }
+.byline strong { color:var(--ink); }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem; }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){nav{display:none;}.footer-inner{flex-direction:column;align-items:flex-start;}}
+</style></head><body>
+<header><div class="header-inner">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+<title>March 2026 Macro Review — The Margin</title>
+<div class="article-wrap">
+<a href="index.html" class="back-link">Back to home</a>
+<div class="article-tag">Macro</div>
+<h1>March 2026 macro review: <em>stability under pressure</em></h1>
+<div class="article-meta"><span>Tobias Velez</span><span>·</span><span>March 2026</span><span>·</span><span>6 min read</span></div>
+<div class="article-body">
+
+<p>The global economy right now is in a weird spot. It's not crashing. It's not booming. It's sort of grinding forward with less cushion than you'd want. Inflation is down from where it was but not fully gone. The Fed is frozen. And the risks sitting underneath all of it, energy prices mainly, mean any bad luck could make things uncomfortable fast.</p>
+
+<h2>Inflation: better but not done</h2>
+<p>February CPI came in at 2.4% year-over-year. That sounds close to the Fed's 2% target and in some ways it is. But the number that matters isn't the headline, it's what's driving it. Shelter costs are still running hotter than overall CPI. Food prices are drifting up slowly. Energy spiked again recently and those increases are starting to show up at gas stations and in utility bills.</p>
+<p>This is why a lot of households don't feel like inflation is fixed even when the headline number looks normal. Rent, groceries, and gas are the things people actually spend money on constantly. Those categories are still elevated. The 2.4% number is real but it's not the full picture.</p>
+
+<div class="chart-box">
+<div class="chart-label">U.S. CPI vs. Fed funds rate, Sept 2025 to Feb 2026</div>
+<div class="legend">
+<div class="legend-item"><div class="legend-line" style="background:#c0392b;"></div>CPI year-over-year</div>
+<div class="legend-item"><div class="legend-line" style="background:#1a1a18;opacity:0.5"></div>Fed funds rate (upper)</div>
+</div>
+<svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+<line x1="55" y1="10" x2="55" y2="170" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="170" x2="530" y2="170" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="130" x2="530" y2="130" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="90" x2="530" y2="90" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="50" x2="530" y2="50" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<text x="48" y="173" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">0%</text>
+<text x="48" y="133" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">2%</text>
+<text x="48" y="93" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">4%</text>
+<text x="48" y="53" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">6%</text>
+<polyline points="80,98 164,102 248,106 332,110 416,110 500,110" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="80,55 164,55 248,55 332,55 416,55 500,55" stroke="#1a1a18" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6,3" opacity="0.6"/>
+<line x1="80" y1="122" x2="500" y2="122" stroke="#aaa" stroke-width="1" stroke-dasharray="3,5"/>
+<text x="505" y="125" font-family="'DM Sans',sans-serif" font-size="9" fill="#aaa">2% target</text>
+<text x="505" y="108" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">2.4%</text>
+<text x="505" y="53" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">3.75%</text>
+<text x="80" y="188" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Sep 25</text>
+<text x="248" y="188" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Nov 25</text>
+<text x="416" y="188" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Jan 26</text>
+<text x="500" y="188" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Feb 26</text>
+</svg>
+<div class="chart-caption">Inflation has drifted down toward the 2% target while the Fed held rates flat at 3.75%. The gap between those two lines is why borrowing still feels expensive even though price growth has slowed significantly.</div>
+</div>
+
+<h2>The Fed is not moving</h2>
+<p>At their March meeting the Fed left rates unchanged at 3.5 to 3.75%. The message was pretty clear: they don't think the inflation fight is fully over, especially with energy prices moving again. But they also see manufacturing slowing and rate-sensitive sectors struggling. They're trying to thread a needle where rates stay tight enough to prevent a second inflation spike but not so tight they break the labor market. Markets are now pricing in maybe one small cut later in 2026 and only if both inflation and growth soften further. The era of cheap money is over for now.</p>
+
+<h2>The global picture</h2>
+<table>
+<tr><th>Region</th><th>GDP growth 2026</th><th>Inflation 2026</th></tr>
+<tr><td>United States</td><td>1.9%</td><td>2.5%</td></tr>
+<tr><td>Euro Area</td><td>1.2%</td><td>2.3%</td></tr>
+<tr><td>Japan</td><td>0.9%</td><td>2.0%</td></tr>
+<tr><td>Emerging Markets</td><td>4.1%</td><td>4.3%</td></tr>
+<tr><td>World</td><td>3.3%</td><td>3.1%</td></tr>
+</table>
+<p>Advanced economies are mostly grinding through with low growth and moderate inflation. Emerging markets are doing more of the heavy lifting on global growth, but with higher inflation and more exposure to energy price swings. The biggest risk to this whole picture is a sustained oil shock. If energy prices jump and stay elevated, central banks have to choose between tolerating higher inflation or tightening into weakness. Neither option is good.</p>
+
+<h2>What this means day to day</h2>
+<p>Higher baseline rates mean student loans, car loans, and mortgages all cost meaningfully more than they did three years ago. A cooler job market means there are still opportunities but more risk in sectors tied to borrowing costs. Real estate, parts of tech, companies with a lot of debt are all feeling it. And when inflation sits at 2.5% while wages only slightly outpace that, real purchasing power improves slowly at best.</p>
+<p>For anyone in Montgomery County specifically this connects directly to the housing stuff I wrote about in other pieces. National rates staying elevated keeps local mortgage costs high, which feeds directly into the lock-in effect and inventory problem that's driving Bethesda prices up.</p>
+
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin</div>
+</div></div>
+<footer><div class="footer-inner">
+<a href="index.html" class="footer-logo">The Margin</a>
+<div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer></body></html>

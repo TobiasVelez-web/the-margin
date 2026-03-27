@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; } .logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.article-wrap { max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem; }
+.back-link { font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem; }
+.back-link:hover { color:var(--ink); }
+.article-tag { font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem; }
+h1 { font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem; } h1 em { font-style:italic; }
+.article-meta { font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap; }
+.article-body p { margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.8; }
+.article-body h2 { font-family:var(--serif);font-size:1.4rem;margin:2.5rem 0 1rem;line-height:1.3; }
+.article-body ul { margin:0 0 1.5rem 1.5rem; }
+.article-body ul li { font-size:1.0625rem;color:#2a2a28;line-height:1.8;margin-bottom:0.5rem; }
+.callout { background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted); }
+.article-body table { width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.875rem; }
+.article-body th { background:var(--faint);padding:0.6rem 0.75rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border);font-size:0.8rem; }
+.article-body td { padding:0.6rem 0.75rem;border-bottom:1px solid var(--border); }
+.article-body tr:last-child td { border-bottom:none; }
+.chart-box { background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0; }
+.chart-label { font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem; }
+.chart-caption { font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic; }
+.legend { display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:0.75rem; }
+.legend-item { display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted); }
+.legend-dot { width:10px;height:10px;border-radius:2px;flex-shrink:0; }
+.legend-line { width:20px;height:2.5px;flex-shrink:0;border-radius:2px; }
+.byline { margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted); }
+.byline strong { color:var(--ink); }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem; }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){nav{display:none;}.footer-inner{flex-direction:column;align-items:flex-start;}}
+</style></head><body>
+<header><div class="header-inner">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+<title>How Tariffs Make Everything More Expensive — The Margin</title>
+<div class="article-wrap">
+<a href="index.html" class="back-link">Back to home</a>
+<div class="article-tag">Current Events</div>
+<h1>How tariffs make everything more expensive — <em>including your next car</em></h1>
+<div class="article-meta"><span>Tobias Velez</span><span>·</span><span>March 2026</span><span>·</span><span>6 min read</span></div>
+<div class="article-body">
+
+<p>When I started looking at car prices this year, I noticed something that didn't make sense at first. Even before options or financing, average new car prices jumped sharply. According to Kelley Blue Book, the average new car in early 2026 is about 8,500, up from 5,000 in 2024. That's an 8% increase in two years. One key reason is higher import costs from new U.S. tariffs, and once I understood the mechanism I started seeing it everywhere.</p>
+
+<h2>What a tariff actually is</h2>
+<p>A tariff is a tax on imported goods. When the U.S. puts a 25% tariff on Canadian steel, it's not Canada paying that tax. It's American companies buying that steel, who then pass most of the cost along to manufacturers and eventually to consumers. Tariffs raise the price of anything that depends on imported materials, which turns out to be a lot of things: cars, electronics, clothes, groceries, construction materials.</p>
+
+<div class="callout">The common assumption is that tariffs hurt the foreign country. Economists at the Peterson Institute found that U.S. consumers and businesses absorb roughly 90% of tariff costs, not the exporters being targeted. The number that gets thrown around politically and the number in the research are very different.</div>
+
+<h2>What's happening right now</h2>
+<p>The current administration imposed sweeping new tariffs starting in late 2025: 25% on goods from Canada and Mexico including steel, dairy, and auto parts, and 10% to 145% on Chinese goods especially in electronics, solar panels, and electric vehicles. The U.S. Trade Representative estimates these cover over 00 billion in imported goods.</p>
+<p>Trade partners responded. China put 20% to 50% tariffs on U.S. soybeans, lithium batteries, and autos. Canada added 10% tariffs on U.S. alcohol and farm products. The EU targeted U.S. cars and bourbon with tariffs up to 25%. That's a trade war, and in a trade war both sides' consumers end up paying more.</p>
+
+<h2>Who actually pays</h2>
+<div class="chart-box">
+<div class="chart-label">Who pays for U.S. tariffs? (2025)</div>
+<svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+<path d="M140,100 L140,20 A80,80 0 1,1 111.8,172.7 Z" fill="#c0392b" opacity="0.85"/>
+<path d="M140,100 L111.8,172.7 A80,80 0 0,1 140,20 Z" fill="#1a1a18" opacity="0.2"/>
+<text x="130" y="90" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="22" font-weight="500" fill="#fff">90%</text>
+<text x="130" y="108" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#fff">U.S. consumers</text>
+<text x="108" y="178" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">10% foreign</text>
+<text x="260" y="40" font-family="'DM Sans',sans-serif" font-size="12" font-weight="500" fill="#1a1a18">2025 by the numbers</text>
+<line x1="260" y1="48" x2="460" y2="48" stroke="#e0ddd6" stroke-width="0.5"/>
+<text x="260" y="70" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">Tariff revenue collected</text>
+<text x="460" y="70" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="11" fill="#1a1a18" font-weight="500">10B</text>
+<text x="260" y="92" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">Cost passed to consumers</text>
+<text x="460" y="92" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="11" fill="#c0392b" font-weight="500">~5B</text>
+<text x="260" y="114" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">Chinese import prices up</text>
+<text x="460" y="114" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="11" fill="#c0392b" font-weight="500">+12% YoY</text>
+<text x="260" y="136" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">Goods covered</text>
+<text x="460" y="136" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="11" fill="#1a1a18" font-weight="500">00B+</text>
+</svg>
+<div class="chart-caption">Of the 10 billion in tariff revenue collected in 2025, about 5 billion was effectively paid by American consumers and businesses through higher prices, not by foreign exporters.</div>
+</div>
+
+<h2>How it shows up in things you buy</h2>
+<div class="chart-box">
+<div class="chart-label">Price increases by category, 2024 vs. 2026</div>
+<svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+<line x1="55" y1="10" x2="55" y2="195" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="195" x2="560" y2="195" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="155" x2="560" y2="155" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="115" x2="560" y2="115" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="75" x2="560" y2="75" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<text x="48" y="198" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">0%</text>
+<text x="48" y="158" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">5%</text>
+<text x="48" y="118" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">10%</text>
+<text x="48" y="78" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">15%</text>
+<rect x="72" y="131" width="65" height="64" fill="#c0392b" opacity="0.90" rx="3"/>
+<text x="104" y="127" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">+8%</text>
+<text x="104" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Cars</text>
+<rect x="162" y="99" width="65" height="96" fill="#c0392b" opacity="0.78" rx="3"/>
+<text x="194" y="95" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">+12%</text>
+<text x="194" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Laptops</text>
+<rect x="252" y="115" width="65" height="80" fill="#c0392b" opacity="0.62" rx="3"/>
+<text x="284" y="111" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67" font-weight="500">+10%</text>
+<text x="284" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Phones</text>
+<rect x="342" y="75" width="65" height="120" fill="#c0392b" opacity="0.75" rx="3"/>
+<text x="374" y="71" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">+15%</text>
+<text x="374" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Cheese</text>
+<rect x="432" y="51" width="65" height="144" fill="#c0392b" opacity="0.85" rx="3"/>
+<text x="464" y="47" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">+18%</text>
+<text x="464" y="213" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">Steel</text>
+</svg>
+<div class="chart-caption">Steel and imported dairy have taken the biggest hits. Cars, laptops, and phones all include significant imported components, so the tariff costs show up in final prices even when the product is "American-made."</div>
+</div>
+
+<h2>What happened last time</h2>
+<p>The 2018 to 2019 tariffs produced nearly identical outcomes. Tariffs covered 60 billion in goods. U.S. consumers bore about 90% of the costs. China's exports to the U.S. fell 25% but imports from Vietnam and Mexico rose 30% to fill the gap, so manufacturing didn't really come back. The biggest hit was American agriculture: soybean and corn exports to China dropped nearly 40% after retaliation, which ended up requiring a 8 billion federal farm bailout.</p>
+
+<h2>Are they ever worth it</h2>
+<p>Sometimes. There's a genuine case for protecting industries that matter for national security, semiconductors being the clearest example. There's also a legitimate argument that tariffs can be effective negotiating leverage when used strategically and temporarily. The problem is broad tariffs on consumer goods function as a regressive tax. Lower-income households spend a higher share of their income on physical goods, so they get hit harder than wealthier households who spend more on services. The stated goal might be protecting American jobs. The actual mechanism often ends up being a tax on American consumers that barely changes the underlying trade patterns.</p>
+
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin<br><small>Sources: Kelley Blue Book, Peterson Institute for International Economics, NBER, USTR, CBO</small></div>
+</div></div>
+<footer><div class="footer-inner">
+<a href="index.html" class="footer-logo">The Margin</a>
+<div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer></body></html>
