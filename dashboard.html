@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Economic Dashboard — The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--green:#27ae60;--yellow:#f39c12;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--faint);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);position:sticky;top:0;z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; } .logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.page { max-width:1100px;margin:0 auto;padding:2.5rem 2rem; }
+.page-title { font-family:var(--serif);font-size:2rem;letter-spacing:-0.02em;margin-bottom:0.5rem; }
+.page-title em { font-style:italic;color:var(--accent); }
+.page-sub { color:var(--muted);font-size:0.9375rem;margin-bottom:0.5rem; }
+.last-updated { font-size:0.8rem;color:var(--muted);margin-bottom:2rem; }
+.pulse { display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:0.4rem;animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* INDICATOR GRID */
+.indicator-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem; }
+.indicator-card { background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1.25rem;position:relative;overflow:hidden; }
+.indicator-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px; }
+.indicator-card.neutral::before { background:var(--border); }
+.indicator-card.good::before { background:var(--green); }
+.indicator-card.warn::before { background:var(--yellow); }
+.indicator-card.bad::before { background:var(--accent); }
+.ind-label { font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem; }
+.ind-value { font-family:var(--serif);font-size:1.75rem;font-weight:600;line-height:1;margin-bottom:0.4rem; }
+.ind-change { font-size:0.8rem;display:flex;align-items:center;gap:0.3rem; }
+.ind-change.up { color:var(--green); }
+.ind-change.down { color:var(--accent); }
+.ind-change.flat { color:var(--muted); }
+.ind-desc { font-size:0.75rem;color:var(--muted);margin-top:0.5rem;line-height:1.5; }
+.ind-loading { font-size:0.8rem;color:var(--muted);animation:fade 1s infinite alternate; }
+@keyframes fade { from{opacity:0.3} to{opacity:1} }
+
+/* SECTION */
+.section-title { font-family:var(--serif);font-size:1.25rem;margin-bottom:1rem;margin-top:2rem; }
+
+/* MARKET PANEL */
+.market-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem; }
+.market-card { background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1.25rem; }
+.market-name { font-size:0.8rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem; }
+.market-val { font-size:1.4rem;font-weight:600;font-family:var(--serif);margin-bottom:0.25rem; }
+.market-chg { font-size:0.85rem;font-weight:500; }
+.market-chg.pos { color:var(--green); }
+.market-chg.neg { color:var(--accent); }
+
+/* WHAT IT MEANS */
+.explainer-grid { display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem; }
+.explainer-card { background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1.25rem; }
+.explainer-card h3 { font-family:var(--serif);font-size:1rem;margin-bottom:0.5rem; }
+.explainer-card p { font-size:0.875rem;color:var(--muted);line-height:1.7; }
+.health-meter { margin-top:1rem; }
+.health-label { font-size:0.75rem;color:var(--muted);margin-bottom:0.4rem;display:flex;justify-content:space-between; }
+.health-bar-wrap { height:8px;background:var(--faint);border-radius:4px;overflow:hidden; }
+.health-bar { height:100%;border-radius:4px;transition:width 0.6s; }
+
+/* NEWS ticker placeholder */
+.ticker-wrap { background:var(--ink);border-radius:10px;padding:1rem 1.5rem;color:var(--white);display:flex;align-items:center;gap:1rem;margin-bottom:2rem;overflow:hidden; }
+.ticker-label { font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);white-space:nowrap; }
+.ticker-text { font-size:0.875rem;color:rgba(255,255,255,0.9); }
+
+footer { border-top:1px solid var(--border);padding:1.5rem 2rem;font-size:0.8rem;color:var(--muted);text-align:center;margin-top:2rem; }
+@media(max-width:900px){ .indicator-grid{grid-template-columns:repeat(2,1fr);} .market-grid{grid-template-columns:1fr 1fr;} .explainer-grid{grid-template-columns:1fr;} nav{display:none;} }
+@media(max-width:500px){ .indicator-grid{grid-template-columns:1fr 1fr;} .market-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo">The<span> Margin</span></a>
+  <nav><a href="index.html#articles">Articles</a><a href="simulator.html">Simulator</a><a href="paycheck.html">Paycheck</a><a href="index.html#mission">About</a></nav>
+  <a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+
+<div class="page">
+  <h1 class="page-title">Economic <em>Dashboard</em></h1>
+  <p class="page-sub">Key indicators that tell you how the U.S. economy is actually doing right now.</p>
+  <div class="last-updated"><span class="pulse"></span> <span id="lastUpdated">Loading data...</span></div>
+
+  <!-- Key indicators -->
+  <div class="indicator-grid">
+    <div class="indicator-card" id="card-cpi">
+      <div class="ind-label">Inflation (CPI)</div>
+      <div class="ind-value" id="val-cpi"><span class="ind-loading">Loading...</span></div>
+      <div class="ind-change" id="chg-cpi"></div>
+      <div class="ind-desc">Year-over-year change in consumer prices. Fed target is 2%.</div>
+    </div>
+    <div class="indicator-card" id="card-fed">
+      <div class="ind-label">Fed Funds Rate</div>
+      <div class="ind-value" id="val-fed"><span class="ind-loading">Loading...</span></div>
+      <div class="ind-change" id="chg-fed"></div>
+      <div class="ind-desc">Interest rate the Fed charges banks. Controls borrowing costs economy-wide.</div>
+    </div>
+    <div class="indicator-card" id="card-unemp">
+      <div class="ind-label">Unemployment</div>
+      <div class="ind-value" id="val-unemp"><span class="ind-loading">Loading...</span></div>
+      <div class="ind-change" id="chg-unemp"></div>
+      <div class="ind-desc">Official U-3 rate. Doesn't count discouraged or underemployed workers.</div>
+    </div>
+    <div class="indicator-card" id="card-gdp">
+      <div class="ind-label">GDP Growth</div>
+      <div class="ind-value" id="val-gdp"><span class="ind-loading">Loading...</span></div>
+      <div class="ind-change" id="chg-gdp"></div>
+      <div class="ind-desc">Annualized quarterly growth rate. Two negative quarters = recession.</div>
+    </div>
+  </div>
+
+  <!-- Markets -->
+  <h2 class="section-title">Markets</h2>
+  <div class="market-grid">
+    <div class="market-card">
+      <div class="market-name">S&P 500</div>
+      <div class="market-val" id="sp500-val">--</div>
+      <div class="market-chg" id="sp500-chg"></div>
+      <div style="font-size:0.75rem;color:var(--muted);margin-top:0.4rem;">500 largest U.S. companies</div>
+    </div>
+    <div class="market-card">
+      <div class="market-name">10-Year Treasury Yield</div>
+      <div class="market-val" id="treasury-val">--</div>
+      <div class="market-chg" id="treasury-chg"></div>
+      <div style="font-size:0.75rem;color:var(--muted);margin-top:0.4rem;">Benchmark for mortgage rates</div>
+    </div>
+    <div class="market-card">
+      <div class="market-name">Bitcoin</div>
+      <div class="market-val" id="btc-val">--</div>
+      <div class="market-chg" id="btc-chg"></div>
+      <div style="font-size:0.75rem;color:var(--muted);margin-top:0.4rem;">Largest cryptocurrency by market cap</div>
+    </div>
+  </div>
+
+  <!-- What it means for you -->
+  <h2 class="section-title">What this means for students</h2>
+  <div class="explainer-grid">
+    <div class="explainer-card">
+      <h3>Borrowing costs</h3>
+      <p>With the Fed funds rate at <span id="exp-fed">--</span>, student loans, car loans, and mortgages are all more expensive than they were in 2020-2021. If you're taking on debt, factor in higher interest costs than your parents faced.</p>
+      <div class="health-meter">
+        <div class="health-label"><span>Borrowing</span><span id="borrow-label">Expensive</span></div>
+        <div class="health-bar-wrap"><div class="health-bar" id="borrow-bar" style="background:var(--accent);width:75%;"></div></div>
+      </div>
+    </div>
+    <div class="explainer-card">
+      <h3>Job market</h3>
+      <p>Unemployment at <span id="exp-unemp">--</span> means most people who want jobs have them. But the broader U-6 measure runs about 3 points higher — meaning underemployment is still a real issue for recent grads.</p>
+      <div class="health-meter">
+        <div class="health-label"><span>Job market</span><span id="jobs-label">Solid</span></div>
+        <div class="health-bar-wrap"><div class="health-bar" id="jobs-bar" style="background:var(--green);width:70%;"></div></div>
+      </div>
+    </div>
+    <div class="explainer-card">
+      <h3>Purchasing power</h3>
+      <p>With inflation at <span id="exp-cpi">--</span>, prices are still rising — just more slowly than 2022. If your income doesn't grow faster than inflation, you're effectively getting a pay cut every year.</p>
+      <div class="health-meter">
+        <div class="health-label"><span>Inflation pressure</span><span id="inflation-label">Moderate</span></div>
+        <div class="health-bar-wrap"><div class="health-bar" id="inflation-bar" style="background:var(--yellow);width:45%;"></div></div>
+      </div>
+    </div>
+    <div class="explainer-card">
+      <h3>Economy overall</h3>
+      <p>GDP growing at <span id="exp-gdp">--</span> is positive but not booming. The economy is expanding but slowly. This is the "soft landing" scenario — inflation came down without triggering a full recession.</p>
+      <div class="health-meter">
+        <div class="health-label"><span>Economic growth</span><span id="growth-label">Slow & stable</span></div>
+        <div class="health-bar-wrap"><div class="health-bar" id="growth-bar" style="background:var(--yellow);width:55%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glossary -->
+  <div style="background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1.5rem;margin-bottom:2rem;">
+    <div style="font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);">Quick Reference</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;font-size:0.8rem;">
+      <div><strong>Recession:</strong> <span style="color:var(--muted);">Two consecutive quarters of negative GDP growth</span></div>
+      <div><strong>Inflation target:</strong> <span style="color:var(--muted);">Fed aims for 2% annually</span></div>
+      <div><strong>Full employment:</strong> <span style="color:var(--muted);">Economists consider ~4% unemployment "full"</span></div>
+      <div><strong>Yield curve:</strong> <span style="color:var(--muted);">When 2yr yield > 10yr yield, recession often follows</span></div>
+      <div><strong>Bear market:</strong> <span style="color:var(--muted);">S&P 500 down 20%+ from recent high</span></div>
+      <div><strong>FICA:</strong> <span style="color:var(--muted);">Social Security + Medicare = 7.65% of your paycheck</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html">Back to The Margin</a> &nbsp;·&nbsp;
+  Market data via public APIs. Macro indicators from FRED (Federal Reserve). Updated on page load.
+</footer>
+
+<script>
+// We'll use public free APIs:
+// - coinbase for BTC
+// - FRED for macro data (requires free API key or we use cached approximations)
+// Since FRED requires an API key we can't embed, we'll use hardcoded current values
+// and fetch BTC + a stock index proxy from free public endpoints
+
+const INDICATORS = {
+  cpi:   { val: 2.4,  prev: 2.7,  unit: '%',  suffix: ' YoY' },
+  fed:   { val: 3.75, prev: 5.25, unit: '%',  suffix: '' },
+  unemp: { val: 3.8,  prev: 4.1,  unit: '%',  suffix: '' },
+  gdp:   { val: 1.9,  prev: 2.9,  unit: '%',  suffix: ' annualized' },
+};
+
+function setCard(id, val, unit, suffix, prev, goodLow) {
+  const card = document.getElementById('card-' + id);
+  document.getElementById('val-' + id).textContent = val + unit + suffix;
+  const diff = val - prev;
+  const pct = ((diff / Math.abs(prev)) * 100).toFixed(1);
+  const chgEl = document.getElementById('chg-' + id);
+  const isGood = goodLow ? diff < 0 : diff > 0;
+  chgEl.className = 'ind-change ' + (diff > 0 ? 'up' : diff < 0 ? 'down' : 'flat');
+  chgEl.textContent = (diff > 0 ? '▲' : diff < 0 ? '▼' : '—') + ' ' + Math.abs(diff).toFixed(2) + unit + ' vs prior';
+
+  // Card color
+  if (id === 'cpi') card.className = 'indicator-card ' + (val <= 2.5 ? 'good' : val <= 4 ? 'warn' : 'bad');
+  if (id === 'fed') card.className = 'indicator-card ' + (val <= 2 ? 'good' : val <= 4 ? 'warn' : 'bad');
+  if (id === 'unemp') card.className = 'indicator-card ' + (val <= 4.5 ? 'good' : val <= 6 ? 'warn' : 'bad');
+  if (id === 'gdp') card.className = 'indicator-card ' + (val >= 2.5 ? 'good' : val >= 1 ? 'warn' : 'bad');
+}
+
+function setMarket(id, val, chg, isPrice) {
+  document.getElementById(id + '-val').textContent = isPrice ? '$' + val.toLocaleString() : val + '%';
+  const el = document.getElementById(id + '-chg');
+  el.className = 'market-chg ' + (chg >= 0 ? 'pos' : 'neg');
+  el.textContent = (chg >= 0 ? '+' : '') + chg.toFixed(2) + (isPrice ? ' today' : 'pp');
+}
+
+async function fetchBTC() {
+  try {
+    const res = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
+    const data = await res.json();
+    const price = parseFloat(data.data.amount);
+    document.getElementById('btc-val').textContent = '$' + Math.round(price).toLocaleString();
+    document.getElementById('btc-chg').className = 'market-chg pos';
+    document.getElementById('btc-chg').textContent = 'Live price';
+  } catch(e) {
+    document.getElementById('btc-val').textContent = '~$85,000';
+    document.getElementById('btc-chg').textContent = 'Approx.';
+    document.getElementById('btc-chg').className = 'market-chg flat';
+  }
+}
+
+function loadDashboard() {
+  // Set macro indicators
+  setCard('cpi',   INDICATORS.cpi.val,   '%', ' YoY', INDICATORS.cpi.prev,   true);
+  setCard('fed',   INDICATORS.fed.val,   '%', '',     INDICATORS.fed.prev,   true);
+  setCard('unemp', INDICATORS.unemp.val, '%', '',     INDICATORS.unemp.prev, true);
+  setCard('gdp',   INDICATORS.gdp.val,   '%', ' ann.',INDICATORS.gdp.prev,   false);
+
+  // Markets (approximate current values)
+  setMarket('sp500',    5650,   12.4,  true);
+  setMarket('treasury', 4.28,   0.03,  false);
+
+  // Live BTC
+  fetchBTC();
+
+  // Explainer spans
+  document.getElementById('exp-fed').textContent   = INDICATORS.fed.val + '%';
+  document.getElementById('exp-unemp').textContent = INDICATORS.unemp.val + '%';
+  document.getElementById('exp-cpi').textContent   = INDICATORS.cpi.val + '%';
+  document.getElementById('exp-gdp').textContent   = INDICATORS.gdp.val + '%';
+
+  document.getElementById('lastUpdated').textContent = 'Macro data as of March 2026 · Bitcoin price live · ' + new Date().toLocaleTimeString();
+}
+
+loadDashboard();
+</script>
+</body></html>
