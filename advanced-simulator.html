@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Financial Simulator — The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:#1a1a18; --muted:#6b6b67; --faint:#f2f0eb; --border:#e0ddd6;
+  --accent:#c0392b; --white:#fff; --green:#27ae60; --blue:#2980b9;
+  --yellow:#f39c12; --purple:#8e44ad;
+  --serif:"Playfair Display",Georgia,serif; --sans:"DM Sans",system-ui,sans-serif;
+}
+body { font-family:var(--sans); background:#0f0f0f; color:#e8e6e0; font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; min-height:100vh; }
+a { color:inherit; text-decoration:none; }
+
+/* HEADER */
+header { border-bottom:1px solid #2a2a2a; padding:0 2rem; background:rgba(15,15,15,0.96); backdrop-filter:blur(6px); position:sticky; top:0; z-index:100; }
+.header-inner { max-width:1300px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; gap:2rem; }
+.logo { font-family:var(--serif); font-size:1.4rem; font-weight:600; letter-spacing:-0.02em; color:#fff; }
+.logo span { color:var(--accent); }
+.header-back { font-size:0.8rem; color:#6b6b67; }
+.header-back:hover { color:#e8e6e0; }
+
+/* MODE SELECTOR */
+.mode-bar { background:#1a1a1a; border-bottom:1px solid #2a2a2a; padding:0 2rem; }
+.mode-inner { max-width:1300px; margin:0 auto; display:flex; gap:0; }
+.mode-tab { padding:0.75rem 1.5rem; font-size:0.8125rem; font-weight:500; color:#6b6b67; cursor:pointer; border-bottom:2px solid transparent; transition:all 0.15s; white-space:nowrap; }
+.mode-tab:hover { color:#e8e6e0; }
+.mode-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+/* LAYOUT */
+.page { max-width:1300px; margin:0 auto; padding:1.5rem 2rem; }
+.sim-layout { display:grid; gap:1.25rem; }
+.mode-panel { display:none; }
+.mode-panel.active { display:block; }
+
+/* PANELS */
+.panel { background:#1a1a1a; border-radius:10px; border:1px solid #2a2a2a; padding:1.25rem; }
+.panel-title { font-size:0.68rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:#6b6b67; margin-bottom:1rem; padding-bottom:0.6rem; border-bottom:1px solid #2a2a2a; }
+
+/* INPUTS */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+.input-group { margin-bottom:0; }
+.input-label { font-size:0.78rem; color:#9a9894; margin-bottom:0.35rem; display:flex; justify-content:space-between; }
+.input-val { color:var(--accent); font-weight:500; }
+input[type="range"] { width:100%; height:3px; border-radius:2px; background:#2a2a2a; outline:none; cursor:pointer; appearance:none; -webkit-appearance:none; margin-top:6px; }
+input[type="range"]::-webkit-slider-thumb { appearance:none; width:14px; height:14px; border-radius:50%; background:var(--accent); cursor:pointer; }
+input[type="number"], select { width:100%; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:0.45rem 0.65rem; font-family:var(--sans); font-size:0.875rem; color:#e8e6e0; outline:none; }
+input[type="number"]:focus, select:focus { border-color:#444; }
+select option { background:#1a1a1a; }
+
+/* BUTTONS */
+.btn { padding:0.65rem 1.5rem; border-radius:7px; border:none; font-family:var(--sans); font-size:0.875rem; font-weight:500; cursor:pointer; transition:all 0.15s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:#a93226; }
+.btn-secondary { background:#2a2a2a; color:#e8e6e0; }
+.btn-secondary:hover { background:#333; }
+.btn-row { display:flex; gap:0.75rem; margin-top:1rem; flex-wrap:wrap; }
+
+/* STATS ROW */
+.stats-row { display:grid; grid-template-columns:repeat(5,1fr); gap:0.75rem; margin-bottom:1.25rem; }
+.stat-box { background:#111; border-radius:8px; border:1px solid #2a2a2a; padding:0.875rem 1rem; }
+.stat-lbl { font-size:0.68rem; color:#6b6b67; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.3rem; }
+.stat-num { font-family:var(--serif); font-size:1.4rem; font-weight:600; line-height:1; }
+.stat-num.up { color:var(--green); }
+.stat-num.down { color:var(--accent); }
+.stat-num.neutral { color:#e8e6e0; }
+.stat-sub { font-size:0.72rem; color:#6b6b67; margin-top:0.2rem; }
+
+/* CHART */
+.chart-box { background:#111; border-radius:8px; border:1px solid #2a2a2a; padding:1.25rem; margin-bottom:1.25rem; }
+.chart-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; }
+.chart-label-sm { font-size:0.68rem; color:#6b6b67; text-transform:uppercase; letter-spacing:0.08em; }
+
+/* EVENT FEED */
+.event-feed { background:#111; border-radius:8px; border:1px solid #2a2a2a; padding:0.875rem 1rem; margin-bottom:1.25rem; min-height:50px; display:flex; align-items:center; gap:0.75rem; font-size:0.85rem; }
+.event-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--green); }
+.event-dot.red { background:var(--accent); }
+.event-dot.yellow { background:var(--yellow); }
+
+/* PROBABILITY BARS (Monte Carlo) */
+.prob-row { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem; font-size:0.8rem; }
+.prob-label { width:80px; color:#9a9894; flex-shrink:0; }
+.prob-bar-wrap { flex:1; height:20px; background:#1a1a1a; border-radius:4px; overflow:hidden; }
+.prob-bar { height:100%; border-radius:4px; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-size:0.72rem; font-weight:500; color:#fff; transition:width 0.5s; }
+.prob-val { width:80px; text-align:right; color:#e8e6e0; font-weight:500; }
+
+/* STRATEGY BUILDER */
+.strategy-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.strategy-rule { background:#111; border:1px solid #2a2a2a; border-radius:8px; padding:1rem; }
+.strategy-rule h4 { font-size:0.8rem; color:#9a9894; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.06em; }
+
+/* MACRO SLIDERS */
+.macro-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1rem; }
+.macro-item { background:#111; border:1px solid #2a2a2a; border-radius:8px; padding:1rem; }
+.macro-name { font-size:0.78rem; color:#9a9894; margin-bottom:0.5rem; }
+.macro-val-big { font-size:1.5rem; font-weight:600; font-family:var(--serif); color:var(--accent); }
+
+/* LEGEND */
+.legend { display:flex; gap:1rem; flex-wrap:wrap; margin-top:0.5rem; }
+.leg-item { display:flex; align-items:center; gap:0.4rem; font-size:0.72rem; color:#6b6b67; }
+.leg-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+/* SPEED */
+.speed-row { display:flex; gap:0.5rem; align-items:center; }
+.speed-label { font-size:0.75rem; color:#6b6b67; }
+.speed-btn { font-size:0.72rem; padding:0.2rem 0.6rem; border-radius:999px; border:1px solid #2a2a2a; background:transparent; color:#6b6b67; cursor:pointer; }
+.speed-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* TOOLTIP */
+.tooltip { font-size:0.75rem; color:#6b6b67; background:#111; border:1px solid #2a2a2a; border-radius:6px; padding:0.4rem 0.65rem; display:inline-block; margin-top:0.4rem; }
+
+@media(max-width:900px) {
+  .grid-2,.grid-3,.grid-4,.stats-row { grid-template-columns:1fr 1fr; }
+  .strategy-grid,.macro-grid { grid-template-columns:1fr; }
+  .mode-tab { padding:0.75rem 0.75rem; font-size:0.75rem; }
+}
+@media(max-width:600px) {
+  .grid-2,.grid-3,.grid-4,.stats-row { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">The<span> Margin</span> — Advanced Simulator</div>
+    <a href="index.html" class="header-back">← Back to site</a>
+  </div>
+</header>
+
+<div class="mode-bar">
+  <div class="mode-inner">
+    <div class="mode-tab active" onclick="switchMode('history',this)">📈 Historical Replay</div>
+    <div class="mode-tab" onclick="switchMode('monte',this)">🎲 Monte Carlo</div>
+    <div class="mode-tab" onclick="switchMode('quant',this)">⚡ Quant Strategy</div>
+    <div class="mode-tab" onclick="switchMode('macro',this)">🌐 Macro Scenarios</div>
+    <div class="mode-tab" onclick="switchMode('college',this)">🎓 College Planner</div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══ MODE 1: HISTORICAL REPLAY ═══ -->
+<div class="mode-panel active" id="mode-history">
+  <div style="display:grid;grid-template-columns:300px 1fr;gap:1.25rem;">
+    <div>
+      <div class="panel">
+        <div class="panel-title">Portfolio Setup</div>
+        <div class="input-group" style="margin-bottom:1rem;">
+          <div class="input-label">Starting amount <span class="input-val" id="h-start-val">$10,000</span></div>
+          <input type="range" id="h-start" min="1000" max="100000" step="1000" value="10000" oninput="document.getElementById('h-start-val').textContent='$'+parseInt(this.value).toLocaleString()">
+        </div>
+        <div class="input-group" style="margin-bottom:1rem;">
+          <div class="input-label">Monthly contribution <span class="input-val" id="h-monthly-val">$200</span></div>
+          <input type="range" id="h-monthly" min="0" max="2000" step="50" value="200" oninput="document.getElementById('h-monthly-val').textContent='$'+this.value+'/mo'">
+        </div>
+        <div class="input-group" style="margin-bottom:1rem;">
+          <div class="input-label">Years <span class="input-val" id="h-years-val">30</span></div>
+          <input type="range" id="h-years" min="5" max="40" value="30" oninput="document.getElementById('h-years-val').textContent=this.value">
+        </div>
+
+        <div class="panel-title" style="margin-top:1rem;">Allocation</div>
+        <div style="font-size:0.78rem;color:#9a9894;margin-bottom:0.75rem;">Drag to adjust. Must total 100%.</div>
+
+        <div id="alloc-rows">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#e74c3c;flex-shrink:0;"></div>
+            <span style="font-size:0.8rem;flex:1;">Stocks</span>
+            <input type="range" id="a-stocks" min="0" max="100" value="60" style="flex:2;" oninput="syncAlloc()">
+            <span style="font-size:0.8rem;min-width:32px;text-align:right;color:var(--accent);" id="ap-stocks">60%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#3498db;flex-shrink:0;"></div>
+            <span style="font-size:0.8rem;flex:1;">Bonds</span>
+            <input type="range" id="a-bonds" min="0" max="100" value="20" style="flex:2;" oninput="syncAlloc()">
+            <span style="font-size:0.8rem;min-width:32px;text-align:right;color:var(--accent);" id="ap-bonds">20%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#27ae60;flex-shrink:0;"></div>
+            <span style="font-size:0.8rem;flex:1;">Real Estate</span>
+            <input type="range" id="a-re" min="0" max="100" value="10" style="flex:2;" oninput="syncAlloc()">
+            <span style="font-size:0.8rem;min-width:32px;text-align:right;color:var(--accent);" id="ap-re">10%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#f39c12;flex-shrink:0;"></div>
+            <span style="font-size:0.8rem;flex:1;">Crypto</span>
+            <input type="range" id="a-crypto" min="0" max="100" value="5" style="flex:2;" oninput="syncAlloc()">
+            <span style="font-size:0.8rem;min-width:32px;text-align:right;color:var(--accent);" id="ap-crypto">5%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#95a5a6;flex-shrink:0;"></div>
+            <span style="font-size:0.8rem;flex:1;">Cash</span>
+            <input type="range" id="a-cash" min="0" max="100" value="5" style="flex:2;" oninput="syncAlloc()">
+            <span style="font-size:0.8rem;min-width:32px;text-align:right;color:var(--accent);" id="ap-cash">5%</span>
+          </div>
+          <div style="font-size:0.78rem;margin-top:0.5rem;" id="alloc-total-row">
+            Total: <span id="alloc-total" style="color:var(--green);">100%</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="runHistory()">▶ Run</button>
+          <button class="btn btn-secondary" onclick="stopHistory()">■ Stop</button>
+        </div>
+        <div class="speed-row" style="margin-top:0.75rem;">
+          <span class="speed-label">Speed:</span>
+          <button class="speed-btn" onclick="setHSpeed(1000,this)">Slow</button>
+          <button class="speed-btn active" onclick="setHSpeed(300,this)">Normal</button>
+          <button class="speed-btn" onclick="setHSpeed(60,this)">Fast</button>
+          <button class="speed-btn" onclick="setHSpeed(0,this)">Instant</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-lbl">Portfolio Value</div><div class="stat-num neutral" id="h-val">$10,000</div></div>
+        <div class="stat-box"><div class="stat-lbl">Total Gain</div><div class="stat-num up" id="h-gain">$0</div></div>
+        <div class="stat-box"><div class="stat-lbl">Return</div><div class="stat-num up" id="h-ret">0%</div></div>
+        <div class="stat-box"><div class="stat-lbl">Invested</div><div class="stat-num neutral" id="h-invested">$10,000</div></div>
+        <div class="stat-box"><div class="stat-lbl">Year</div><div class="stat-num neutral" id="h-year">0 / 30</div></div>
+      </div>
+
+      <div class="event-feed" id="h-event">
+        <div class="event-dot"></div>
+        <span>Set your allocation and press Run to replay 30 years of market history.</span>
+      </div>
+
+      <div class="chart-box">
+        <div class="chart-header">
+          <span class="chart-label-sm">Portfolio value over time</span>
+          <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:var(--accent);"></div>Portfolio</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#333;border:1px solid #555;"></div>Invested</div>
+          </div>
+        </div>
+        <svg id="h-chart" viewBox="0 0 700 220" style="width:100%;display:block;">
+          <text x="350" y="115" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#333">Press Run to start</text>
+        </svg>
+      </div>
+
+      <!-- Asset breakdown -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem;">
+        <div class="stat-box"><div class="stat-lbl" style="color:#e74c3c;">Stocks</div><div class="stat-num neutral" id="h-bd-stocks">-</div><div class="stat-sub" id="h-bdr-stocks"></div></div>
+        <div class="stat-box"><div class="stat-lbl" style="color:#3498db;">Bonds</div><div class="stat-num neutral" id="h-bd-bonds">-</div><div class="stat-sub" id="h-bdr-bonds"></div></div>
+        <div class="stat-box"><div class="stat-lbl" style="color:#27ae60;">Real Estate</div><div class="stat-num neutral" id="h-bd-re">-</div><div class="stat-sub" id="h-bdr-re"></div></div>
+        <div class="stat-box"><div class="stat-lbl" style="color:#f39c12;">Crypto</div><div class="stat-num neutral" id="h-bd-crypto">-</div><div class="stat-sub" id="h-bdr-crypto"></div></div>
+        <div class="stat-box"><div class="stat-lbl" style="color:#95a5a6;">Cash</div><div class="stat-num neutral" id="h-bd-cash">-</div><div class="stat-sub" id="h-bdr-cash"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODE 2: MONTE CARLO ═══ -->
+<div class="mode-panel" id="mode-monte">
+  <div class="panel" style="margin-bottom:1.25rem;">
+    <div class="panel-title">Monte Carlo Simulation — Run thousands of random scenarios</div>
+    <div class="tooltip">Monte Carlo simulations use random sampling to show the range of possible outcomes. Instead of one path, you see the probability distribution of where you might end up.</div>
+    <div class="grid-4" style="margin-top:1rem;">
+      <div class="input-group">
+        <div class="input-label">Starting amount</div>
+        <input type="number" id="mc-start" value="10000" min="100">
+      </div>
+      <div class="input-group">
+        <div class="input-label">Monthly contribution ($)</div>
+        <input type="number" id="mc-monthly" value="200" min="0">
+      </div>
+      <div class="input-group">
+        <div class="input-label">Years</div>
+        <input type="number" id="mc-years" value="30" min="1" max="50">
+      </div>
+      <div class="input-group">
+        <div class="input-label">Simulations</div>
+        <select id="mc-runs">
+          <option value="1000">1,000</option>
+          <option value="5000" selected>5,000</option>
+          <option value="10000">10,000</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:1rem;">
+      <div class="input-group">
+        <div class="input-label">Expected annual return (%) <span class="input-val" id="mc-ret-val">7%</span></div>
+        <input type="range" id="mc-ret" min="1" max="20" value="7" oninput="document.getElementById('mc-ret-val').textContent=this.value+'%'">
+      </div>
+      <div class="input-group">
+        <div class="input-label">Volatility / std dev (%) <span class="input-val" id="mc-vol-val">15%</span></div>
+        <input type="range" id="mc-vol" min="1" max="40" value="15" oninput="document.getElementById('mc-vol-val').textContent=this.value+'%'">
+      </div>
+      <div class="input-group">
+        <div class="input-label">Inflation rate (%) <span class="input-val" id="mc-inf-val">2.5%</span></div>
+        <input type="range" id="mc-inf" min="0" max="10" step="0.5" value="2.5" oninput="document.getElementById('mc-inf-val').textContent=this.value+'%'">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="runMonteCarlo()">🎲 Run Monte Carlo</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-lbl">Median Outcome</div><div class="stat-num neutral" id="mc-median">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Best 10%</div><div class="stat-num up" id="mc-p90">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Worst 10%</div><div class="stat-num down" id="mc-p10">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Chance of Doubling</div><div class="stat-num neutral" id="mc-double">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Chance of Loss</div><div class="stat-num down" id="mc-loss">-</div></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-header"><span class="chart-label-sm">Distribution of final portfolio values (all simulations)</span></div>
+    <svg id="mc-chart" viewBox="0 0 700 220" style="width:100%;display:block;">
+      <text x="350" y="115" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#333">Run simulation to see distribution</text>
+    </svg>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Probability of reaching target portfolio value</div>
+    <div id="mc-prob-bars">
+      <div style="color:#6b6b67;font-size:0.85rem;">Run the simulation to see probabilities.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODE 3: QUANT STRATEGY ═══ -->
+<div class="mode-panel" id="mode-quant">
+  <div class="panel" style="margin-bottom:1.25rem;">
+    <div class="panel-title">Quantitative Strategy Back-Tester</div>
+    <div class="tooltip">Quant (quantitative) finance uses mathematical rules to make trading decisions automatically. Back-testing means testing these rules against historical data to see if they would have worked.</div>
+
+    <div class="grid-2" style="margin-top:1rem;">
+      <div class="input-group">
+        <div class="input-label">Strategy</div>
+        <select id="q-strategy" onchange="updateStrategyDesc()">
+          <option value="buyhold">Buy and Hold (baseline)</option>
+          <option value="ma_cross">Moving Average Crossover (50/200 day)</option>
+          <option value="momentum">Momentum — buy winners, sell losers</option>
+          <option value="rebalance">Annual Rebalancing (60/40)</option>
+          <option value="dca">Dollar Cost Averaging</option>
+          <option value="riskparity">Risk Parity</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <div class="input-label">Starting amount ($)</div>
+        <input type="number" id="q-start" value="10000">
+      </div>
+    </div>
+
+    <div id="q-desc" style="background:#111;border-radius:6px;padding:0.75rem 1rem;margin-top:0.75rem;font-size:0.85rem;color:#9a9894;line-height:1.6;"></div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="runQuant()">⚡ Back-test Strategy</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-lbl">Final Value</div><div class="stat-num neutral" id="q-val">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Total Return</div><div class="stat-num up" id="q-ret">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Sharpe Ratio</div><div class="stat-num neutral" id="q-sharpe">-</div><div class="stat-sub">Risk-adjusted return</div></div>
+    <div class="stat-box"><div class="stat-lbl">Max Drawdown</div><div class="stat-num down" id="q-drawdown">-</div><div class="stat-sub">Worst peak-to-trough</div></div>
+    <div class="stat-box"><div class="stat-lbl">vs Buy & Hold</div><div class="stat-num neutral" id="q-vs-bh">-</div></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-header">
+      <span class="chart-label-sm">Strategy performance vs buy & hold</span>
+      <div class="legend">
+        <div class="leg-item"><div class="leg-dot" style="background:var(--accent);"></div>Your strategy</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#3498db;"></div>Buy & hold</div>
+      </div>
+    </div>
+    <svg id="q-chart" viewBox="0 0 700 220" style="width:100%;display:block;">
+      <text x="350" y="115" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#333">Select a strategy and press Back-test</text>
+    </svg>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Quant Finance Glossary</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;font-size:0.8rem;">
+      <div><strong style="color:var(--accent);">Sharpe Ratio</strong><br><span style="color:#6b6b67;">Return divided by volatility. Higher = better risk-adjusted performance. Above 1.0 is good. Above 2.0 is excellent.</span></div>
+      <div><strong style="color:var(--accent);">Max Drawdown</strong><br><span style="color:#6b6b67;">The biggest percentage drop from peak to trough. A 50% drawdown means you need a 100% gain just to break even.</span></div>
+      <div><strong style="color:var(--accent);">Moving Average</strong><br><span style="color:#6b6b67;">The average price over the last N days. When the 50-day MA crosses above the 200-day MA, it's called a "golden cross" — a bullish signal.</span></div>
+      <div><strong style="color:var(--accent);">Momentum</strong><br><span style="color:#6b6b67;">Assets that have gone up recently tend to keep going up (and vice versa) in the short term. Momentum strategies exploit this pattern.</span></div>
+      <div><strong style="color:var(--accent);">Risk Parity</strong><br><span style="color:#6b6b67;">Allocate so each asset contributes equally to portfolio risk, not equally to value. Bonds get more weight because they're less volatile.</span></div>
+      <div><strong style="color:var(--accent);">Back-testing</strong><br><span style="color:#6b6b67;">Testing a trading strategy against historical data. Warning: past performance doesn't guarantee future results. But it reveals if a strategy is fundamentally flawed.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODE 4: MACRO SCENARIOS ═══ -->
+<div class="mode-panel" id="mode-macro">
+  <div class="panel" style="margin-bottom:1.25rem;">
+    <div class="panel-title">Macro Scenario Builder — set economic conditions, see portfolio impact</div>
+    <div class="tooltip">Change inflation, interest rates, GDP growth, and market stress to simulate different economic environments. See how your portfolio holds up in each scenario.</div>
+
+    <div class="macro-grid" style="margin-top:1rem;">
+      <div class="macro-item">
+        <div class="macro-name">Inflation Rate</div>
+        <div class="macro-val-big" id="ms-inf-val">2.5%</div>
+        <input type="range" id="ms-inf" min="0" max="15" step="0.5" value="2.5" oninput="document.getElementById('ms-inf-val').textContent=this.value+'%';updateMacroPreview()">
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:#6b6b67;margin-top:0.3rem;"><span>Deflation</span><span>Hyperinflation</span></div>
+      </div>
+      <div class="macro-item">
+        <div class="macro-name">Fed Funds Rate</div>
+        <div class="macro-val-big" id="ms-fed-val">3.75%</div>
+        <input type="range" id="ms-fed" min="0" max="20" step="0.25" value="3.75" oninput="document.getElementById('ms-fed-val').textContent=parseFloat(this.value).toFixed(2)+'%';updateMacroPreview()">
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:#6b6b67;margin-top:0.3rem;"><span>Zero rate</span><span>Volcker-era</span></div>
+      </div>
+      <div class="macro-item">
+        <div class="macro-name">GDP Growth</div>
+        <div class="macro-val-big" id="ms-gdp-val">2.0%</div>
+        <input type="range" id="ms-gdp" min="-5" max="8" step="0.5" value="2" oninput="document.getElementById('ms-gdp-val').textContent=this.value+'%';updateMacroPreview()">
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:#6b6b67;margin-top:0.3rem;"><span>Deep recession</span><span>Boom</span></div>
+      </div>
+      <div class="macro-item">
+        <div class="macro-name">Market Stress</div>
+        <div class="macro-val-big" id="ms-stress-val">Low</div>
+        <input type="range" id="ms-stress" min="0" max="3" step="1" value="0" oninput="updateStressLabel();updateMacroPreview()">
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:#6b6b67;margin-top:0.3rem;"><span>Calm</span><span>2008-level</span></div>
+      </div>
+      <div class="macro-item">
+        <div class="macro-name">Dollar Strength</div>
+        <div class="macro-val-big" id="ms-usd-val">Neutral</div>
+        <input type="range" id="ms-usd" min="0" max="2" step="1" value="1" oninput="updateUSDLabel();updateMacroPreview()">
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:#6b6b67;margin-top:0.3rem;"><span>Weak</span><span>Strong</span></div>
+      </div>
+      <div class="macro-item">
+        <div class="macro-name">Years to simulate</div>
+        <div class="macro-val-big" id="ms-years-val">10</div>
+        <input type="range" id="ms-years" min="1" max="30" value="10" oninput="document.getElementById('ms-years-val').textContent=this.value">
+      </div>
+    </div>
+
+    <!-- Preset scenarios -->
+    <div style="margin-top:1rem;">
+      <div style="font-size:0.72rem;color:#6b6b67;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Quick Scenarios</div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.4rem 0.85rem;" onclick="setScenario('2008')">🔥 2008 Crisis</button>
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.4rem 0.85rem;" onclick="setScenario('covid')">🦠 COVID 2020</button>
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.4rem 0.85rem;" onclick="setScenario('1970s')">📉 1970s Stagflation</button>
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.4rem 0.85rem;" onclick="setScenario('boom')">🚀 90s Bull Run</button>
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.4rem 0.85rem;" onclick="setScenario('now')">📊 Current (2026)</button>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:1rem;">
+      <div class="input-group">
+        <div class="input-label">Starting amount ($)</div>
+        <input type="number" id="ms-start" value="10000">
+      </div>
+      <div class="input-group">
+        <div class="input-label">Portfolio type</div>
+        <select id="ms-portfolio">
+          <option value="aggressive">Aggressive (80% stocks)</option>
+          <option value="balanced" selected>Balanced (60/40)</option>
+          <option value="conservative">Conservative (30/70)</option>
+          <option value="allstocks">100% Stocks</option>
+          <option value="allbonds">100% Bonds</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="runMacro()">🌐 Run Scenario</button>
+    </div>
+  </div>
+
+  <div id="macro-preview" style="background:#111;border-radius:8px;border:1px solid #2a2a2a;padding:1rem;margin-bottom:1.25rem;font-size:0.85rem;color:#9a9894;line-height:1.7;"></div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-lbl">Final Value</div><div class="stat-num neutral" id="ms-val">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Real Return</div><div class="stat-num neutral" id="ms-real-ret">-</div><div class="stat-sub">Inflation adjusted</div></div>
+    <div class="stat-box"><div class="stat-lbl">Nominal Return</div><div class="stat-num neutral" id="ms-nom-ret">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Worst Year</div><div class="stat-num down" id="ms-worst">-</div></div>
+    <div class="stat-box"><div class="stat-lbl">Best Year</div><div class="stat-num up" id="ms-best">-</div></div>
+  </div>
+
+  <div class="chart-box">
+    <div class="chart-header"><span class="chart-label-sm">Portfolio value under this scenario</span></div>
+    <svg id="ms-chart" viewBox="0 0 700 220" style="width:100%;display:block;">
+      <text x="350" y="115" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#333">Set scenario parameters and run</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ═══ MODE 5: COLLEGE PLANNER ═══ -->
+<div class="mode-panel" id="mode-college">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+    <div class="panel">
+      <div class="panel-title">College Funding Goal</div>
+
+      <div class="input-group" style="margin-bottom:1rem;">
+        <div class="input-label">Target school cost (per year) <span class="input-val" id="cp-cost-val">$58,000</span></div>
+        <input type="range" id="cp-cost" min="10000" max="90000" step="1000" value="58000" oninput="document.getElementById('cp-cost-val').textContent='$'+parseInt(this.value).toLocaleString();calcCollege()">
+      </div>
+      <div class="input-group" style="margin-bottom:1rem;">
+        <div class="input-label">Years of college</div>
+        <select id="cp-years-col" onchange="calcCollege()">
+          <option value="4" selected>4 years</option>
+          <option value="2">2 years (community college)</option>
+          <option value="5">5 years</option>
+        </select>
+      </div>
+      <div class="input-group" style="margin-bottom:1rem;">
+        <div class="input-label">Years until college starts <span class="input-val" id="cp-until-val">3 years</span></div>
+        <input type="range" id="cp-until" min="1" max="10" value="3" oninput="document.getElementById('cp-until-val').textContent=this.value+' years';calcCollege()">
+      </div>
+      <div class="input-group" style="margin-bottom:1rem;">
+        <div class="input-label">Current savings ($)</div>
+        <input type="number" id="cp-saved" value="5000" oninput="calcCollege()">
+      </div>
+      <div class="input-group" style="margin-bottom:1rem;">
+        <div class="input-label">Monthly savings toward college ($)</div>
+        <input type="number" id="cp-monthly" value="300" oninput="calcCollege()">
+      </div>
+      <div class="input-group" style="margin-bottom:1rem;">
+        <div class="input-label">Expected annual scholarships/aid ($)</div>
+        <input type="number" id="cp-aid" value="10000" oninput="calcCollege()">
+      </div>
+      <div class="input-group" style="margin-bottom:1rem;">
+        <div class="input-label">Investment return (%) <span class="input-val" id="cp-ret-val">6%</span></div>
+        <input type="range" id="cp-ret" min="1" max="12" value="6" oninput="document.getElementById('cp-ret-val').textContent=this.value+'%';calcCollege()">
+      </div>
+    </div>
+
+    <div>
+      <div class="panel" style="margin-bottom:1rem;">
+        <div class="panel-title">Your College Funding Picture</div>
+
+        <div style="text-align:center;padding:1.5rem;background:#111;border-radius:8px;margin-bottom:1rem;">
+          <div style="font-size:0.72rem;color:#6b6b67;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Total 4-year cost</div>
+          <div style="font-family:var(--serif);font-size:2rem;font-weight:600;color:#e8e6e0;" id="cp-total-cost">-</div>
+        </div>
+
+        <div id="cp-breakdown" style="font-size:0.875rem;"></div>
+
+        <div style="margin-top:1rem;background:#111;border-radius:8px;padding:1rem;" id="cp-verdict"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Loan scenario — if you borrow the gap</div>
+        <div id="cp-loan" style="font-size:0.875rem;color:#9a9894;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-box" style="margin-top:1.25rem;">
+    <div class="chart-header"><span class="chart-label-sm">Savings vs. cost over time</span></div>
+    <svg id="cp-chart" viewBox="0 0 700 180" style="width:100%;display:block;">
+      <text x="350" y="95" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#333">Adjust inputs to see your savings trajectory</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end page -->
+
+<script>
+// ═══════════════════════════════════════
+// SHARED DATA
+// ═══════════════════════════════════════
+const YEARS = [
+  {s:0.28, b:0.09, r:0.12, c:null,  k:0.05, ev:null},
+  {s:0.23, b:0.03, r:0.15, c:null,  k:0.05, ev:null},
+  {s:0.33, b:0.10, r:0.17, c:null,  k:0.05, ev:"🚀 Dot-com boom. Tech stocks surge."},
+  {s:0.28, b:0.09, r:0.15, c:null,  k:0.05, ev:null},
+  {s:0.21, b:0.05, r:0.11, c:null,  k:0.05, ev:"📈 S&P 500 peaks. Nasdaq all-time high."},
+  {s:-0.09,b:0.08, r:0.12, c:null,  k:0.04, ev:"💥 Dot-com crash begins. Tech -40%."},
+  {s:-0.12,b:0.09, r:0.09, c:null,  k:0.03, ev:"📉 9/11. Markets close for a week."},
+  {s:-0.22,b:0.10, r:0.05, c:null,  k:0.03, ev:"📉 Markets bottom. Dot-com bust ends."},
+  {s:0.29, b:0.04, r:0.07, c:0.50,  k:0.03, ev:"🔄 Recovery. Real estate booms."},
+  {s:0.11, b:0.04, r:0.14, c:1.50,  k:0.04, ev:"🏠 Housing bubble. Bitcoin launched."},
+  {s:0.05, b:0.02, r:0.12, c:2.00,  k:0.04, ev:null},
+  {s:0.16, b:0.07, r:0.05, c:1.00,  k:0.05, ev:"⚠️ Subprime mortgage warnings."},
+  {s:0.05, b:0.07, r:-0.08,c:0.30,  k:0.05, ev:"⚠️ Housing market cracking."},
+  {s:-0.37,b:0.08, r:-0.39,c:-0.80, k:0.03, ev:"🔥 2008 Financial Crisis. Lehman collapses."},
+  {s:0.26, b:0.06, r:-0.05,c:0.50,  k:0.03, ev:"🔄 Recovery. Fed cuts to zero."},
+  {s:0.15, b:0.07, r:0.04, c:3.00,  k:0.03, ev:"📈 Markets recover. Bitcoin hits $1."},
+  {s:0.02, b:0.08, r:0.08, c:15.0,  k:0.03, ev:"💰 Bitcoin +1,500%. European debt crisis."},
+  {s:0.16, b:0.04, r:0.11, c:5.00,  k:0.03, ev:null},
+  {s:0.32, b:-0.02,r:0.12, c:100.0, k:0.03, ev:"🚀 Bitcoin $13→$1,100. S&P best year since '97."},
+  {s:0.14, b:0.06, r:0.13, c:-0.58, k:0.03, ev:"📉 Bitcoin crashes 58%. Stocks steady."},
+  {s:0.01, b:0.05, r:0.10, c:0.35,  k:0.03, ev:"⚠️ Oil crash. Emerging markets struggle."},
+  {s:0.12, b:0.03, r:0.09, c:1.25,  k:0.04, ev:null},
+  {s:0.22, b:0.03, r:0.11, c:13.0,  k:0.04, ev:"🚀 Bitcoin $1k→$14k. Tech boom."},
+  {s:-0.04,b:0.00, r:0.08, c:-0.73, k:0.04, ev:"📉 Bitcoin -73%. Trade war with China."},
+  {s:0.31, b:0.09, r:0.12, c:0.92,  k:0.05, ev:"📈 Strong year. Fed signals patience."},
+  {s:-0.19,b:0.08, r:-0.10,c:-0.68, k:0.03, ev:"🦠 COVID-19. Fastest crash in history. Fed prints trillions."},
+  {s:0.28, b:0.00, r:0.41, c:3.00,  k:0.03, ev:"🚀 Massive recovery. BTC $29k. Real estate explodes."},
+  {s:0.27, b:-0.02,r:0.25, c:0.60,  k:0.03, ev:"📈 Everything rallies. Meme stocks. Inflation begins."},
+  {s:-0.19,b:-0.13,r:0.05, c:-0.65, k:0.04, ev:"🔥 Inflation 40yr high. Fed hikes hard. Crypto winter."},
+  {s:0.26, b:0.05, r:0.08, c:1.56,  k:0.05, ev:"🔄 Recovery. AI boom. Bitcoin ETF approved."},
+  {s:0.23, b:0.04, r:0.06, c:0.45,  k:0.05, ev:"📊 Stable growth. AI reshapes economy."},
+];
+
+const fmt = v => '$' + Math.round(v).toLocaleString();
+const fmtPct = (v, dp=1) => (v>=0?'+':'') + (v*100).toFixed(dp) + '%';
+let hInterval = null, hSpeed = 300;
+
+// ═══════════════════════════════════════
+// MODE SWITCHING
+// ═══════════════════════════════════════
+function switchMode(id, btn) {
+  document.querySelectorAll('.mode-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('mode-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'macro') updateMacroPreview();
+  if (id === 'college') calcCollege();
+  if (id === 'quant') updateStrategyDesc();
+}
+
+// ═══════════════════════════════════════
+// ALLOCATION SYNC
+// ═══════════════════════════════════════
+function syncAlloc() {
+  const ids = ['stocks','bonds','re','crypto','cash'];
+  const vals = ids.map(id => +document.getElementById('a-'+id).value);
+  const total = vals.reduce((a,b)=>a+b,0);
+  ids.forEach((id,i) => {
+    document.getElementById('ap-'+id).textContent = Math.round(vals[i]) + '%';
+  });
+  const totalEl = document.getElementById('alloc-total');
+  totalEl.textContent = total + '%';
+  totalEl.style.color = total === 100 ? 'var(--green)' : 'var(--accent)';
+}
+
+// ═══════════════════════════════════════
+// MODE 1: HISTORICAL
+// ═══════════════════════════════════════
+function setHSpeed(ms, btn) {
+  hSpeed = ms;
+  document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function stopHistory() {
+  if (hInterval) { clearInterval(hInterval); hInterval = null; }
+}
+
+function runHistory() {
+  stopHistory();
+  const start = +document.getElementById('h-start').value;
+  const monthly = +document.getElementById('h-monthly').value;
+  const years = +document.getElementById('h-years').value;
+  document.getElementById('h-years-val').textContent = years;
+
+  const alloc = {
+    s: +document.getElementById('a-stocks').value / 100,
+    b: +document.getElementById('a-bonds').value / 100,
+    r: +document.getElementById('a-re').value / 100,
+    c: +document.getElementById('a-crypto').value / 100,
+    k: +document.getElementById('a-cash').value / 100,
+  };
+
+  let assets = { s:start*alloc.s, b:start*alloc.b, r:start*alloc.r, c:start*alloc.c, k:start*alloc.k };
+  let totalInvested = start;
+  const history = [{ val:start, invested:start, assets:{...assets}, ev:null, year:0 }];
+
+  for (let y = 0; y < years; y++) {
+    const yd = YEARS[y % YEARS.length];
+    totalInvested += monthly * 12;
+    assets.s += monthly*12*alloc.s; assets.b += monthly*12*alloc.b;
+    assets.r += monthly*12*alloc.r; assets.c += monthly*12*alloc.c; assets.k += monthly*12*alloc.k;
+    assets.s *= (1+yd.s); assets.b *= (1+yd.b); assets.r *= (1+yd.r);
+    assets.c *= (1+Math.max(-0.9, Math.min(yd.c !== null ? yd.c : yd.s*1.5, 3)));
+    assets.k *= (1+yd.k);
+    history.push({ val:assets.s+assets.b+assets.r+assets.c+assets.k, invested:totalInvested, assets:{...assets}, ev:yd.ev, year:y+1 });
+  }
+
+  const maxVal = Math.max(...history.map(h=>h.val)) * 1.08;
+  let step = 0;
+
+  function draw() {
+    if (step >= history.length) { stopHistory(); return; }
+    const h = history[step];
+    const PL=55,PR=10,PT=10,PB=28,W=700,H=220;
+    const cW=W-PL-PR, cH=H-PT-PB;
+
+    let svg = '';
+    for (let i=0;i<=4;i++) {
+      const yv=(maxVal/4)*i, yp=H-PB-(yv/maxVal)*cH;
+      svg += `<line x1="${PL}" y1="${yp.toFixed(1)}" x2="${W-PR}" y2="${yp.toFixed(1)}" stroke="#222" stroke-width="1"/>`;
+      svg += `<text x="${PL-6}" y="${(yp+4).toFixed(1)}" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">${yv>=1e6?'$'+(yv/1e6).toFixed(1)+'M':yv>=1e3?'$'+Math.round(yv/1e3)+'k':'$'+Math.round(yv)}</text>`;
+    }
+
+    // Invested area
+    let iPath = `M ${PL} ${H-PB}`;
+    for (let i=0;i<=step;i++) {
+      const x=PL+(i/(history.length-1))*cW, y=H-PB-(history[i].invested/maxVal)*cH;
+      iPath += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+    }
+    iPath += ` L ${(PL+(step/(history.length-1))*cW).toFixed(1)} ${H-PB} Z`;
+    svg += `<path d="${iPath}" fill="#2a2a2a"/>`;
+
+    // Portfolio line
+    let line='', area=`M ${PL} ${H-PB}`;
+    for (let i=0;i<=step;i++) {
+      const x=PL+(i/(history.length-1))*cW, y=H-PB-(history[i].val/maxVal)*cH;
+      line += (i===0?`M ${x.toFixed(1)} ${y.toFixed(1)}`:`L ${x.toFixed(1)} ${y.toFixed(1)}`);
+      area += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+    }
+    const lx=PL+(step/(history.length-1))*cW, ly=H-PB-(h.val/maxVal)*cH;
+    area += ` L ${lx.toFixed(1)} ${H-PB} Z`;
+    svg += `<path d="${area}" fill="rgba(192,57,43,0.12)"/>`;
+    svg += `<path d="${line}" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linejoin="round"/>`;
+    svg += `<circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="4" fill="var(--accent)"/>`;
+
+    // x labels
+    [0,Math.round(years/4),Math.round(years/2),Math.round(3*years/4),years].forEach(ly2 => {
+      const x=PL+(ly2/years)*cW;
+      svg += `<text x="${x.toFixed(1)}" y="${H-8}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">Yr ${ly2}</text>`;
+    });
+
+    document.getElementById('h-chart').innerHTML = svg;
+
+    const gain = h.val - h.invested;
+    const ret = h.invested > 0 ? gain/h.invested : 0;
+    document.getElementById('h-val').textContent = fmt(h.val);
+    document.getElementById('h-gain').textContent = (gain>=0?'+':'')+fmt(Math.abs(gain));
+    document.getElementById('h-gain').className = 'stat-num ' + (gain>=0?'up':'down');
+    document.getElementById('h-ret').textContent = fmtPct(ret);
+    document.getElementById('h-ret').className = 'stat-num ' + (ret>=0?'up':'down');
+    document.getElementById('h-invested').textContent = fmt(h.invested);
+    document.getElementById('h-year').textContent = `${h.year} / ${years}`;
+
+    const ev = document.getElementById('h-event');
+    const isBad = h.ev && (h.ev.includes('💥')||h.ev.includes('📉')||h.ev.includes('🔥')||h.ev.includes('⚠️'));
+    ev.innerHTML = h.ev
+      ? `<div class="event-dot ${isBad?'red':''}"></div><span><strong>Year ${h.year}:</strong> ${h.ev}</span>`
+      : `<div class="event-dot"></div><span>Year ${h.year}: Steady compounding.</span>`;
+
+    ['s','b','r','c','k'].forEach((k,i) => {
+      const names=['stocks','bonds','re','crypto','cash'];
+      const val = h.assets[k];
+      const init = history[0].assets[k];
+      const r2 = init>0?(val-init)/init:0;
+      document.getElementById('h-bd-'+names[i]).textContent = fmt(val);
+      document.getElementById('h-bdr-'+names[i]).textContent = fmtPct(r2);
+      document.getElementById('h-bdr-'+names[i]).style.color = r2>=0?'var(--green)':'var(--accent)';
+    });
+
+    step++;
+  }
+
+  if (hSpeed === 0) { while(step < history.length) draw(); }
+  else { draw(); hInterval = setInterval(draw, hSpeed); }
+}
+
+// ═══════════════════════════════════════
+// MODE 2: MONTE CARLO
+// ═══════════════════════════════════════
+function runMonteCarlo() {
+  const start = +document.getElementById('mc-start').value;
+  const monthly = +document.getElementById('mc-monthly').value * 12;
+  const years = +document.getElementById('mc-years').value;
+  const runs = +document.getElementById('mc-runs').value;
+  const mu = +document.getElementById('mc-ret').value / 100;
+  const sigma = +document.getElementById('mc-vol').value / 100;
+  const inflation = +document.getElementById('mc-inf').value / 100;
+
+  // Box-Muller for normal distribution
+  function randn() {
+    let u=0,v=0;
+    while(u===0) u=Math.random();
+    while(v===0) v=Math.random();
+    return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+  }
+
+  const finals = [];
+  for (let r=0;r<runs;r++) {
+    let val = start;
+    for (let y=0;y<years;y++) {
+      val += monthly;
+      const ret = mu + sigma*randn();
+      val *= (1+ret);
+    }
+    finals.push(val);
+  }
+  finals.sort((a,b)=>a-b);
+
+  const median = finals[Math.floor(runs/2)];
+  const p10 = finals[Math.floor(runs*0.1)];
+  const p90 = finals[Math.floor(runs*0.9)];
+  const invested = start + monthly*years;
+  const pLoss = finals.filter(v=>v<invested).length/runs;
+  const pDouble = finals.filter(v=>v>invested*2).length/runs;
+
+  document.getElementById('mc-median').textContent = fmt(median);
+  document.getElementById('mc-p90').textContent = fmt(p90);
+  document.getElementById('mc-p10').textContent = fmt(p10);
+  document.getElementById('mc-double').textContent = (pDouble*100).toFixed(1)+'%';
+  document.getElementById('mc-loss').textContent = (pLoss*100).toFixed(1)+'%';
+  document.getElementById('mc-double').className = 'stat-num ' + (pDouble>0.7?'up':pDouble>0.4?'neutral':'down');
+  document.getElementById('mc-loss').className = 'stat-num ' + (pLoss<0.1?'up':pLoss<0.25?'neutral':'down');
+
+  // Histogram
+  const bins = 40;
+  const minV = p10*0.5, maxV = p90*1.5;
+  const binSize = (maxV-minV)/bins;
+  const counts = new Array(bins).fill(0);
+  finals.forEach(v => {
+    const b = Math.min(bins-1, Math.max(0, Math.floor((v-minV)/binSize)));
+    counts[b]++;
+  });
+  const maxCount = Math.max(...counts);
+
+  const PL=55,PR=10,PT=15,PB=28,W=700,H=220;
+  const cW=W-PL-PR, cH=H-PT-PB;
+  let svg = '';
+
+  counts.forEach((c,i) => {
+    const x = PL + (i/bins)*cW;
+    const barW = cW/bins - 1;
+    const barH = (c/maxCount)*cH;
+    const centerVal = minV + (i+0.5)*binSize;
+    const isMedian = Math.abs(centerVal-median)<binSize;
+    svg += `<rect x="${x.toFixed(1)}" y="${(H-PB-barH).toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${isMedian?'var(--accent)':'#3a3a3a'}" rx="1"/>`;
+  });
+
+  // Percentile lines
+  const medX = PL + ((median-minV)/(maxV-minV))*cW;
+  const p10X = PL + ((p10-minV)/(maxV-minV))*cW;
+  const p90X = PL + ((p90-minV)/(maxV-minV))*cW;
+  svg += `<line x1="${medX.toFixed(1)}" y1="${PT}" x2="${medX.toFixed(1)}" y2="${H-PB}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4,3"/>`;
+  svg += `<text x="${medX.toFixed(1)}" y="${PT-3}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="var(--accent)">Median</text>`;
+  svg += `<line x1="${p10X.toFixed(1)}" y1="${PT}" x2="${p10X.toFixed(1)}" y2="${H-PB}" stroke="#f39c12" stroke-width="1" stroke-dasharray="3,3"/>`;
+  svg += `<line x1="${p90X.toFixed(1)}" y1="${PT}" x2="${p90X.toFixed(1)}" y2="${H-PB}" stroke="#27ae60" stroke-width="1" stroke-dasharray="3,3"/>`;
+
+  // x axis labels
+  [0,0.25,0.5,0.75,1].forEach(pct => {
+    const v = minV + pct*(maxV-minV);
+    const x = PL + pct*cW;
+    svg += `<text x="${x.toFixed(1)}" y="${H-8}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">${v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+Math.round(v/1e3)+'k':'$'+Math.round(v)}</text>`;
+  });
+
+  document.getElementById('mc-chart').innerHTML = svg;
+
+  // Probability bars
+  const targets = [invested, invested*1.5, invested*2, invested*3, invested*5, invested*10];
+  const labels = ['Break even','1.5x','2x','3x','5x','10x'];
+  let barsHtml = '';
+  targets.forEach((t,i) => {
+    const prob = finals.filter(v=>v>=t).length/runs;
+    const color = prob>0.75?'var(--green)':prob>0.4?'var(--yellow)':'var(--accent)';
+    barsHtml += `<div class="prob-row">
+      <span class="prob-label">${labels[i]}</span>
+      <div class="prob-bar-wrap"><div class="prob-bar" style="width:${(prob*100).toFixed(0)}%;background:${color};">${prob>0.15?(prob*100).toFixed(0)+'%':''}</div></div>
+      <span class="prob-val">${fmt(t)}</span>
+    </div>`;
+  });
+  document.getElementById('mc-prob-bars').innerHTML = barsHtml;
+}
+
+// ═══════════════════════════════════════
+// MODE 3: QUANT STRATEGY
+// ═══════════════════════════════════════
+const stratDescs = {
+  buyhold: "Buy once and hold forever. No trading, no rebalancing, no decisions. Studies show this beats most active strategies over the long run. Used as the baseline to compare everything else against.",
+  ma_cross: "Buy when the 50-day moving average crosses above the 200-day MA (golden cross). Sell when it crosses below (death cross). A classic trend-following signal used by institutional traders.",
+  momentum: "Rotate into assets that have performed best over the past 12 months. Research shows momentum persists in markets over medium timeframes — winners keep winning, losers keep losing, until they don't.",
+  rebalance: "Maintain a fixed 60/40 stocks/bonds allocation by rebalancing annually. When stocks rise and become >60% of portfolio, sell some and buy bonds. Forces buy-low-sell-high behavior systematically.",
+  dca: "Invest a fixed dollar amount at regular intervals regardless of price. Automatically buys more shares when prices are low and fewer when high. Removes emotion from timing decisions.",
+  riskparity: "Allocate based on risk contribution, not dollar value. Bonds are less volatile than stocks so they get more capital. Made famous by Ray Dalio's All Weather Portfolio.",
+};
+
+function updateStrategyDesc() {
+  const s = document.getElementById('q-strategy').value;
+  document.getElementById('q-desc').textContent = stratDescs[s] || '';
+}
+
+function runQuant() {
+  updateStrategyDesc();
+  const strategy = document.getElementById('q-strategy').value;
+  const start = +document.getElementById('q-start').value;
+
+  // Use annual return data from YEARS
+  const stockReturns = YEARS.map(y => y.s);
+  const bondReturns  = YEARS.map(y => y.b);
+
+  function simulate(allocs) {
+    // allocs: array of {s, b} for each year
+    let val = start;
+    const history = [start];
+    let peak = start, maxDD = 0;
+    const returns = [];
+    for (let y = 0; y < 30; y++) {
+      const a = allocs[y % allocs.length];
+      const r = a.s * stockReturns[y] + a.b * bondReturns[y];
+      const prev = val;
+      val *= (1 + r);
+      history.push(val);
+      returns.push(r);
+      if (val > peak) peak = val;
+      const dd = (peak - val) / peak;
+      if (dd > maxDD) maxDD = dd;
+    }
+    const totalRet = (val - start) / start;
+    const avgRet = returns.reduce((a,b)=>a+b,0)/returns.length;
+    const variance = returns.reduce((a,b)=>a+(b-avgRet)**2,0)/returns.length;
+    const sharpe = avgRet / Math.sqrt(variance);
+    return { val, history, totalRet, sharpe, maxDD };
+  }
+
+  // Buy & hold baseline (60/40)
+  const bhAllocs = Array(30).fill({s:0.6, b:0.4});
+  const bh = simulate(bhAllocs);
+
+  // Strategy-specific allocs
+  let stratAllocs;
+  switch(strategy) {
+    case 'buyhold':
+      stratAllocs = bhAllocs; break;
+    case 'ma_cross':
+      // Simplified: use momentum proxy - buy stocks in up years, bonds in down years
+      stratAllocs = YEARS.slice(0,30).map((y,i) => {
+        const prev3avg = i>=3 ? (YEARS[i-1].s+YEARS[i-2].s+YEARS[i-3].s)/3 : 0.1;
+        return prev3avg > 0 ? {s:0.9, b:0.1} : {s:0.1, b:0.9};
+      }); break;
+    case 'momentum':
+      stratAllocs = YEARS.slice(0,30).map((y,i) => {
+        const prevRet = i>0 ? YEARS[i-1].s : 0.1;
+        return prevRet > 0.1 ? {s:0.95, b:0.05} : {s:0.3, b:0.7};
+      }); break;
+    case 'rebalance':
+      stratAllocs = Array(30).fill({s:0.6, b:0.4}); break;
+    case 'dca':
+      stratAllocs = Array(30).fill({s:0.7, b:0.3}); break;
+    case 'riskparity':
+      stratAllocs = Array(30).fill({s:0.25, b:0.75}); break;
+    default:
+      stratAllocs = bhAllocs;
+  }
+
+  const strat = simulate(stratAllocs);
+
+  document.getElementById('q-val').textContent = fmt(strat.val);
+  document.getElementById('q-ret').textContent = fmtPct(strat.totalRet);
+  document.getElementById('q-ret').className = 'stat-num ' + (strat.totalRet>=0?'up':'down');
+  document.getElementById('q-sharpe').textContent = strat.sharpe.toFixed(2);
+  document.getElementById('q-sharpe').className = 'stat-num ' + (strat.sharpe>1?'up':strat.sharpe>0.5?'neutral':'down');
+  document.getElementById('q-drawdown').textContent = '-' + (strat.maxDD*100).toFixed(1) + '%';
+  const vs = strat.val - bh.val;
+  document.getElementById('q-vs-bh').textContent = (vs>=0?'+':'')+fmt(vs);
+  document.getElementById('q-vs-bh').className = 'stat-num ' + (vs>=0?'up':'down');
+
+  // Chart
+  const allH = [...strat.history, ...bh.history];
+  const maxV = Math.max(...allH)*1.08;
+  const PL=55,PR=10,PT=10,PB=28,W=700,H=220;
+  const cW=W-PL-PR, cH=H-PT-PB;
+  let svg='';
+
+  for(let i=0;i<=4;i++){
+    const yv=(maxV/4)*i, yp=H-PB-(yv/maxV)*cH;
+    svg+=`<line x1="${PL}" y1="${yp.toFixed(1)}" x2="${W-PR}" y2="${yp.toFixed(1)}" stroke="#222" stroke-width="1"/>`;
+    svg+=`<text x="${PL-6}" y="${(yp+4).toFixed(1)}" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">${yv>=1e6?'$'+(yv/1e6).toFixed(1)+'M':yv>=1e3?'$'+Math.round(yv/1e3)+'k':'$'+Math.round(yv)}</text>`;
+  }
+
+  [bh, strat].forEach((sim, si) => {
+    const color = si===0 ? '#3498db' : 'var(--accent)';
+    let line='';
+    sim.history.forEach((v,i)=>{
+      const x=PL+(i/30)*cW, y=H-PB-(v/maxV)*cH;
+      line += (i===0?`M ${x.toFixed(1)} ${y.toFixed(1)}`:`L ${x.toFixed(1)} ${y.toFixed(1)}`);
+    });
+    svg+=`<path d="${line}" stroke="${color}" stroke-width="2" fill="none" stroke-linejoin="round" ${si===0?'stroke-dasharray="5,3"':''}/>`;
+  });
+
+  [0,10,20,30].forEach(y=>{
+    const x=PL+(y/30)*cW;
+    svg+=`<text x="${x.toFixed(1)}" y="${H-8}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">Yr ${y}</text>`;
+  });
+
+  document.getElementById('q-chart').innerHTML=svg;
+}
+
+// ═══════════════════════════════════════
+// MODE 4: MACRO SCENARIOS
+// ═══════════════════════════════════════
+function updateStressLabel() {
+  const v = +document.getElementById('ms-stress').value;
+  const labels = ['Low','Moderate','High','Extreme (2008-level)'];
+  document.getElementById('ms-stress-val').textContent = labels[v];
+}
+function updateUSDLabel() {
+  const v = +document.getElementById('ms-usd').value;
+  document.getElementById('ms-usd-val').textContent = ['Weak','Neutral','Strong'][v];
+}
+
+function setScenario(name) {
+  const scenarios = {
+    '2008':    { inf:3,    fed:5,    gdp:-3,  stress:3, usd:1 },
+    'covid':   { inf:1.2,  fed:0.25, gdp:-3.5,stress:2, usd:1 },
+    '1970s':   { inf:10,   fed:12,   gdp:1.5, stress:2, usd:0 },
+    'boom':    { inf:2.5,  fed:5,    gdp:4,   stress:0, usd:2 },
+    'now':     { inf:2.4,  fed:3.75, gdp:1.9, stress:0, usd:1 },
+  };
+  const s = scenarios[name];
+  if (!s) return;
+  document.getElementById('ms-inf').value = s.inf;
+  document.getElementById('ms-fed').value = s.fed;
+  document.getElementById('ms-gdp').value = s.gdp;
+  document.getElementById('ms-stress').value = s.stress;
+  document.getElementById('ms-usd').value = s.usd;
+  document.getElementById('ms-inf-val').textContent = s.inf + '%';
+  document.getElementById('ms-fed-val').textContent = s.fed + '%';
+  document.getElementById('ms-gdp-val').textContent = s.gdp + '%';
+  updateStressLabel(); updateUSDLabel(); updateMacroPreview();
+}
+
+function updateMacroPreview() {
+  const inf = +document.getElementById('ms-inf').value;
+  const fed = +document.getElementById('ms-fed').value;
+  const gdp = +document.getElementById('ms-gdp').value;
+  const stress = +document.getElementById('ms-stress').value;
+  const stressLabels = ['calm','moderate stress','high stress','extreme stress'];
+
+  let desc = `In this scenario: inflation at ${inf}%, Fed funds rate at ${fed}%, GDP growth at ${gdp}%, market stress is ${stressLabels[stress]}. `;
+  if (gdp < 0) desc += 'The economy is in recession. ';
+  if (inf > 6) desc += 'High inflation erodes purchasing power significantly. ';
+  if (fed > 8) desc += 'Very high rates crush bond prices and slow borrowing. ';
+  if (stress >= 2) desc += 'Elevated market stress reduces expected stock returns. ';
+  desc += 'Stock returns will be adjusted based on these conditions.';
+  document.getElementById('macro-preview').textContent = desc;
+}
+
+function runMacro() {
+  const start = +document.getElementById('ms-start').value;
+  const years = +document.getElementById('ms-years').value;
+  const inf = +document.getElementById('ms-inf').value / 100;
+  const fed = +document.getElementById('ms-fed').value / 100;
+  const gdp = +document.getElementById('ms-gdp').value / 100;
+  const stress = +document.getElementById('ms-stress').value;
+  const portType = document.getElementById('ms-portfolio').value;
+
+  const allocs = { aggressive:{s:0.8,b:0.1,r:0.1}, balanced:{s:0.6,b:0.35,r:0.05}, conservative:{s:0.3,b:0.65,r:0.05}, allstocks:{s:1,b:0,r:0}, allbonds:{s:0,b:1,r:0} };
+  const alloc = allocs[portType];
+
+  // Derive expected returns from macro conditions
+  const baseStockRet = 0.07 + gdp * 1.5 - Math.max(0, inf - 0.02) * 0.5 - stress * 0.04;
+  const bondRet = fed * 0.9 - inf;
+  const reRet = Math.max(-0.1, 0.05 + gdp - (fed - 0.02) * 0.5);
+  const stockVol = 0.15 + stress * 0.07;
+
+  let val = start, best = -Infinity, worst = Infinity;
+  const history = [start];
+
+  for (let y = 0; y < years; y++) {
+    const noiseS = (Math.random() - 0.5) * stockVol * 2;
+    const noiseB = (Math.random() - 0.5) * 0.04;
+    const sRet = baseStockRet + noiseS;
+    const bRet = bondRet + noiseB;
+    const rRet = reRet + (Math.random() - 0.5) * 0.08;
+    const yearRet = alloc.s * sRet + alloc.b * bRet + (alloc.r||0) * rRet;
+    if (yearRet > best) best = yearRet;
+    if (yearRet < worst) worst = yearRet;
+    val *= (1 + yearRet);
+    history.push(val);
+  }
+
+  const nomRet = (val - start) / start;
+  const realRet = nomRet - inf * years;
+
+  document.getElementById('ms-val').textContent = fmt(val);
+  document.getElementById('ms-nom-ret').textContent = fmtPct(nomRet);
+  document.getElementById('ms-nom-ret').className = 'stat-num ' + (nomRet>=0?'up':'down');
+  document.getElementById('ms-real-ret').textContent = fmtPct(realRet);
+  document.getElementById('ms-real-ret').className = 'stat-num ' + (realRet>=0?'up':'down');
+  document.getElementById('ms-best').textContent = fmtPct(best);
+  document.getElementById('ms-worst').textContent = fmtPct(worst);
+  document.getElementById('ms-worst').className = 'stat-num down';
+
+  // Chart
+  const maxV = Math.max(...history) * 1.08;
+  const PL=55,PR=10,PT=10,PB=28,W=700,H=220;
+  const cW=W-PL-PR, cH=H-PT-PB;
+  let svg='';
+  for(let i=0;i<=4;i++){
+    const yv=(maxV/4)*i, yp=H-PB-(yv/maxV)*cH;
+    svg+=`<line x1="${PL}" y1="${yp.toFixed(1)}" x2="${W-PR}" y2="${yp.toFixed(1)}" stroke="#222" stroke-width="1"/>`;
+    svg+=`<text x="${PL-6}" y="${(yp+4).toFixed(1)}" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">${yv>=1e6?'$'+(yv/1e6).toFixed(1)+'M':yv>=1e3?'$'+Math.round(yv/1e3)+'k':'$'+Math.round(yv)}</text>`;
+  }
+  let line='', area=`M ${PL} ${H-PB}`;
+  history.forEach((v,i)=>{
+    const x=PL+(i/years)*cW, y=H-PB-(v/maxV)*cH;
+    line+=(i===0?`M ${x.toFixed(1)} ${y.toFixed(1)}`:`L ${x.toFixed(1)} ${y.toFixed(1)}`);
+    area+=` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+  });
+  area+=` L ${(PL+cW).toFixed(1)} ${H-PB} Z`;
+  svg+=`<path d="${area}" fill="rgba(192,57,43,0.1)"/>`;
+  svg+=`<path d="${line}" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linejoin="round"/>`;
+  for(let y=0;y<=years;y+=Math.ceil(years/5)){
+    const x=PL+(y/years)*cW;
+    svg+=`<text x="${x.toFixed(1)}" y="${H-8}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">Yr ${y}</text>`;
+  }
+  document.getElementById('ms-chart').innerHTML=svg;
+}
+
+// ═══════════════════════════════════════
+// MODE 5: COLLEGE PLANNER
+// ═══════════════════════════════════════
+function calcCollege() {
+  const costPerYear = +document.getElementById('cp-cost').value;
+  const colYears = +document.getElementById('cp-years-col').value;
+  const until = +document.getElementById('cp-until').value;
+  const saved = +document.getElementById('cp-saved').value;
+  const monthly = +document.getElementById('cp-monthly').value;
+  const aid = +document.getElementById('cp-aid').value;
+  const ret = +document.getElementById('cp-ret').value / 100;
+
+  const totalCost = costPerYear * colYears;
+  const totalAid = aid * colYears;
+  const netCost = totalCost - totalAid;
+
+  // Project savings growth
+  let savings = saved;
+  const savingsHistory = [saved];
+  for (let y = 0; y < until; y++) {
+    savings = savings * (1 + ret) + monthly * 12;
+    savingsHistory.push(savings);
+  }
+
+  const gap = Math.max(0, netCost - savings);
+  const overage = Math.max(0, savings - netCost);
+
+  document.getElementById('cp-total-cost').textContent = fmt(totalCost);
+
+  const rows = [
+    ['Total cost', fmt(totalCost), ''],
+    ['Expected aid/scholarships', '-' + fmt(totalAid), 'color:var(--green)'],
+    ['Net cost after aid', fmt(netCost), 'font-weight:600'],
+    ['Projected savings', fmt(savings), 'color:var(--green)'],
+    ['Gap to fund', gap > 0 ? fmt(gap) : '$0', gap > 0 ? 'color:var(--accent)' : 'color:var(--green)'],
+  ];
+  document.getElementById('cp-breakdown').innerHTML = rows.map(([label, val, style]) =>
+    `<div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #2a2a2a;font-size:0.875rem;">
+      <span style="color:#9a9894;">${label}</span>
+      <span style="${style}">${val}</span>
+    </div>`
+  ).join('');
+
+  const onTrack = savings >= netCost;
+  document.getElementById('cp-verdict').innerHTML = onTrack
+    ? `<div style="color:var(--green);font-weight:500;">✓ On track</div><div style="color:#9a9894;font-size:0.8rem;margin-top:0.4rem;">At current savings rate you'll have ${fmt(overage)} more than needed. Consider increasing your Roth IRA contribution with the surplus.</div>`
+    : `<div style="color:var(--accent);font-weight:500;">⚠ Funding gap of ${fmt(gap)}</div><div style="color:#9a9894;font-size:0.8rem;margin-top:0.4rem;">You'd need to save an additional ${fmt(gap/until/12)}/month to close this gap, or find ${fmt(gap/colYears)}/year more in scholarships.</div>`;
+
+  // Loan scenario
+  if (gap > 0) {
+    const loanRate = 0.0699;
+    const loanPayment = gap * (loanRate/12) / (1 - Math.pow(1+loanRate/12, -120));
+    document.getElementById('cp-loan').innerHTML = `
+      <div style="display:flex;justify-content:space-between;padding:0.4rem 0;font-size:0.875rem;"><span style="color:#9a9894;">Loan amount needed</span><span>${fmt(gap)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:0.4rem 0;font-size:0.875rem;"><span style="color:#9a9894;">Interest rate (current federal)</span><span>6.99%</span></div>
+      <div style="display:flex;justify-content:space-between;padding:0.4rem 0;font-size:0.875rem;"><span style="color:#9a9894;">Monthly payment (10yr repayment)</span><span style="color:var(--accent);">${fmt(loanPayment)}/mo</span></div>
+      <div style="display:flex;justify-content:space-between;padding:0.4rem 0;font-size:0.875rem;"><span style="color:#9a9894;">Total interest paid</span><span style="color:var(--accent);">${fmt(loanPayment*120-gap)}</span></div>
+    `;
+  } else {
+    document.getElementById('cp-loan').textContent = 'No loan needed based on your projections.';
+    document.getElementById('cp-loan').style.color = 'var(--green)';
+  }
+
+  // Chart
+  const chartYears = until + colYears;
+  const allVals = [];
+  let s2 = saved;
+  for (let y = 0; y <= chartYears; y++) {
+    allVals.push(s2);
+    if (y < until) s2 = s2*(1+ret) + monthly*12;
+    else s2 = Math.max(0, s2 - costPerYear + aid);
+  }
+  const costLine = Array(chartYears+1).fill(0).map((_,i) => i<until ? 0 : netCost);
+  const maxV = Math.max(...allVals, netCost) * 1.1;
+  const PL=55,PR=10,PT=10,PB=28,W=700,H=180;
+  const cW=W-PL-PR, cH=H-PT-PB;
+  let svg='';
+  for(let i=0;i<=4;i++){
+    const yv=(maxV/4)*i, yp=H-PB-(yv/maxV)*cH;
+    svg+=`<line x1="${PL}" y1="${yp.toFixed(1)}" x2="${W-PR}" y2="${yp.toFixed(1)}" stroke="#222" stroke-width="1"/>`;
+    svg+=`<text x="${PL-6}" y="${(yp+4).toFixed(1)}" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">${yv>=1e3?'$'+Math.round(yv/1e3)+'k':'$'+Math.round(yv)}</text>`;
+  }
+  // Savings line
+  let savLine='';
+  allVals.forEach((v,i)=>{
+    const x=PL+(i/chartYears)*cW, y=H-PB-(v/maxV)*cH;
+    savLine+=(i===0?`M ${x.toFixed(1)} ${y.toFixed(1)}`:`L ${x.toFixed(1)} ${y.toFixed(1)}`);
+  });
+  svg+=`<path d="${savLine}" stroke="var(--green)" stroke-width="2" fill="none" stroke-linejoin="round"/>`;
+  // Cost line (horizontal at netCost during college years)
+  const collStartX = PL+(until/chartYears)*cW;
+  const collEndX = PL+(chartYears/chartYears)*cW;
+  const costY = H-PB-(netCost/maxV)*cH;
+  svg+=`<line x1="${collStartX.toFixed(1)}" y1="${costY.toFixed(1)}" x2="${collEndX.toFixed(1)}" y2="${costY.toFixed(1)}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5,3"/>`;
+  svg+=`<text x="${((collStartX+collEndX)/2).toFixed(1)}" y="${(costY-6).toFixed(1)}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="var(--accent)">Net cost ${fmt(netCost)}</text>`;
+  // College start marker
+  svg+=`<line x1="${collStartX.toFixed(1)}" y1="${PT}" x2="${collStartX.toFixed(1)}" y2="${H-PB}" stroke="#444" stroke-width="1" stroke-dasharray="3,3"/>`;
+  svg+=`<text x="${collStartX.toFixed(1)}" y="${PT+10}" font-family="'DM Sans',sans-serif" font-size="10" fill="#666">College starts</text>`;
+  // x labels
+  [0,Math.round(chartYears/2),chartYears].forEach(y=>{
+    const x=PL+(y/chartYears)*cW;
+    svg+=`<text x="${x.toFixed(1)}" y="${H-8}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#444">Yr ${y}</text>`;
+  });
+  document.getElementById('cp-chart').innerHTML=svg;
+}
+
+// Init
+syncAlloc();
+updateStrategyDesc();
+updateMacroPreview();
+updateStressLabel();
+updateUSDLabel();
+calcCollege();
+</script>
+</body></html>
