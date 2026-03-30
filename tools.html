@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools — The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--white:#ffffff;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif; }
+body { font-family:var(--sans);background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased; }
+a { color:inherit;text-decoration:none; } a:hover { color:var(--accent); }
+header { border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100; }
+.header-inner { max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem; }
+.logo { font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em; } .logo span { color:var(--accent); }
+nav { display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted); }
+nav a:hover { color:var(--ink); }
+.header-cta { background:var(--ink);color:var(--white)!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px;transition:background 0.15s; }
+.header-cta:hover { background:var(--accent)!important; }
+.page { max-width:1100px;margin:0 auto;padding:3rem 2rem 5rem; }
+.page-eyebrow { font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem; }
+.page-title { font-family:var(--serif);font-size:2.25rem;letter-spacing:-0.02em;margin-bottom:0.75rem; }
+.page-title em { font-style:italic; }
+.page-sub { color:var(--muted);font-size:1rem;max-width:560px;margin-bottom:3rem; }
+.section-label { font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:500;color:var(--muted);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border); }
+.tools-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem; }
+.tool-card { background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1.75rem;display:flex;flex-direction:column;gap:0.75rem;transition:border-color 0.15s,box-shadow 0.15s;text-decoration:none;color:var(--ink); }
+.tool-card:hover { border-color:var(--accent);box-shadow:0 4px 16px rgba(192,57,43,0.1);color:var(--ink); }
+.tool-icon { width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem; }
+.tool-name { font-family:var(--serif);font-size:1.15rem;font-weight:600; }
+.tool-desc { font-size:0.875rem;color:var(--muted);line-height:1.6;flex:1; }
+.tool-link { font-size:0.8rem;font-weight:500;color:var(--accent); }
+.tool-badge { font-size:0.65rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;background:var(--faint);color:var(--muted);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;align-self:flex-start; }
+.advanced-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-bottom:3rem; }
+.advanced-card { background:var(--faint);border-radius:10px;border:1px solid var(--border);padding:1.5rem;display:flex;gap:1.25rem;align-items:flex-start;text-decoration:none;color:var(--ink);transition:border-color 0.15s; }
+.advanced-card:hover { border-color:var(--accent);color:var(--ink); }
+.advanced-icon { width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;background:var(--white); }
+.advanced-content { flex:1; }
+.advanced-name { font-weight:500;font-size:0.9375rem;margin-bottom:0.35rem; }
+.advanced-desc { font-size:0.8125rem;color:var(--muted);line-height:1.55; }
+.advanced-tag { font-size:0.65rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.15rem 0.5rem;border-radius:3px;display:inline-block;margin-top:0.5rem; }
+footer { border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted); }
+.footer-inner { max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-logo { font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem; }
+.footer-links { display:flex;gap:1.5rem; }
+@media(max-width:768px){ .tools-grid{grid-template-columns:1fr;} .advanced-grid{grid-template-columns:1fr;} nav{display:none;} .footer-inner{flex-direction:column;align-items:flex-start;} }
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+  <a href="index.html" class="logo">The<span> Margin</span></a>
+  <nav><a href="index.html#articles">Articles</a><a href="index.html#tools">Tools</a><a href="index.html#mission">About</a></nav>
+  <a href="index.html#newsletter" class="header-cta">Subscribe</a>
+</div></header>
+
+<div class="page">
+  <div class="page-eyebrow">Interactive Tools</div>
+  <h1 class="page-title">Learn economics <em>by doing it</em></h1>
+  <p class="page-sub">Free tools built to make economic concepts tangible. Simulate markets, calculate your paycheck, model macro scenarios, and plan for college — all in your browser.</p>
+
+  <div class="section-label">Core Tools</div>
+  <div class="tools-grid">
+    <a href="simulator.html" class="tool-card">
+      <div class="tool-icon" style="background:#fdf0ee;">📈</div>
+      <div class="tool-name">Portfolio Simulator</div>
+      <div class="tool-desc">Build a portfolio across stocks, bonds, real estate, crypto, and cash. Watch 30 years of real market history — dot-com crash, 2008, COVID — play out year by year with live event commentary.</div>
+      <span class="tool-badge">Investing</span>
+      <span class="tool-link">Launch →</span>
+    </a>
+    <a href="paycheck.html" class="tool-card">
+      <div class="tool-icon" style="background:#f0faf4;">💵</div>
+      <div class="tool-name">First Paycheck Calculator</div>
+      <div class="tool-desc">Enter your hourly rate or salary and see exactly where your money goes — federal income tax, state tax, Social Security, Medicare. Generates a real-looking pay stub and calculates your Roth IRA potential.</div>
+      <span class="tool-badge">Tax & Income</span>
+      <span class="tool-link">Calculate →</span>
+    </a>
+    <a href="dashboard.html" class="tool-card">
+      <div class="tool-icon" style="background:#eef5fb;">🌐</div>
+      <div class="tool-name">Economic Dashboard</div>
+      <div class="tool-desc">Live inflation rate, Fed funds rate, unemployment, GDP growth, S&P 500, 10-year Treasury yield, and Bitcoin price — all in one place with plain-English explanations of what each number means for students.</div>
+      <span class="tool-badge">Macro Indicators</span>
+      <span class="tool-link">Open →</span>
+    </a>
+  </div>
+
+  <div class="section-label">Advanced Simulators</div>
+  <div class="advanced-grid">
+    <a href="advanced-simulator.html" class="advanced-card">
+      <div class="advanced-icon">📊</div>
+      <div class="advanced-content">
+        <div class="advanced-name">Advanced Financial Simulator — 5 Modes</div>
+        <div class="advanced-desc">The full suite: historical market replay, Monte Carlo probability simulation, quantitative strategy back-testing, macro scenario modeling, and college funding planner. All in one dark-mode dashboard.</div>
+        <div class="advanced-tag">Full Suite</div>
+      </div>
+    </a>
+    <a href="advanced-simulator.html" class="advanced-card">
+      <div class="advanced-icon">🎲</div>
+      <div class="advanced-content">
+        <div class="advanced-name">Monte Carlo Simulator</div>
+        <div class="advanced-desc">Run up to 10,000 randomized investment scenarios using Box-Muller normal distribution sampling. See the full probability distribution of outcomes — median, 10th percentile, 90th percentile — and the chance of doubling your money or losing it.</div>
+        <div class="advanced-tag">Statistics · Probability</div>
+      </div>
+    </a>
+    <a href="advanced-simulator.html" class="advanced-card">
+      <div class="advanced-icon">⚡</div>
+      <div class="advanced-content">
+        <div class="advanced-name">Quant Strategy Back-Tester</div>
+        <div class="advanced-desc">Test algorithmic trading strategies against 30 years of historical data. Compare moving average crossover (golden cross / death cross), momentum investing, risk parity, and dollar cost averaging. Shows Sharpe ratio, max drawdown, and performance vs. buy-and-hold baseline.</div>
+        <div class="advanced-tag">Algorithmic Trading · Quant Finance</div>
+      </div>
+    </a>
+    <a href="advanced-simulator.html" class="advanced-card">
+      <div class="advanced-icon">🌐</div>
+      <div class="advanced-content">
+        <div class="advanced-name">Macro Scenario Builder</div>
+        <div class="advanced-desc">Set inflation, Fed funds rate, GDP growth, market stress, and dollar strength. Load presets like 2008 Financial Crisis, COVID 2020, 1970s Stagflation, or 90s Bull Run. See how different portfolios respond to each macro environment.</div>
+        <div class="advanced-tag">Macroeconomics · Scenario Analysis</div>
+      </div>
+    </a>
+    <a href="advanced-simulator.html" class="advanced-card">
+      <div class="advanced-icon">🎓</div>
+      <div class="advanced-content">
+        <div class="advanced-name">College Funding Planner</div>
+        <div class="advanced-desc">Enter tuition costs, years until college, current savings, monthly contribution, and expected scholarships. See your funding gap, what loan payments would look like, and a savings vs. cost trajectory chart over time.</div>
+        <div class="advanced-tag">College Planning · Personal Finance</div>
+      </div>
+    </a>
+    <a href="advanced-simulator.html" class="advanced-card">
+      <div class="advanced-icon">📉</div>
+      <div class="advanced-content">
+        <div class="advanced-name">Historical Market Replay (Advanced)</div>
+        <div class="advanced-desc">The full-featured version of the portfolio simulator with individual allocation sliders for each asset class, adjustable speed, crash event commentary, and per-asset return breakdowns. Watch 1995 to 2026 play out year by year.</div>
+        <div class="advanced-tag">Market History · Portfolio Theory</div>
+      </div>
+    </a>
+  </div>
+
+  <div style="background:var(--faint);border-radius:8px;padding:1.5rem 2rem;">
+    <div style="font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">A note on these tools</div>
+    <p style="font-size:0.875rem;color:var(--muted);line-height:1.7;">All tools are free, require no account, and work entirely in your browser. They use historical market data and mathematical models to illustrate economic concepts — not to provide financial advice. Past performance doesn't guarantee future results. Built by Tobias Velez, Walter Johnson High School.</p>
+  </div>
+</div>
+
+<footer><div class="footer-inner">
+  <a href="index.html" class="footer-logo">The Margin</a>
+  <div class="footer-links"><a href="index.html#articles">Articles</a><a href="index.html#tools">Tools</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+  <div>© 2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer>
+</body></html>
