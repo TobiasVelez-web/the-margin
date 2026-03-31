@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bethesda Housing | The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+body{font-family:var(--sans);background:#fff;color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}
+header{border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100}
+.hi{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem}
+.logo{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em}.logo span{color:var(--accent)}
+nav{display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted)}
+.cta{background:var(--ink);color:#fff!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px}
+.cta:hover{background:var(--accent)!important}
+.wrap{max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem}
+.back{font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem}
+.tag{font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem}
+h1{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem}
+h1 em{font-style:italic}
+.meta{font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap}
+.body p{margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.85}
+.body h2{font-family:var(--serif);font-size:1.4rem;margin:2.75rem 0 1rem;line-height:1.3}
+.callout{background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted);line-height:1.75}
+.chart{background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.clabel{font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem}
+.ccap{font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic}
+.byline{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted)}
+.byline strong{color:var(--ink)}
+footer{border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem}
+.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fl{font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem}
+.fli{display:flex;gap:1.5rem}
+@media(max-width:768px){nav{display:none}.fi{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="hi">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="tools.html">Tools</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="cta">Subscribe</a>
+</div></header>
+
+<div class="wrap">
+<a href="index.html" class="back">Back to home</a>
+<div class="tag">Housing</div>
+<h1>Bethesda housing: <em>why the math stopped working for everyone except the people already in</em></h1>
+<div class="meta"><span>Tobias Velez</span><span>·</span><span>March 2026</span><span>·</span><span>9 min read</span></div>
+<div class="body">
+
+<p>Something happened in 2022 that was supposed to be good news for people trying to buy a home. Mortgage rates climbed past 7% for the first time since 2001, and nationally home prices started falling. Phoenix dropped 12%. Austin was down almost 18%. The conventional logic worked exactly as expected: higher borrowing costs reduced demand, and prices adjusted down.</p>
+
+<p>Bethesda did not get that memo. Prices here rose 8% in 2022 and another 6% in 2023. The median hit $1.2 million in 2025, up 142% from 2010. I started digging into this because the divergence seemed too large to explain away. Why would the same interest rate increase that cooled markets across the country barely touch a suburb of Washington, D.C.? I went through two years of BrightMLS transaction data and several cycles of Montgomery County Planning reports, and the answer is actually three separate problems that happen to make each other worse.</p>
+
+<h2>The inventory collapse nobody is talking about clearly enough</h2>
+
+<p>Start with the most basic number. In 2025, about 41 homes were listed in Bethesda each month while 69 were closing. That is 0.6 months of inventory. Real estate economists consider a market "balanced" somewhere between 4 and 6 months. Below 2 months the standard models predict sustained price increases regardless of interest rate conditions. Bethesda has spent three consecutive years well below that floor.</p>
+
+<p>To put 0.6 in perspective: there are cities in the Midwest with 8 to 10 months of inventory right now. Denver has about 3.5. The DC metro overall is around 2. Bethesda at 0.6 is not just a tight market. It is a market functioning in a categorically different regime where the normal relationship between rates and prices has effectively broken down.</p>
+
+<div class="callout">The average Bethesda home goes under contract in 21 days. The national average is 45. Even in a high-rate environment, that pace leaves buyers with essentially no leverage. When sellers know a home will receive multiple offers within two weeks of listing, there is no rational reason to price it lower or accept any concession.</div>
+
+<div class="chart">
+<div class="clabel">Bethesda median home price vs. national average, 2010 to 2025</div>
+<svg viewBox="0 0 580 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+<line x1="55" y1="10" x2="55" y2="180" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="180" x2="545" y2="180" stroke="#c8c5be" stroke-width="1"/>
+<line x1="55" y1="140" x2="545" y2="140" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="100" x2="545" y2="100" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="55" y1="60" x2="545" y2="60" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<text x="48" y="183" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$200k</text>
+<text x="48" y="143" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$500k</text>
+<text x="48" y="103" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$800k</text>
+<text x="48" y="63" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">$1.1M</text>
+<polyline points="70,170 150,157 230,142 310,122 390,97 460,72 520,52" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+<polygon points="70,170 150,157 230,142 310,122 390,97 460,72 520,52 520,180 70,180" fill="#c0392b" opacity="0.07"/>
+<polyline points="70,166 150,160 230,153 310,147 390,142 460,139 520,137" stroke="#6b6b67" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-dasharray="5,3" opacity="0.6"/>
+<text x="525" y="50" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">$1.2M</text>
+<text x="525" y="135" font-family="'DM Sans',sans-serif" font-size="10" fill="#888">$420k</text>
+<text x="70" y="197" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2010</text>
+<text x="230" y="197" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2015</text>
+<text x="390" y="197" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2020</text>
+<text x="520" y="197" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#6b6b67">2025</text>
+</svg>
+<div class="ccap">The 2022 rate hike barely registers in the Bethesda line. National appreciation slowed significantly over that period. Bethesda kept going.</div>
+</div>
+
+<h2>The mortgage trap that froze the market</h2>
+
+<p>Here is the single biggest mechanical reason inventory is so low. During 2019, 2020, and 2021, about 67% of Bethesda homeowners refinanced or bought at rates around 3%. Their monthly payment on a typical house here is roughly $2,400 to $2,600. If one of them decides to sell today and buy something comparable at a 6.5% rate, that payment jumps to somewhere between $6,600 and $6,900 depending on the purchase price.</p>
+
+<p>That is not a minor inconvenience. That is $4,000 more per month, $48,000 more per year, for the same basic housing situation. No rational actor makes that trade voluntarily unless they have to. So they don't. They stay in houses they may have outgrown, houses they might have sold in a different rate environment, and those houses never enter the market.</p>
+
+<p>Economists have a name for this: the lock-in effect. But the numbers are worse here than most places for a specific reason. Bethesda homes are expensive enough that the absolute dollar difference between a 3% payment and a 6.5% payment is enormous even though the percentage spread is the same as everywhere else. A $700,000 mortgage at 3% costs about $2,950 a month. At 6.5% it costs $4,420. That extra $1,470 is the margin that keeps someone from listing. Multiply that dynamic across thousands of homeowners and you get a market where the normal turnover that creates inventory has essentially stopped.</p>
+
+<h2>What the zoning rules are actually doing to supply</h2>
+
+<p>Even if the lock-in effect resolved tomorrow, Bethesda would still have a supply problem. R-60 zoning covers about 78% of the residential land here. The designation permits one single-family home per lot. Not two. Not a duplex. Not a small apartment building. One home. The supply elasticity for Bethesda residential land sits around 0.08, which means for every 100 new households who want to move in, the rules allow roughly 8 new homes to be built in response. The national average elasticity is 0.45. We are not slightly below normal. We are less than one fifth of normal.</p>
+
+<p>Why does that matter? Because every time a demand shock hits, whether that is NIH expansion or a new biotech cluster or remote workers moving from more expensive cities, the prices those new households bid up have nowhere to go but stay up. In an elastic market, high prices attract new construction which eventually brings prices back toward equilibrium. In a market with 0.08 elasticity, prices bid up and compound from the new baseline. The mechanism that normally prevents runaway appreciation is structurally disabled.</p>
+
+<p>There is also a less obvious effect. Low supply elasticity creates what researchers call price informationally inefficient markets. Comparable sales data, which is what appraisers and buyers use to understand fair value, gets skewed by a series of bidding-war outcomes rather than reflecting genuine market equilibrium. Each high sale becomes the floor for the next one. The price history stops reflecting what buyers think the home is worth in a normal market and starts reflecting what they were willing to pay to win a competition under artificial scarcity.</p>
+
+<h2>Who actually absorbs the cost</h2>
+
+<p>Walter Johnson had an 18% teacher vacancy rate in 2025. A first-year MCPS teacher earns around $68,000. In Bethesda, keeping a one-bedroom apartment to yourself runs $2,200 to $2,800 a month depending on where you look. That is roughly 40 to 50% of gross income before taxes. The housing economics have made it effectively impossible for the people who fill entry-level professional roles, teachers, nurses, firefighters, social workers, to live anywhere near where they work.</p>
+
+<p>This is not a soft social problem with no measurable consequences. Every teacher vacancy is a documented outcome of this housing market. Every delayed response time from a fire station whose staff commutes from Frederick or Manassas is connected to this math. The county spends money on recruitment, on substitute teachers, on retention bonuses, and those costs come from somewhere. The housing market externality is paid by everyone who uses public services, whether or not they own a home.</p>
+
+<h2>What could change the trajectory and what probably won't</h2>
+
+<p>The lock-in effect will eventually resolve on its own. If rates fall back to 5% or below, the payment spread narrows enough that more homeowners will choose to move. Some projections suggest that could add 15 to 20% more inventory to markets like Bethesda within 12 to 18 months of a meaningful rate drop. That would help. It would not be sufficient.</p>
+
+<p>The zoning problem requires a policy decision that nobody in county government has been willing to make clearly. My proposal is a targeted intervention: the county purchases around 50 teardown lots per year and develops them into duplexes, restricted by deed to first-time buyers earning between $120,000 and $200,000 annually. Each lot that would have produced one luxury home instead creates six middle-income units. Arlington ran a version of this from 2019 to 2024 and added 4,200 units while reducing teacher vacancies by 42%. The mechanism works when it is implemented with specificity.</p>
+
+<p>The larger fix is allowing duplexes on even a small percentage of R-60 land, say 5%, countywide. The projections I have seen suggest that pushes days-on-market back toward 35, slows annual price appreciation from 12% to somewhere around 4%, and begins reversing the professional vacancy crisis in public services. Without any intervention, the 30-year projection puts the median price above $1.8 million. At that number the market has stopped functioning as a housing market. It has become a barrier to entry mechanism that preserves the existing wealth concentration of current owners at the explicit expense of everyone who comes after them.</p>
+
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin<br><small>Data: BrightMLS 2025, Montgomery Planning, Redfin Research, MCPS HR Annual Report</small></div>
+</div>
+</div>
+
+<footer><div class="fi">
+<a href="index.html" class="fl">The Margin</a>
+<div class="fli"><a href="index.html#articles">Articles</a><a href="tools.html">Tools</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer>
+</body></html>
