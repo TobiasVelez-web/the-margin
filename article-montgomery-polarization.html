@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Montgomery County Income Polarization | The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+body{font-family:var(--sans);background:#fff;color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}
+header{border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100}
+.hi{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem}
+.logo{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em}.logo span{color:var(--accent)}
+nav{display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted)}
+.cta{background:var(--ink);color:#fff!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px}
+.cta:hover{background:var(--accent)!important}
+.wrap{max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem}
+.back{font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem}
+.tag{font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem}
+h1{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem}
+h1 em{font-style:italic}
+.meta{font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap}
+.body p{margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.85}
+.body h2{font-family:var(--serif);font-size:1.4rem;margin:2.75rem 0 1rem;line-height:1.3}
+.callout{background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted);line-height:1.75}
+.chart{background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.clabel{font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem}
+.ccap{font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic}
+.leg{display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:0.75rem}
+.li{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted)}
+.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.byline{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted)}
+.byline strong{color:var(--ink)}
+footer{border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem}
+.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fl{font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem}
+.fli{display:flex;gap:1.5rem}
+@media(max-width:768px){nav{display:none}.fi{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="hi">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="tools.html">Tools</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="cta">Subscribe</a>
+</div></header>
+
+<div class="wrap">
+<a href="index.html" class="back">Back to home</a>
+<div class="tag">Inequality</div>
+<h1>Montgomery County is splitting in two. <em>The data makes it hard to ignore.</em></h1>
+<div class="meta"><span>Tobias Velez</span><span>·</span><span>March 2026</span><span>·</span><span>9 min read</span></div>
+<div class="body">
+
+<p>I go to Walter Johnson in Bethesda. If you go there too, or went there, you probably already know what I'm about to describe without needing data to confirm it.</p>
+
+<p>There's a wealth gap you can see inside the school itself. Not just between schools in different parts of the county, but within the same building. Some students come from families who own homes nearby, while others are commuting in from places like Wheaton or Gaithersburg. No one really talks about it directly, but you notice it over time. The houses people go to for parties, the cars in the senior lot, the vacations that come up in conversation. The way some people treat summer as something to fill, and others treat it as time to work.</p>
+
+<p>I didn't want to just rely on that feeling, so I tried to see if it showed up in the data.</p>
+
+<p>The Montgomery County Planning Department's 2024 report ended up being one of the more surprising things I've read. Between 2005 and 2022, the county lost about 26,000 middle-income residents while gaining roughly 88,000 low-income residents. It ranked first among America's 50 largest counties for low-income population growth during that period, and near the bottom for high-income growth.</p>
+
+<p>Those aren't small changes. They suggest the county is shifting in a pretty fundamental way, and it doesn't look like the result of one decision. It looks more like the outcome of a few different forces that built up over time and started compounding off each other.</p>
+
+<h2>What the shift actually looks like</h2>
+
+<p>In 2005, middle-income households made up about 42% of Montgomery County. By 2022, that number had dropped to 31%. Over the same stretch, the low-income share went from 22% all the way up to 34%. High-income stayed relatively stable through all of it.</p>
+
+<div class="chart">
+<div class="clabel">Montgomery County income group share: 2005 vs. 2022</div>
+<div class="leg">
+<div class="li"><div class="ld" style="background:#c0392b;"></div>Low-income (22% to 34%)</div>
+<div class="li"><div class="ld" style="background:#6b6b67;opacity:0.6"></div>Middle-income (42% to 31%)</div>
+<div class="li"><div class="ld" style="background:#1a1a18;opacity:0.2"></div>High-income (roughly flat)</div>
+</div>
+<svg viewBox="0 0 540 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+<line x1="50" y1="10" x2="50" y2="160" stroke="#c8c5be" stroke-width="1"/>
+<line x1="50" y1="160" x2="510" y2="160" stroke="#c8c5be" stroke-width="1"/>
+<line x1="50" y1="120" x2="510" y2="120" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="50" y1="80" x2="510" y2="80" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="50" y1="40" x2="510" y2="40" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<text x="44" y="163" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">0%</text>
+<text x="44" y="123" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">10%</text>
+<text x="44" y="83" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">20%</text>
+<text x="44" y="43" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">30%</text>
+<rect x="75" y="116" width="48" height="44" fill="#c0392b" opacity="0.85" rx="2"/>
+<text x="99" y="111" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b">22%</text>
+<rect x="133" y="76" width="48" height="84" fill="#6b6b67" opacity="0.55" rx="2"/>
+<text x="157" y="71" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">42%</text>
+<rect x="191" y="100" width="48" height="60" fill="#1a1a18" opacity="0.18" rx="2"/>
+<text x="215" y="95" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#888">30%</text>
+<text x="160" y="178" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12" fill="#6b6b67">2005</text>
+<rect x="300" y="88" width="48" height="72" fill="#c0392b" opacity="0.95" rx="2"/>
+<text x="324" y="83" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">34%</text>
+<rect x="358" y="100" width="48" height="60" fill="#6b6b67" opacity="0.55" rx="2"/>
+<text x="382" y="95" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">31%</text>
+<rect x="416" y="98" width="48" height="62" fill="#1a1a18" opacity="0.18" rx="2"/>
+<text x="440" y="93" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#888">32%</text>
+<text x="385" y="178" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="12" fill="#6b6b67">2022</text>
+</svg>
+<div class="ccap">The low-income bar grew 12 points while middle-income shrank 11. High-income barely moved. The county didn't get richer across the board. The middle got smaller while the bottom grew significantly.</div>
+</div>
+
+<p>Those percentage changes can feel abstract at first. But this is a county of over a million people, so an 11-point drop in middle-income share is a lot of families. What matters is where those families went. They didn't shift upward into higher income brackets within the county. A lot of them left. The Gini coefficient here went from 0.42 to 0.46 during this period, which puts Montgomery County in the same inequality range as Manhattan. That's not a comparison most people would make when thinking about suburban Maryland, but the data makes it hard to avoid.</p>
+
+<h2>Ninety thousand people isn't abstract</h2>
+
+<p>It helps to sit with the raw numbers rather than the percentages.</p>
+
+<p>An increase of roughly 88,000 low-income residents is larger than the entire current population of Bethesda. Meanwhile around 26,000 middle-income residents left. High-income growth was much smaller by comparison. So this isn't a situation where both ends of the income distribution are expanding. It's a situation where the low end grew substantially and the middle shrank, while high-income stayed relatively flat. The county didn't get more prosperous. It got more polarized.</p>
+
+<h2>What might be driving it</h2>
+
+<p>This pattern doesn't seem random. A few forces line up in a way that helps explain it.</p>
+
+<p>The first is demand. The expansion of NIH and the broader biotech cluster around Bethesda brought a steady stream of high-income households into the county through the 2010s. These are people who can pay significantly more to live near work, and they've been competing for a housing stock that never grew to match the demand they created.</p>
+
+<p>The second is supply. Large portions of the county are still zoned for single-family housing only. No duplexes, no small apartment buildings. When demand increases but the rules prevent supply from responding, prices go up. That's not a complicated dynamic. It's just what happens when you constrain construction in a market with rising demand.</p>
+
+<p>The third is what that combination does to middle-income households. For teachers, nurses, and other workers in that $80,000 to $150,000 range, the math gets harder to justify over time. If commuting is already part of daily life and housing near work keeps getting more expensive, moving farther out starts to make financial sense. Over time, enough families making that calculation produces a measurable outflow from the county.</p>
+
+<p>Finally, there's who replaces them. As middle-income households leave, lower-wage workers in service and care industries often move in from even more expensive nearby parts of the region. That's a fairly standard pattern when housing costs rise faster than wages in a place that still needs people to do work that can't be moved elsewhere.</p>
+
+<h2>What it looks like at the school level</h2>
+
+<p>This is where it starts to feel more real than a graph.</p>
+
+<p>Teachers in the area spend a large portion of their income on housing costs and turn over at a high rate. Positions are harder to fill, and vacancies last longer. WJ had an 18% teacher vacancy rate in 2025. That's not a school-level problem. It traces back directly to a housing market that makes it financially unreasonable for a first-year teacher to live anywhere near the school they're teaching at.</p>
+
+<p>Inside the building, that vacancy rate shows up as less continuity. More substitutes. Experienced teachers leave and new ones take a while to find, if they're found at all. The institutional knowledge that accumulates when someone teaches the same course for ten years just disappears, and it takes years to rebuild. None of that originates in the school. It connects back to what's been happening in the housing market around it.</p>
+
+<h2>What might actually help</h2>
+
+<p>One approach would be targeting the middle-income layer specifically, rather than waiting for general market forces to sort it out.</p>
+
+<p>That could look like allowing limited duplex development in a small portion of areas currently zoned for single-family housing only. Builders could get incentives to price units within reach of middle-income buyers, with resale restrictions in place to keep those homes from flipping into the luxury market quickly. The goal wouldn't be to completely reshape the county. It would be to slow down the outflow that's been running for 17 years.</p>
+
+<p>Some nearby jurisdictions have tried versions of this. Howard County started something similar in 2019 and saw a meaningful reduction in middle-income population loss compared to what Montgomery County was experiencing over the same period. The results aren't perfect, but they suggest that targeted intervention can actually work, even if broad market change is slow.</p>
+
+<h2>Where this is heading</h2>
+
+<p>If the trends from 2005 to 2022 continue without any real policy response, the county becomes more divided. Fewer middle-income households, more distance between the top and the bottom, less of the connective tissue that makes a county function as one place rather than two separate ones sharing a border.</p>
+
+<p>That shows up in schools, in workforce stability, and in the tax base that pays for public services. It's not abstract. The 18% teacher vacancy rate is one version of it. So is the increasing difficulty of staffing firehouses, hospitals, and county offices with people who can afford to live near where they work.</p>
+
+<p>This kind of change doesn't happen all at once. It's been building since 2005 and most people haven't noticed in a concrete way yet. But these things compound. And past a certain point they become very hard to reverse without policy changes that are far more disruptive than the ones that could work right now.</p>
+
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin<br><small>Data: Montgomery County Planning 2024, ACS 1-Year Estimates, MCPS Annual Reports</small></div>
+</div>
+</div>
+
+<footer><div class="fi">
+<a href="index.html" class="fl">The Margin</a>
+<div class="fli"><a href="index.html#articles">Articles</a><a href="tools.html">Tools</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer>
+</body></html>
