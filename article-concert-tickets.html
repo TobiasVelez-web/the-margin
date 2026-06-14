@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Concert Tickets Cost So Much — The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+body{font-family:var(--sans);background:#fff;color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}
+header{border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100}
+.hi{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem}
+.logo{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em}.logo span{color:var(--accent)}
+nav{display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted)}
+.cta{background:var(--ink);color:#fff!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px}
+.cta:hover{background:var(--accent)!important}
+.wrap{max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem}
+.back{font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem}
+.tag{font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem}
+h1{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem}
+h1 em{font-style:italic}
+.meta{font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap}
+.body p{margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.85}
+.body h2{font-family:var(--serif);font-size:1.4rem;margin:2.75rem 0 1rem;line-height:1.3}
+.callout{background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted);line-height:1.75}
+.chart{background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.clabel{font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem}
+.ccap{font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic}
+.byline{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted)}
+.byline strong{color:var(--ink)}
+footer{border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem}
+.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fl{font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem}
+.fli{display:flex;gap:1.5rem}
+@media(max-width:768px){nav{display:none}.fi{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="hi">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="cta">Subscribe</a>
+</div></header>
+
+<div class="wrap">
+<a href="index.html" class="back">← Back to home</a>
+<div class="tag">Everyday Econ</div>
+<h1>Why concert tickets cost so much — and why that's <em>actually rational</em></h1>
+<div class="meta"><span>Tobias Velez</span><span>·</span><span>December 2025</span><span>·</span><span>5 min read</span></div>
+<div class="body">
+
+<p>You refresh Ticketmaster. A Lil Baby ticket shows $85. You wait two hours in the queue and suddenly it's $340. You feel robbed. I've felt that way too. But after actually looking at the economics of it, I think the outrage is aimed at the wrong thing.</p>
+
+<h2>The basic supply and demand problem</h2>
+
+<p>Arenas hold a fixed number of seats. Lil Baby cannot clone himself and play 50 shows simultaneously. When 500,000 people want 20,000 seats, the price has to rise until the number of buyers willing to pay matches the number of seats available. That's not a scam. That's just how markets work when supply is hard-capped.</p>
+
+<div class="chart">
+<div class="clabel">Buyers willing to pay at each price point (20,000 seats available)</div>
+<svg viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+<line x1="65" y1="15" x2="65" y2="215" stroke="#c8c5be" stroke-width="1"/>
+<line x1="65" y1="215" x2="570" y2="215" stroke="#c8c5be" stroke-width="1"/>
+<line x1="65" y1="55" x2="570" y2="55" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="65" y1="95" x2="570" y2="95" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="65" y1="135" x2="570" y2="135" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<line x1="65" y1="175" x2="570" y2="175" stroke="#e0ddd6" stroke-width="0.5" stroke-dasharray="3,3"/>
+<text x="58" y="218" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">0</text>
+<text x="58" y="178" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">100K</text>
+<text x="58" y="138" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">200K</text>
+<text x="58" y="98" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">300K</text>
+<text x="58" y="58" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">400K</text>
+<rect x="85" y="15" width="70" height="200" fill="#c0392b" opacity="0.80" rx="3"/>
+<text x="120" y="11" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">500,000</text>
+<text x="120" y="232" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">$85</text>
+<rect x="185" y="115" width="70" height="100" fill="#c0392b" opacity="0.65" rx="3"/>
+<text x="220" y="111" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#c0392b" font-weight="500">250,000</text>
+<text x="220" y="232" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">$150</text>
+<rect x="285" y="183" width="70" height="32" fill="#c0392b" opacity="0.50" rx="3"/>
+<text x="320" y="179" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67" font-weight="500">80,000</text>
+<text x="320" y="232" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">$240</text>
+<rect x="385" y="207" width="70" height="8" fill="#1a1a18" rx="2"/>
+<text x="420" y="200" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#1a1a18" font-weight="500">20,000 ← equilibrium</text>
+<text x="420" y="232" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#1a1a18" font-weight="500">$340</text>
+<text x="520" y="208" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#aaa">8,000</text>
+<text x="520" y="232" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#6b6b67">$500+</text>
+<text x="317" y="252" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#aaa">Ticket price</text>
+</svg>
+<div class="ccap">$340 is where 20,000 willing buyers meets 20,000 available seats. Below that price there are way more buyers than seats — which is why the queue moves so fast and tickets disappear instantly.</div>
+</div>
+
+<h2>Dynamic pricing isn't new, it's just more visible now</h2>
+
+<p>Airlines have done this for decades. Uber surge pricing runs every Friday night. Hotels charge double during festival weekends. Ticketmaster just made the same logic real-time and transparent for concerts. The algorithm watches queue length, time remaining, seat location, and remaining inventory. As seats get scarcer, prices adjust upward automatically. It feels manipulative because you can watch it happen in real time. But the mechanism isn't new.</p>
+
+<h2>What actually happens without dynamic pricing</h2>
+
+<p>This part gets left out of most complaints. Without dynamic pricing, Ticketmaster sells at $85. Scalpers using bots grab the bulk of those tickets in seconds. Fans end up paying $340 on StubHub anyway. The only difference is the artist gets $85 and the scalper pockets $255. With dynamic pricing the artist captures that $340, fans pay market rate, and nobody profits from the chaos in the middle.</p>
+
+<p>I wanted Bad Bunny floor seats last year. They started at $120 and hit $450 after 90 minutes. It felt like getting robbed. But 200,000 people from the DMV wanted 300 floor seats. Someone was paying $450 either way. Better the artist sees that money than a scalper running a bot farm out of a basement.</p>
+
+<h2>What actually deserves the outrage</h2>
+
+<p>The price itself isn't the real problem. Ticketmaster's service fees are. A $340 ticket showing up as $420 after fees at checkout is a different issue — that's not market pricing, that's opacity. What I'd actually push for: hard caps on service charges as a percentage of face value, real anti-bot enforcement so actual fans have a fair shot at whatever the base price is, and full fee transparency upfront. Fix those things and dynamic pricing becomes a lot easier to accept.</p>
+
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin</div>
+</div>
+</div>
+
+<footer><div class="fi">
+<a href="index.html" class="fl">The Margin</a>
+<div class="fli"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>© 2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer>
+</body></html>
