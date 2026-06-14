@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Paycheck | The Margin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1a18;--muted:#6b6b67;--faint:#f2f0eb;--border:#e0ddd6;--accent:#c0392b;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+body{font-family:var(--sans);background:#fff;color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}
+header{border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;background:rgba(255,255,255,0.96);backdrop-filter:blur(6px);z-index:100}
+.hi{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:2rem}
+.logo{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-0.02em}.logo span{color:var(--accent)}
+nav{display:flex;gap:2rem;font-size:0.875rem;font-weight:500;color:var(--muted)}
+.cta{background:var(--ink);color:#fff!important;font-size:0.8125rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:999px}
+.cta:hover{background:var(--accent)!important}
+.wrap{max-width:720px;margin:0 auto;padding:3.5rem 2rem 5rem}
+.back{font-size:0.8125rem;color:var(--muted);display:inline-flex;align-items:center;gap:0.4rem;margin-bottom:2.5rem}
+.tag{font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#fdf0ee;color:var(--accent);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:1rem}
+h1{font-family:var(--serif);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem}
+h1 em{font-style:italic}
+.meta{font-size:0.8125rem;color:var(--muted);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);display:flex;gap:1rem;flex-wrap:wrap}
+.body p{margin-bottom:1.5rem;font-size:1.0625rem;color:#2a2a28;line-height:1.85}
+.body h2{font-family:var(--serif);font-size:1.4rem;margin:2.75rem 0 1rem;line-height:1.3}
+.callout{background:var(--faint);border-left:3px solid var(--accent);padding:1rem 1.25rem;border-radius:0 4px 4px 0;margin:2rem 0;font-size:0.9375rem;color:var(--muted);line-height:1.75}
+.chart{background:var(--faint);border-radius:6px;padding:1.5rem;margin:2rem 0}
+.clabel{font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1rem}
+.ccap{font-size:0.8rem;color:var(--muted);margin-top:0.75rem;line-height:1.6;font-style:italic}
+.stub{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:2rem 0}
+.stub-header{background:var(--ink);color:var(--white);padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center}
+.stub-header .co{font-family:var(--serif);font-size:1rem;font-weight:600}
+.stub-header .period{font-size:0.75rem;color:rgba(255,255,255,0.6)}
+.stub-row{display:flex;justify-content:space-between;padding:0.7rem 1.25rem;border-bottom:1px solid var(--border);font-size:0.9rem}
+.stub-row:last-child{border-bottom:none}
+.stub-row.total{background:var(--faint);font-weight:500}
+.stub-row.net{background:#fdf0ee;font-weight:600;color:var(--accent)}
+.stub-label{color:var(--muted)}
+.stub-amt{font-family:var(--serif)}
+.byline{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted)}
+.byline strong{color:var(--ink)}
+footer{border-top:1px solid var(--border);padding:2rem;font-size:0.8125rem;color:var(--muted);margin-top:2rem}
+.fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fl{font-family:var(--serif);font-weight:600;color:var(--ink);font-size:1rem}
+.fli{display:flex;gap:1.5rem}
+@media(max-width:768px){nav{display:none}.fi{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="hi">
+<a href="index.html" class="logo">The<span> Margin</span></a>
+<nav><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a></nav>
+<a href="index.html#newsletter" class="cta">Subscribe</a>
+</div></header>
+
+<div class="wrap">
+<a href="index.html" class="back">← Back to home</a>
+<div class="tag">Personal Finance</div>
+<h1>I got my first real paycheck and a third of it disappeared. <em>Here's where it actually went.</em></h1>
+<div class="meta"><span>Tobias Velez</span><span>·</span><span>November 2025</span><span>·</span><span>5 min read</span></div>
+<div class="body">
+
+<p>Last summer I started working at a camp for kids with special needs, which I've been volunteering at for a couple years. When I got my first paycheck I was expecting to see the number I'd calculated: hours times hourly rate. The number on the check was about $200 less than that. I actually thought it was a mistake at first. I went back and counted my hours again. The hours were right. The gross pay was right. Something had just taken a significant chunk of it between when I earned it and when it landed in my account.</p>
+
+<p>Nobody had explained this to me before I started working. So I looked it up, and once I understood what was actually happening, I realized it's one of those things that should just be taught to people before they get a job rather than after the fact when they're confused and slightly annoyed.</p>
+
+<h2>The difference between gross pay and net pay</h2>
+
+<p>Gross pay is what you earned. Net pay is what you actually receive after deductions. The gap between them is taxes, and there are four separate taxes pulling from your paycheck before you ever see it.</p>
+
+<p>Let me use my actual situation as an example. I was making $14 an hour and working about 30 hours a week during the summer, so roughly $420 in gross pay per week.</p>
+
+<div class="stub">
+  <div class="stub-header">
+    <span class="co">Sample Pay Stub</span>
+    <span class="period">Weekly · $14/hr · 30 hrs</span>
+  </div>
+  <div class="stub-row"><span class="stub-label">Gross pay (30 hrs × $14)</span><span class="stub-amt">$420.00</span></div>
+  <div class="stub-row"><span class="stub-label">Federal income tax (10% bracket)</span><span class="stub-amt" style="color:var(--accent)">− $42.00</span></div>
+  <div class="stub-row"><span class="stub-label">Maryland state income tax (~4.75%)</span><span class="stub-amt" style="color:var(--accent)">− $19.95</span></div>
+  <div class="stub-row"><span class="stub-label">Social Security (6.2%)</span><span class="stub-amt" style="color:var(--accent)">− $26.04</span></div>
+  <div class="stub-row"><span class="stub-label">Medicare (1.45%)</span><span class="stub-amt" style="color:var(--accent)">− $6.09</span></div>
+  <div class="stub-row total"><span class="stub-label">Total deductions</span><span class="stub-amt">$94.08</span></div>
+  <div class="stub-row net"><span>Net pay (take-home)</span><span class="stub-amt">$325.92</span></div>
+</div>
+
+<p>That's 22% of my gross pay gone before I could spend any of it. Which sounds dramatic until you understand what each piece is actually doing.</p>
+
+<h2>Federal income tax</h2>
+
+<p>The federal government taxes income in brackets. As of 2026, the first roughly $11,000 of income is taxed at 10%. If you make more than that, the portion above it gets taxed at a higher rate, but only that portion — not your whole income. Most teenagers working part-time are firmly in the 10% bracket for the whole year, which is one of the lowest effective tax rates you'll ever have in your adult life. This is one of the reasons the Roth IRA situation I wrote about elsewhere is so compelling — you're paying taxes at 10% now versus whatever your rate will be decades from now when you presumably earn more.</p>
+
+<h2>State income tax</h2>
+
+<p>Maryland has a state income tax on top of the federal one. The rate depends on your income, but for part-time teenage earners it's roughly 4.75% plus a county piggyback tax. Montgomery County adds another 3.2%. So the actual Maryland effective rate for someone in my situation is closer to 7.5 to 8%. That's a meaningful chunk. Other states vary — some have no income tax at all (Florida, Texas, Nevada), some are higher than Maryland.</p>
+
+<h2>Social Security and Medicare, which are different</h2>
+
+<p>These two are labeled FICA on your pay stub, and they're not technically income taxes — they're payroll taxes that fund specific programs. Social Security takes 6.2% of your gross pay up to about $168,000 of annual earnings. Medicare takes 1.45% with no income cap. Your employer pays an identical amount on top of that, so the government is actually collecting 15.3% on your wages total, just splitting it between you and your boss.</p>
+
+<p>Here's the part that's strange to think about: you're paying into Social Security and Medicare right now, but you won't be able to access either program until your 60s at the earliest. You're essentially funding benefits for current retirees. Whether you'll receive similar benefits when you eventually retire is something economists and policy people argue about, but that's a separate piece.</p>
+
+<div class="callout">If you work multiple jobs and together they pay you more than $168,600, you might have too much Social Security withheld across both employers. You can claim that overage back when you file your taxes. Worth knowing if you're ever in that situation.</div>
+
+<h2>What you can do about it: the W-4</h2>
+
+<p>When you start a job, you fill out a W-4 form that tells your employer how much to withhold for federal income tax. Most people just fill it out automatically without thinking about it, and the withholding ends up being close to correct. But if you're a teenager and this is your only job, you might actually owe very little in federal tax for the year — and you can indicate that on the W-4 so they withhold less during the year. Then when you file a return by April, you get back whatever was over-withheld.</p>
+
+<p>You cannot get out of paying Social Security or Medicare. Those are mandatory. But income tax withholding is an estimate, not a final bill — it just gets settled when you file.</p>
+
+<h2>The thing about filing a return</h2>
+
+<p>If you earn income, you generally need to file a federal tax return — even as a dependent on your parents' taxes. The income threshold for being required to file in 2025 was $14,600 for single filers. But even if you earn less than that, you should probably file anyway, because if your employer withheld any federal income tax from your paychecks during the year, filing is the only way to get it back. The IRS isn't going to mail you a refund you didn't ask for. You have to claim it.</p>
+
+<p>The return itself isn't complicated if your situation is simple — one job, no investments, no self-employment. There are free filing options through the IRS website. It takes maybe 20 minutes the first time and less after that.</p>
+
+<p>The bottom line is that the paycheck math isn't a scam and it isn't a mistake. It's four separate programs taking their share, each of them doing something specific. Understanding what they are makes it a lot less frustrating than staring at a check that's smaller than you expected and not knowing why.</p>
+
+<div class="byline"><strong>Tobias Velez</strong> · Walter Johnson High School · The Margin</div>
+</div>
+</div>
+
+<footer><div class="fi">
+<a href="index.html" class="fl">The Margin</a>
+<div class="fli"><a href="index.html#articles">Articles</a><a href="index.html#mission">About</a><a href="index.html#newsletter">Subscribe</a></div>
+<div>© 2026 Tobias Velez · Walter Johnson High School</div>
+</div></footer>
+</body></html>
